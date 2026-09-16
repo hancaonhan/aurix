@@ -1,0 +1,16 @@
+node_modules/
+
+# Bí mật — không bao giờ đưa lên kho mã
+.env
+.env.local
+.env.*.local
+
+# Dữ liệu chạy thật
+server/data/*.db
+server/data/*.db-wal
+server/data/*.db-shm
+server/data/backups/
+
+# Tạm
+*.log
+.DS_Store

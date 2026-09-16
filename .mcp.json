@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "vibehost": {
+      "type": "http",
+      "url": "https://v2.tinhgon.xyz/api/agent/mcp",
+      "headers": {
+        "Authorization": "Bearer ${VIBEHOST_KEY}"
+      }
+    }
+  }
+}

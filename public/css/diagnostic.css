@@ -1,0 +1,224 @@
+/* ==========================================================================
+   AURIX — Công cụ Chẩn đoán Hệ thống Tăng trưởng
+   ========================================================================== */
+
+.dx {
+  border-radius: clamp(18px, 2.6vw, 26px);
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(100% 120% at 50% 0%, rgba(212, 175, 55, 0.075) 0%, transparent 60%),
+    var(--ink-700);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+/* Đầu công cụ: tiến trình */
+.dx-head {
+  display: flex; align-items: center; gap: 18px;
+  padding: 22px clamp(22px, 3.4vw, 40px);
+  border-bottom: 1px solid var(--line-soft);
+}
+.dx-head .n {
+  font-family: var(--font-serif);
+  font-size: 14px; color: var(--gold-300); flex: none;
+  letter-spacing: 0.04em;
+}
+.dx-track { flex: 1; height: 3px; border-radius: 3px; background: rgba(255, 255, 255, 0.07); overflow: hidden; }
+.dx-fill {
+  height: 100%; width: 0%;
+  background: var(--gold-grad);
+  border-radius: 3px;
+  transition: width 0.6s var(--ease);
+}
+
+.dx-body { padding: clamp(30px, 4.4vw, 56px) clamp(22px, 3.4vw, 48px); }
+
+/* Từng bước câu hỏi */
+.dx-step { display: none; }
+.dx-step.is-on { display: block; animation: dxIn 0.5s var(--ease) both; }
+@keyframes dxIn { from { opacity: 0; transform: translateY(14px); } }
+
+.dx-q {
+  font-family: var(--font-display);
+  font-size: clamp(21px, 2.7vw, 30px);
+  font-weight: 700;
+  line-height: 1.26;
+  letter-spacing: -0.025em;
+  margin-bottom: 10px;
+  text-wrap: balance;
+}
+.dx-hint { font-size: 14.5px; color: var(--fg-mute); margin-bottom: 30px; }
+
+/* Lựa chọn */
+.dx-opts { display: grid; gap: 11px; }
+.dx-opt {
+  display: flex; align-items: center; gap: 15px;
+  width: 100%;
+  padding: 17px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-soft);
+  background: rgba(255, 255, 255, 0.022);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.3s var(--ease), background 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.dx-opt:hover { border-color: var(--line); background: rgba(255, 255, 255, 0.05); transform: translateX(3px); }
+.dx-opt[aria-pressed='true'] {
+  border-color: var(--gold-200);
+  background: rgba(212, 175, 55, 0.09);
+}
+.dx-opt .mark {
+  flex: none; width: 21px; height: 21px; border-radius: 50%;
+  border: 1.5px solid var(--line); display: grid; place-items: center;
+  transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+}
+.dx-opt .mark::after {
+  content: ''; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--gold-grad); transform: scale(0);
+  transition: transform 0.3s var(--ease);
+}
+.dx-opt[aria-pressed='true'] .mark { border-color: var(--gold-200); }
+.dx-opt[aria-pressed='true'] .mark::after { transform: scale(1); }
+
+.dx-nav { display: flex; gap: 12px; margin-top: 30px; align-items: center; }
+.dx-back {
+  background: none; border: 0; color: var(--fg-mute); cursor: pointer;
+  font-size: 14.5px; padding: 10px 4px;
+  transition: color 0.25s var(--ease);
+}
+.dx-back:hover { color: var(--fg); }
+.dx-nav .btn { margin-left: auto; }
+
+/* ---------- Kết quả ---------- */
+.dx-result { display: none; }
+.dx-result.is-on { display: block; animation: dxIn 0.6s var(--ease) both; }
+
+.dx-score {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: clamp(26px, 4vw, 46px);
+  align-items: center;
+  padding-bottom: 34px;
+  margin-bottom: 34px;
+  border-bottom: 1px solid var(--line-soft);
+}
+@media (max-width: 640px) { .dx-score { grid-template-columns: 1fr; justify-items: start; } }
+
+/* Vòng điểm */
+.dx-dial { position: relative; width: 190px; height: 190px; flex: none; }
+.dx-dial svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.dx-dial .bg { fill: none; stroke: rgba(255, 255, 255, 0.07); stroke-width: 9; }
+.dx-dial .fg {
+  fill: none; stroke: url(#dxGrad); stroke-width: 9; stroke-linecap: round;
+  stroke-dasharray: 534;
+  stroke-dashoffset: 534;
+  transition: stroke-dashoffset 1.6s var(--ease) 0.2s;
+}
+.dx-dial .num {
+  position: absolute; inset: 0;
+  display: grid; place-content: center; text-align: center;
+}
+.dx-dial .num b {
+  font-family: var(--font-serif); font-size: 50px; line-height: 1; font-weight: 500;
+  background: var(--gold-grad);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.dx-dial .num span { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-mute); margin-top: 7px; }
+
+.dx-verdict h3 { margin-bottom: 12px; }
+.dx-verdict p { color: var(--fg-soft); font-size: 16px; }
+.dx-tier {
+  display: inline-block; padding: 6px 15px; border-radius: 999px;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
+  border: 1px solid var(--line); color: var(--gold-300);
+  background: rgba(212, 175, 55, 0.08);
+  margin-bottom: 14px;
+}
+
+/* Bảng điểm rò rỉ theo tầng */
+.dx-layers { display: grid; gap: 13px; margin-bottom: 34px; }
+.dx-layer {
+  display: grid;
+  grid-template-columns: 34px 1fr 86px;
+  gap: 16px;
+  align-items: center;
+  padding: 15px 18px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-soft);
+  background: rgba(255, 255, 255, 0.022);
+}
+.dx-layer .lt {
+  font-family: var(--font-serif); font-size: 22px; color: var(--gold-300);
+  text-align: center; line-height: 1;
+}
+.dx-layer .ln { font-size: 15px; font-weight: 600; margin-bottom: 7px; }
+.dx-layer .lbar { height: 5px; border-radius: 5px; background: rgba(255, 255, 255, 0.07); overflow: hidden; }
+.dx-layer .lbar i {
+  display: block; height: 100%; width: 0;
+  border-radius: 5px;
+  transition: width 1.2s var(--ease) 0.4s;
+}
+.dx-layer .lv { text-align: right; font-size: 13px; color: var(--fg-mute); font-variant-numeric: tabular-nums; }
+
+.dx-layer[data-state='weak'] .lbar i { background: linear-gradient(90deg, #FF6B6B, #FF9E5E); }
+.dx-layer[data-state='mid'] .lbar i { background: linear-gradient(90deg, #FF9F2E, #E8C468); }
+.dx-layer[data-state='good'] .lbar i { background: var(--gold-grad); }
+
+/* Ước tính thất thoát */
+.dx-leak {
+  padding: 26px clamp(20px, 3vw, 32px);
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: rgba(255, 159, 46, 0.05);
+  margin-bottom: 34px;
+}
+.dx-leak .k { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber); margin-bottom: 10px; }
+.dx-leak .v {
+  font-family: var(--font-serif); font-size: clamp(30px, 4.4vw, 46px); line-height: 1.1;
+  background: var(--gold-grad);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.dx-leak p { font-size: 14px; color: var(--fg-mute); margin: 12px 0 0; max-width: 60ch; }
+
+/* Khuyến nghị */
+.dx-recs { display: grid; gap: 12px; margin-bottom: 36px; }
+.dx-rec {
+  display: grid; grid-template-columns: 26px 1fr; gap: 14px;
+  padding: 18px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-soft);
+  background: rgba(255, 255, 255, 0.022);
+}
+.dx-rec .i { display: grid; place-items: center; padding-top: 3px; }
+.dx-rec h4 { font-size: 16px; margin-bottom: 6px; }
+.dx-rec p { font-size: 14.5px; color: var(--fg-soft); margin: 0; }
+.dx-rec a { color: var(--gold-300); font-weight: 600; }
+
+/* Form nhận báo cáo */
+.dx-capture {
+  padding: clamp(26px, 3.4vw, 38px);
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--ink-600);
+}
+.dx-capture h3 { margin-bottom: 8px; }
+.dx-capture .lead { font-size: 15.5px; margin-bottom: 24px; }
+.dx-capture .form-grid { grid-template-columns: 1fr 1fr; }
+.dx-capture .field.full { grid-column: 1 / -1; }
+@media (max-width: 620px) { .dx-capture .form-grid { grid-template-columns: 1fr; } }
+
+/* Trạng thái đang tính */
+.dx-calc { display: none; text-align: center; padding: 60px 20px; }
+.dx-calc.is-on { display: block; }
+.dx-calc .ring {
+  width: 54px; height: 54px; margin: 0 auto 22px;
+  border-radius: 50%;
+  border: 2px solid rgba(212, 175, 55, 0.2);
+  border-top-color: var(--gold-200);
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { rotate: 360deg; } }
+.dx-calc p { color: var(--fg-mute); font-size: 15px; }

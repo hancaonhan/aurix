@@ -1,0 +1,33 @@
+{
+  "name": "aurix-growth-system",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Aurix Vietnam — Growth System Builder. Frontend sinh tĩnh + backend Node không phụ thuộc gói ngoài, có phân quyền và bảng điều khiển.",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "dev": "node scripts/build.js && node server/server.js",
+    "start": "node server/server.js",
+    "build": "node scripts/build.js",
+    "audit": "node scripts/audit.js",
+    "check": "node scripts/build.js && node scripts/audit.js && node server/cli.js doctor",
+
+    "cli": "node server/cli.js",
+    "doctor": "node server/cli.js doctor",
+    "migrate": "node server/cli.js migrate",
+    "routes": "node server/cli.js routes",
+    "backup": "node server/cli.js backup",
+    "user:create": "node server/cli.js user:create",
+    "user:list": "node server/cli.js user:list",
+    "audit:tail": "node server/cli.js audit:tail",
+
+    "assets": "node scripts/fonts.js && node scripts/images.js",
+    "images": "node scripts/images.js",
+    "fonts": "node scripts/fonts.js"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.4"
+  }
+}

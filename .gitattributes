@@ -1,0 +1,10 @@
+# Chuẩn hoá kết thúc dòng — kho luôn giữ LF, tránh script shell hỏng trên Linux.
+* text=auto eol=lf
+
+# Tệp nhị phân: Git không được chạm vào.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.woff2 binary
+*.db binary

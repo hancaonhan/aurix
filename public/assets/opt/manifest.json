@@ -1,0 +1,464 @@
+{
+  "/assets/logo-trang-aurix.png": {
+    "fingerprint": "195544-1789355234383-logo-150.300",
+    "role": "logo",
+    "width": 704,
+    "height": 191,
+    "ratio": 3.6859,
+    "widths": [
+      150,
+      300
+    ],
+    "avif": [
+      "/assets/opt/logo-trang-aurix-150.avif",
+      "/assets/opt/logo-trang-aurix-300.avif"
+    ],
+    "webp": [
+      "/assets/opt/logo-trang-aurix-150.webp",
+      "/assets/opt/logo-trang-aurix-300.webp"
+    ],
+    "fallback": "/assets/opt/logo-trang-aurix-300.webp"
+  },
+  "/assets/models/11.png": {
+    "fingerprint": "1610588-1789355234504-hero-480.720.960.1280",
+    "role": "hero",
+    "width": 1023,
+    "height": 1537,
+    "ratio": 0.6656,
+    "widths": [
+      480,
+      720,
+      960
+    ],
+    "avif": [
+      "/assets/opt/11-480.avif",
+      "/assets/opt/11-720.avif",
+      "/assets/opt/11-960.avif"
+    ],
+    "webp": [
+      "/assets/opt/11-480.webp",
+      "/assets/opt/11-720.webp",
+      "/assets/opt/11-960.webp"
+    ],
+    "fallback": "/assets/opt/11-960.webp"
+  },
+  "/assets/aurix-team.png": {
+    "fingerprint": "2117691-1789355234396-wide-640.960.1280.1600",
+    "role": "wide",
+    "width": 1536,
+    "height": 1024,
+    "ratio": 1.5,
+    "widths": [
+      640,
+      960,
+      1280,
+      1536
+    ],
+    "avif": [
+      "/assets/opt/aurix-team-640.avif",
+      "/assets/opt/aurix-team-960.avif",
+      "/assets/opt/aurix-team-1280.avif",
+      "/assets/opt/aurix-team-1536.avif"
+    ],
+    "webp": [
+      "/assets/opt/aurix-team-640.webp",
+      "/assets/opt/aurix-team-960.webp",
+      "/assets/opt/aurix-team-1280.webp",
+      "/assets/opt/aurix-team-1536.webp"
+    ],
+    "fallback": "/assets/opt/aurix-team-1536.webp"
+  },
+  "/assets/aurix-difference.png": {
+    "fingerprint": "1719713-1789355234273-wide-640.960.1280.1600",
+    "role": "wide",
+    "width": 1448,
+    "height": 1086,
+    "ratio": 1.3333,
+    "widths": [
+      640,
+      960,
+      1280,
+      1448
+    ],
+    "avif": [
+      "/assets/opt/aurix-difference-640.avif",
+      "/assets/opt/aurix-difference-960.avif",
+      "/assets/opt/aurix-difference-1280.avif",
+      "/assets/opt/aurix-difference-1448.avif"
+    ],
+    "webp": [
+      "/assets/opt/aurix-difference-640.webp",
+      "/assets/opt/aurix-difference-960.webp",
+      "/assets/opt/aurix-difference-1280.webp",
+      "/assets/opt/aurix-difference-1448.webp"
+    ],
+    "fallback": "/assets/opt/aurix-difference-1448.webp"
+  },
+  "/assets/aurix-marketing-funnel.png": {
+    "fingerprint": "1738411-1789355234279-wide-640.960.1280.1600",
+    "role": "wide",
+    "width": 1448,
+    "height": 1086,
+    "ratio": 1.3333,
+    "widths": [
+      640,
+      960,
+      1280,
+      1448
+    ],
+    "avif": [
+      "/assets/opt/aurix-marketing-funnel-640.avif",
+      "/assets/opt/aurix-marketing-funnel-960.avif",
+      "/assets/opt/aurix-marketing-funnel-1280.avif",
+      "/assets/opt/aurix-marketing-funnel-1448.avif"
+    ],
+    "webp": [
+      "/assets/opt/aurix-marketing-funnel-640.webp",
+      "/assets/opt/aurix-marketing-funnel-960.webp",
+      "/assets/opt/aurix-marketing-funnel-1280.webp",
+      "/assets/opt/aurix-marketing-funnel-1448.webp"
+    ],
+    "fallback": "/assets/opt/aurix-marketing-funnel-1448.webp"
+  },
+  "/assets/after-fitness.png": {
+    "fingerprint": "1760455-1789355234515-wide-640.960.1280.1600",
+    "role": "wide",
+    "width": 1402,
+    "height": 1122,
+    "ratio": 1.2496,
+    "widths": [
+      640,
+      960,
+      1280
+    ],
+    "avif": [
+      "/assets/opt/after-fitness-640.avif",
+      "/assets/opt/after-fitness-960.avif",
+      "/assets/opt/after-fitness-1280.avif"
+    ],
+    "webp": [
+      "/assets/opt/after-fitness-640.webp",
+      "/assets/opt/after-fitness-960.webp",
+      "/assets/opt/after-fitness-1280.webp"
+    ],
+    "fallback": "/assets/opt/after-fitness-1280.webp"
+  },
+  "/assets/after-edu.png": {
+    "fingerprint": "1681956-1789355234517-wide-640.960.1280.1600",
+    "role": "wide",
+    "width": 1402,
+    "height": 1122,
+    "ratio": 1.2496,
+    "widths": [
+      640,
+      960,
+      1280
+    ],
+    "avif": [
+      "/assets/opt/after-edu-640.avif",
+      "/assets/opt/after-edu-960.avif",
+      "/assets/opt/after-edu-1280.avif"
+    ],
+    "webp": [
+      "/assets/opt/after-edu-640.webp",
+      "/assets/opt/after-edu-960.webp",
+      "/assets/opt/after-edu-1280.webp"
+    ],
+    "fallback": "/assets/opt/after-edu-1280.webp"
+  },
+  "/assets/C.E.O-a-chau.png": {
+    "fingerprint": "1779343-1789355234385-avatar-72.128.192",
+    "role": "avatar",
+    "width": 1086,
+    "height": 1448,
+    "ratio": 0.75,
+    "widths": [
+      72,
+      128,
+      192
+    ],
+    "avif": [
+      "/assets/opt/C.E.O-a-chau-72.avif",
+      "/assets/opt/C.E.O-a-chau-128.avif",
+      "/assets/opt/C.E.O-a-chau-192.avif"
+    ],
+    "webp": [
+      "/assets/opt/C.E.O-a-chau-72.webp",
+      "/assets/opt/C.E.O-a-chau-128.webp",
+      "/assets/opt/C.E.O-a-chau-192.webp"
+    ],
+    "fallback": "/assets/opt/C.E.O-a-chau-192.webp"
+  },
+  "/assets/C.E.O-fitness.png": {
+    "fingerprint": "1872864-1789355234388-avatar-72.128.192",
+    "role": "avatar",
+    "width": 1086,
+    "height": 1448,
+    "ratio": 0.75,
+    "widths": [
+      72,
+      128,
+      192
+    ],
+    "avif": [
+      "/assets/opt/C.E.O-fitness-72.avif",
+      "/assets/opt/C.E.O-fitness-128.avif",
+      "/assets/opt/C.E.O-fitness-192.avif"
+    ],
+    "webp": [
+      "/assets/opt/C.E.O-fitness-72.webp",
+      "/assets/opt/C.E.O-fitness-128.webp",
+      "/assets/opt/C.E.O-fitness-192.webp"
+    ],
+    "fallback": "/assets/opt/C.E.O-fitness-192.webp"
+  },
+  "/assets/C.E.O-anh-ngu.png": {
+    "fingerprint": "1952002-1789355234392-avatar-72.128.192",
+    "role": "avatar",
+    "width": 1086,
+    "height": 1448,
+    "ratio": 0.75,
+    "widths": [
+      72,
+      128,
+      192
+    ],
+    "avif": [
+      "/assets/opt/C.E.O-anh-ngu-72.avif",
+      "/assets/opt/C.E.O-anh-ngu-128.avif",
+      "/assets/opt/C.E.O-anh-ngu-192.avif"
+    ],
+    "webp": [
+      "/assets/opt/C.E.O-anh-ngu-72.webp",
+      "/assets/opt/C.E.O-anh-ngu-128.webp",
+      "/assets/opt/C.E.O-anh-ngu-192.webp"
+    ],
+    "fallback": "/assets/opt/C.E.O-anh-ngu-192.webp"
+  },
+  "/assets/projects/brightway-aurix.png": {
+    "fingerprint": "2140795-1789355234434-board-320.480.640.960.1240",
+    "role": "board",
+    "width": 1254,
+    "height": 1254,
+    "ratio": 1,
+    "widths": [
+      320,
+      480,
+      640,
+      960,
+      1240
+    ],
+    "avif": [
+      "/assets/opt/brightway-aurix-320.avif",
+      "/assets/opt/brightway-aurix-480.avif",
+      "/assets/opt/brightway-aurix-640.avif",
+      "/assets/opt/brightway-aurix-960.avif",
+      "/assets/opt/brightway-aurix-1240.avif"
+    ],
+    "webp": [
+      "/assets/opt/brightway-aurix-320.webp",
+      "/assets/opt/brightway-aurix-480.webp",
+      "/assets/opt/brightway-aurix-640.webp",
+      "/assets/opt/brightway-aurix-960.webp",
+      "/assets/opt/brightway-aurix-1240.webp"
+    ],
+    "fallback": "/assets/opt/brightway-aurix-1240.webp"
+  },
+  "/assets/projects/dental-aurix.png": {
+    "fingerprint": "1953168-1789355234460-board-320.480.640.960.1240",
+    "role": "board",
+    "width": 1254,
+    "height": 1254,
+    "ratio": 1,
+    "widths": [
+      320,
+      480,
+      640,
+      960,
+      1240
+    ],
+    "avif": [
+      "/assets/opt/dental-aurix-320.avif",
+      "/assets/opt/dental-aurix-480.avif",
+      "/assets/opt/dental-aurix-640.avif",
+      "/assets/opt/dental-aurix-960.avif",
+      "/assets/opt/dental-aurix-1240.avif"
+    ],
+    "webp": [
+      "/assets/opt/dental-aurix-320.webp",
+      "/assets/opt/dental-aurix-480.webp",
+      "/assets/opt/dental-aurix-640.webp",
+      "/assets/opt/dental-aurix-960.webp",
+      "/assets/opt/dental-aurix-1240.webp"
+    ],
+    "fallback": "/assets/opt/dental-aurix-1240.webp"
+  },
+  "/assets/projects/fitcore-aurix.png": {
+    "fingerprint": "2344275-1789355234420-board-320.480.640.960.1240",
+    "role": "board",
+    "width": 1254,
+    "height": 1254,
+    "ratio": 1,
+    "widths": [
+      320,
+      480,
+      640,
+      960,
+      1240
+    ],
+    "avif": [
+      "/assets/opt/fitcore-aurix-320.avif",
+      "/assets/opt/fitcore-aurix-480.avif",
+      "/assets/opt/fitcore-aurix-640.avif",
+      "/assets/opt/fitcore-aurix-960.avif",
+      "/assets/opt/fitcore-aurix-1240.avif"
+    ],
+    "webp": [
+      "/assets/opt/fitcore-aurix-320.webp",
+      "/assets/opt/fitcore-aurix-480.webp",
+      "/assets/opt/fitcore-aurix-640.webp",
+      "/assets/opt/fitcore-aurix-960.webp",
+      "/assets/opt/fitcore-aurix-1240.webp"
+    ],
+    "fallback": "/assets/opt/fitcore-aurix-1240.webp"
+  },
+  "/assets/projects/lavie-spa-aurix.png": {
+    "fingerprint": "2224834-1789355234496-board-320.480.640.960.1240",
+    "role": "board",
+    "width": 1254,
+    "height": 1254,
+    "ratio": 1,
+    "widths": [
+      320,
+      480,
+      640,
+      960,
+      1240
+    ],
+    "avif": [
+      "/assets/opt/lavie-spa-aurix-320.avif",
+      "/assets/opt/lavie-spa-aurix-480.avif",
+      "/assets/opt/lavie-spa-aurix-640.avif",
+      "/assets/opt/lavie-spa-aurix-960.avif",
+      "/assets/opt/lavie-spa-aurix-1240.avif"
+    ],
+    "webp": [
+      "/assets/opt/lavie-spa-aurix-320.webp",
+      "/assets/opt/lavie-spa-aurix-480.webp",
+      "/assets/opt/lavie-spa-aurix-640.webp",
+      "/assets/opt/lavie-spa-aurix-960.webp",
+      "/assets/opt/lavie-spa-aurix-1240.webp"
+    ],
+    "fallback": "/assets/opt/lavie-spa-aurix-1240.webp"
+  },
+  "/assets/projects/lumina-aurix.png": {
+    "fingerprint": "1995920-1789355234476-board-320.480.640.960.1240",
+    "role": "board",
+    "width": 1254,
+    "height": 1254,
+    "ratio": 1,
+    "widths": [
+      320,
+      480,
+      640,
+      960,
+      1240
+    ],
+    "avif": [
+      "/assets/opt/lumina-aurix-320.avif",
+      "/assets/opt/lumina-aurix-480.avif",
+      "/assets/opt/lumina-aurix-640.avif",
+      "/assets/opt/lumina-aurix-960.avif",
+      "/assets/opt/lumina-aurix-1240.avif"
+    ],
+    "webp": [
+      "/assets/opt/lumina-aurix-320.webp",
+      "/assets/opt/lumina-aurix-480.webp",
+      "/assets/opt/lumina-aurix-640.webp",
+      "/assets/opt/lumina-aurix-960.webp",
+      "/assets/opt/lumina-aurix-1240.webp"
+    ],
+    "fallback": "/assets/opt/lumina-aurix-1240.webp"
+  },
+  "/assets/projects/moc-vi-aurix.png": {
+    "fingerprint": "2267803-1789355234408-board-320.480.640.960.1240",
+    "role": "board",
+    "width": 1254,
+    "height": 1254,
+    "ratio": 1,
+    "widths": [
+      320,
+      480,
+      640,
+      960,
+      1240
+    ],
+    "avif": [
+      "/assets/opt/moc-vi-aurix-320.avif",
+      "/assets/opt/moc-vi-aurix-480.avif",
+      "/assets/opt/moc-vi-aurix-640.avif",
+      "/assets/opt/moc-vi-aurix-960.avif",
+      "/assets/opt/moc-vi-aurix-1240.avif"
+    ],
+    "webp": [
+      "/assets/opt/moc-vi-aurix-320.webp",
+      "/assets/opt/moc-vi-aurix-480.webp",
+      "/assets/opt/moc-vi-aurix-640.webp",
+      "/assets/opt/moc-vi-aurix-960.webp",
+      "/assets/opt/moc-vi-aurix-1240.webp"
+    ],
+    "fallback": "/assets/opt/moc-vi-aurix-1240.webp"
+  },
+  "/assets/projects/wanderlust-aurix.png": {
+    "fingerprint": "2199537-1789355234449-board-320.480.640.960.1240",
+    "role": "board",
+    "width": 1254,
+    "height": 1254,
+    "ratio": 1,
+    "widths": [
+      320,
+      480,
+      640,
+      960,
+      1240
+    ],
+    "avif": [
+      "/assets/opt/wanderlust-aurix-320.avif",
+      "/assets/opt/wanderlust-aurix-480.avif",
+      "/assets/opt/wanderlust-aurix-640.avif",
+      "/assets/opt/wanderlust-aurix-960.avif",
+      "/assets/opt/wanderlust-aurix-1240.avif"
+    ],
+    "webp": [
+      "/assets/opt/wanderlust-aurix-320.webp",
+      "/assets/opt/wanderlust-aurix-480.webp",
+      "/assets/opt/wanderlust-aurix-640.webp",
+      "/assets/opt/wanderlust-aurix-960.webp",
+      "/assets/opt/wanderlust-aurix-1240.webp"
+    ],
+    "fallback": "/assets/opt/wanderlust-aurix-1240.webp"
+  },
+  "/assets/aurix-giap-phap-marketing-dich-vu.webp": {
+    "fingerprint": "77560-1789355234498-wide-640.960.1280.1600",
+    "role": "wide",
+    "width": 1138,
+    "height": 809,
+    "ratio": 1.4067,
+    "widths": [
+      640,
+      960,
+      1138
+    ],
+    "avif": [
+      "/assets/opt/aurix-giap-phap-marketing-dich-vu-640.avif",
+      "/assets/opt/aurix-giap-phap-marketing-dich-vu-960.avif",
+      "/assets/opt/aurix-giap-phap-marketing-dich-vu-1138.avif"
+    ],
+    "webp": [
+      "/assets/opt/aurix-giap-phap-marketing-dich-vu-640.webp",
+      "/assets/opt/aurix-giap-phap-marketing-dich-vu-960.webp",
+      "/assets/opt/aurix-giap-phap-marketing-dich-vu-1138.webp"
+    ],
+    "fallback": "/assets/opt/aurix-giap-phap-marketing-dich-vu-1138.webp"
+  }
+}

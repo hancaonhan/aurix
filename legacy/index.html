@@ -1,0 +1,1595 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aurix Vietnam | Growth System Builder</title>
+    <meta
+      name="description"
+      content="Aurix Vietnam xây dựng hệ thống marketing dựa trên dữ liệu, quy trình và hiệu suất để doanh nghiệp tăng trưởng bền vững."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="image" href="assets/aurix-representative-hero.webp" fetchpriority="high" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://aurix.vn/#organization",
+          "name": "Aurix Vietnam Co., Ltd",
+          "url": "https://aurix.vn",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://aurix.vn/assets/provided/Logo.png"
+          },
+          "description": "Aurix xây dựng hệ thống marketing dựa trên dữ liệu, quy trình và hiệu suất để doanh nghiệp tăng trưởng bền vững."
+        },
+        {
+          "@type": "LocalBusiness",
+          "@id": "https://aurix.vn/#localbusiness",
+          "name": "Aurix Vietnam",
+          "image": "https://aurix.vn/assets/provided/Logo.png",
+          "telephone": "0900000000",
+          "url": "https://aurix.vn",
+          "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "VN"
+          }
+        },
+        {
+          "@type": "Service",
+          "name": "Kiểm tra hệ thống",
+          "provider": {
+            "@id": "https://aurix.vn/#organization"
+          },
+          "description": "Chẩn đoán phễu dịch vụ cho doanh nghiệp Du lịch, Fitness, Giáo dục."
+        }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Aurix có chỉ chạy quảng cáo không?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Không. Với ngành dịch vụ, quảng cáo chỉ tạo đầu vào. Aurix nhìn cả offer, landing page, bằng chứng niềm tin, CRM, tư vấn và doanh thu."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Lead nhiều nhưng sales chốt kém thì sao?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Đó chính là lý do cần kiểm tra hệ thống. Aurix đánh giá chất lượng lead, tốc độ phản hồi, script tư vấn, lý do từ chối và trạng thái CRM."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Doanh nghiệp chưa có nhiều dữ liệu có làm được không?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Làm được nếu đã có dịch vụ rõ và sẵn sàng chuẩn hóa tracking. Giai đoạn đầu sẽ ưu tiên thiết lập phễu, offer, nội dung chứng thực và dữ liệu nền."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <link rel="stylesheet" href="index.css">
+  </head>
+  <body>
+    <div class="visual-signature" aria-hidden="true">
+      <svg class="flow-lines" viewBox="0 0 1440 800" preserveAspectRatio="none">
+        <path d="M-100,500 C 300,450 500,650 800,350 S 1200,150 1550,50" stroke="rgba(229, 201, 139, 0.25)" stroke-width="1.5" fill="none" />
+        <path d="M-50,700 C 400,550 700,450 1000,150 S 1300,50 1550,-50" stroke="rgba(86, 210, 214, 0.15)" stroke-width="1" fill="none" />
+        <path d="M200,850 C 600,650 800,600 1100,400 S 1350,200 1550,150" stroke="rgba(229, 201, 139, 0.1)" stroke-width="2" stroke-dasharray="4 6" fill="none" />
+      </svg>
+      <div class="glow-node node-1"></div>
+      <div class="glow-node node-teal node-2"></div>
+      <div class="glow-node node-3"></div>
+      <div class="glow-node node-teal node-4"></div>
+    </div>
+    </div>
+    <header class="site-header">
+        <div class="container nav">
+          <a class="brand" href="#top" aria-label="Aurix Vietnam">
+            <img src="assets/logo-trang-aurix.webp" alt="Aurix Vietnam Logo" />
+          </a>
+          <nav class="nav-links" aria-label="Điều hướng chính" id="main-nav">
+            <a href="#problem">Vấn đề</a>
+            <a href="#system">Hệ thống</a>
+            <a href="#solution">Giải pháp</a>
+            <a href="#projects">Dự án</a>
+            <a href="#workflow">Quy trình</a>
+            <a href="#contact">Liên hệ</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-secondary desktop-btn" href="#contact">Kiểm tra hệ thống →</a>
+            <button class="mobile-menu-toggle" aria-label="Mở menu" id="menu-toggle">
+              <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+          </div>
+        </div>
+      </header>
+    <div class="page">
+      <main id="top">
+        <section class="hero" style="padding-top: 40px; text-align: center;">
+          <div class="container">
+            <h1 class="sr-only">Xây hệ thống marketing ổn định, tăng trưởng bền vững cho doanh nghiệp dịch vụ</h1>
+            <img src="assets/aurix-representative-hero.webp" alt="Xây hệ thống Marketing ổn định, tăng trưởng bền vững" style="width: 100%; height: auto; max-width: 1200px; margin: 0 auto; display: block; border-radius: 12px; box-shadow: 0 24px 60px rgba(0,0,0,0.3);" fetchpriority="high" width="1200" height="800" decoding="async" />
+            <div style="margin-top: 48px;">
+              <a class="btn btn-primary" href="#contact" style="font-size: 16px; padding: 18px 40px;">Khám phá giải pháp →</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="partner-section" aria-label="Đối tác đồng hành">
+          <div class="container">
+            <div class="partner-title">Đồng hành cùng sự tăng trưởng của các thương hiệu dịch vụ</div>
+            <div class="partner-track-container">
+              <div class="partner-carousel" aria-hidden="true">
+                <img src="assets/partner-logo-1.png" alt="Partner Logo" />
+                <img src="assets/partner-logo-2.png" alt="Partner Logo" />
+                <img src="assets/partner-logo-3.png" alt="Partner Logo" />
+                <img src="assets/partner-logo-4.png" alt="Partner Logo" />
+                <!-- Duplicate for seamless scroll -->
+                <img src="assets/partner-logo-1.png" alt="Partner Logo" />
+                <img src="assets/partner-logo-2.png" alt="Partner Logo" />
+                <img src="assets/partner-logo-3.png" alt="Partner Logo" />
+                <img src="assets/partner-logo-4.png" alt="Partner Logo" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="conversion-strip" aria-label="Lý do chọn Aurix">
+          <div class="container">
+            <div class="section-heading" style="display: block; text-align: center; max-width: 800px; margin: 0 auto 32px;">
+              <span class="eyebrow" style="justify-content: center;">Tâm thế kinh doanh</span>
+              <h2>Chạy quảng cáo là chưa đủ để chốt khách dịch vụ</h2>
+            </div>
+            <div class="strip-grid">
+              <div class="strip-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                <strong>Nhiều người hỏi là chưa đủ</strong>
+                <span>Aurix đo đếm <strong style="color: var(--soft-gold);">tỷ lệ tư vấn, lịch hẹn và số đơn chốt thành công.</strong></span>
+              </div>
+              <div class="strip-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <strong>Niềm tin tạo ra doanh thu</strong>
+                <span>Khách mua dịch vụ cần <strong style="color: var(--soft-gold);">đánh giá, hình ảnh thật và cam kết rõ ràng.</strong></span>
+              </div>
+              <div class="strip-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <strong>Chăm sóc để chốt đơn</strong>
+                <span>Khách hàng luôn cần được <strong style="color: var(--soft-gold);">bám đuổi trước khi rút ví chi tiền.</strong></span>
+              </div>
+              <div class="strip-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                <strong>Mở rộng cần quy trình</strong>
+                <span>Khi có nhiều chi nhánh/lớp/tour, marketing phải <strong style="color: var(--soft-gold);">vận hành như một hệ thống.</strong></span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="ineffective-marketing-section">
+          <div class="container">
+            <div class="section-heading" style="display: block; text-align: center; max-width: 800px; margin: 0 auto 32px;">
+              <span class="eyebrow" style="justify-content: center;">Marketing của bạn có thể không sai</span>
+              <h2>nhưng vẫn không hiệu quả?</h2>
+            </div>
+            
+            <div class="marketing-carousel-container">
+              <button class="carousel-nav-btn prev-btn" aria-label="Previous slide">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              </button>
+              <div class="marketing-carousel">
+                <div class="marketing-slide"><img src="assets/1.png" alt="Marketing Slide 1" loading="lazy" /></div>
+                <div class="marketing-slide"><img src="assets/2.png" alt="Marketing Slide 2" loading="lazy" /></div>
+                <div class="marketing-slide"><img src="assets/3.png" alt="Marketing Slide 3" loading="lazy" /></div>
+                <div class="marketing-slide"><img src="assets/4.png" alt="Marketing Slide 4" loading="lazy" /></div>
+                <div class="marketing-slide"><img src="assets/5.png" alt="Marketing Slide 5" loading="lazy" /></div>
+                <div class="marketing-slide"><img src="assets/6.png" alt="Marketing Slide 6" loading="lazy" /></div>
+                <div class="marketing-slide"><img src="assets/7.png" alt="Marketing Slide 7" loading="lazy" /></div>
+                <div class="marketing-slide"><img src="assets/8.png" alt="Marketing Slide 8" loading="lazy" /></div>
+              </div>
+              <button class="carousel-nav-btn next-btn" aria-label="Next slide">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+            </div>
+            
+            <div style="text-align: center; margin-top: 48px;">
+              <a class="btn btn-primary" href="#contact" style="font-size: 16px; padding: 18px 40px;">Khắc phục ngay hệ thống →</a>
+            </div>
+          </div>
+        </section>
+
+<section id="problem">
+          <div class="container">
+            <div class="section-heading">
+              <div>
+                <span class="eyebrow">Nỗi đau → Giải pháp → Kết quả</span>
+                <h2>Marketing dịch vụ không thất bại vì thiếu bài đăng. Nó thất bại vì <em style="color: var(--gold);">đứt phễu chuyển đổi</em>.</h2>
+              </div>
+            </div>
+            <div class="ad-proof-grid">
+              <figure class="ad-proof">
+                <img
+                  src="assets/aurix-marketing-funnel.png"
+                  alt="Aurix visual: doanh nghiệp không thiếu marketing nhưng thiếu một hệ thống đúng nghĩa"
+                  width="800" height="450" loading="lazy" decoding="async"
+                />
+              </figure>
+              <div class="ad-proof-copy">
+                <span class="eyebrow">Giải pháp thực tế</span>
+                <h3>Đừng lãng phí ngân sách vào những chiến dịch không mang lại doanh thu.</h3>
+                <p>
+                  Bạn không cần thêm những lời hứa hẹn "viral" sáo rỗng. Điều bạn thực sự cần là một hệ thống chỉ rõ: vì sao có Lead nhưng chốt rớt, vì sao khách hỏi rồi im lặng, và làm thế nào để <strong style="color: var(--soft-gold);">bịt kín lỗ hổng đó trước khi đổ thêm tiền quảng cáo.</strong>
+                </p>
+              </div>
+            </div>
+            <div class="pain-grid">
+              <article class="panel">
+                <svg class="icon" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                  <path d="M8 12h32M8 24h22M8 36h28" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  <circle cx="36" cy="24" r="4" stroke="currentColor" stroke-width="2" />
+                </svg>
+                <h3>Có Lead nhưng không có Lịch Hẹn</h3>
+                <p>Đổ ngân sách chạy quảng cáo ra form, nhưng không biết ai gọi, gọi lúc nào, kịch bản chốt ra sao. <strong style="color: var(--soft-gold);">Tỷ lệ chuyển đổi sau lead gần như bằng 0.</strong></p>
+              </article>
+              <article class="panel">
+                <svg class="icon" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                  <path d="M10 36V14h28v22H10Z" stroke="currentColor" stroke-width="2" />
+                  <path d="M16 30l6-6 5 4 8-10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <h3>Tốn tiền nội dung nhưng khách không tin</h3>
+                <p>Ảnh đẹp, video hay nhưng thiếu các bằng chứng thực tế (Review, Case Study, Kết quả thật) để khách hàng <strong style="color: var(--soft-gold);">vượt qua rào cản ra quyết định.</strong></p>
+              </article>
+              <article class="panel">
+                <svg class="icon" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                  <path d="M14 34c8-18 16-18 24-18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  <path d="M30 12h10v10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <circle cx="14" cy="34" r="4" stroke="currentColor" stroke-width="2" />
+                </svg>
+                <h3>Marketing & Sale đứt gãy, lãng phí</h3>
+                <p>Marketing mang số về, Sale chê lead rác. Không có hệ thống theo dõi vòng đời khách hàng, <strong style="color: var(--soft-gold);">ngân sách rớt ở mọi điểm chạm.</strong></p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+<section class="industry-showcase" id="industries">
+          <div class="container">
+            <div class="section-heading">
+              <div>
+                <span class="eyebrow">May đo theo đặc thù ngành</span>
+                <h2>Marketing không sai. Sai ở chỗ bạn đang dùng sai hệ thống cho ngành của mình.</h2>
+              </div>
+              <div>
+                <p>
+                  Du lịch bán trải nghiệm trước khi khách lên đường. Fitness bán cam kết thay đổi cơ thể. Giáo dục bán kết quả tương lai. Vì vậy marketing phải vừa <strong style="color: var(--soft-gold);">tạo niềm tin, vừa quản trị chuyển đổi sau khi có lead.</strong>
+                </p>
+                <div style="margin-top: 24px;">
+                  <a class="btn btn-primary" href="#contact">Nhận giải pháp theo ngành →</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="industry-tabs">
+              <button class="tab-btn active" data-tab="du-lich">Du lịch</button>
+              <button class="tab-btn" data-tab="fitness">Fitness</button>
+              <button class="tab-btn" data-tab="giao-duc">Đào tạo</button>
+              <button class="tab-btn" data-tab="spa">Spa & Thẩm mỹ</button>
+            </div>
+
+            <div class="tab-content active" id="tab-du-lich">
+              <div class="tab-header">
+                <h3>Điểm nghẽn tăng trưởng trong ngành Du Lịch</h3>
+                <p>Tại sao các công ty lữ hành, đại lý liên tục "đốt tiền" chạy quảng cáo nhưng vẫn chật vật trong việc mở rộng quy mô và <strong style="color: var(--soft-gold);">tối ưu tỷ suất lợi nhuận (ROI)</strong>?</p>
+              </div>
+
+              <div class="comparison-grid">
+                <!-- Cột trái: Sai lầm -->
+                <div class="comp-col error-col">
+                  <div class="comp-col-header">
+                    <span class="icon-circle icon-x">✖</span> SAI LẦM PHỔ BIẾN
+                  </div>
+                  <div class="comp-item error-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                    </div>
+                    <div>
+                      <strong>Chỉ chạy quảng cáo bán tour</strong>
+                      <span>Khách chưa có nhu cầu nhưng bạn đã bán.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item error-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </div>
+                    <div>
+                      <strong>Nhắm sai đối tượng</strong>
+                      <span>Tiếp cận sai người, đúng người nhưng sai thời điểm.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item error-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                    </div>
+                    <div>
+                      <strong>Cạnh tranh bằng giá</strong>
+                      <span>Giảm giá liên tục nhưng không tăng lợi nhuận.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item error-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                    </div>
+                    <div>
+                      <strong>Landing page không thuyết phục</strong>
+                      <span>Nội dung rời rạc, không trả lời đúng điều khách quan tâm.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item error-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    </div>
+                    <div>
+                      <strong>Không có quy trình chăm sóc</strong>
+                      <span>Khách hỏi rồi... để đó, không follow up, không nuôi dưỡng.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Cột phải: Hệ thống -->
+                <div class="comp-col system-col">
+                  <div class="comp-col-header">
+                    <span class="icon-circle icon-check">✔</span> HỆ THỐNG AURIX XÂY DỰNG
+                  </div>
+                  <div class="comp-item system-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    </div>
+                    <div>
+                      <strong>Gợi cảm hứng đúng thời điểm</strong>
+                      <span>Nội dung đánh vào nhu cầu trải nghiệm, không bán tour ngay lập tức.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item system-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                    </div>
+                    <div>
+                      <strong>Nhắm đúng người - đúng giai đoạn</strong>
+                      <span>Dựa trên hành vi & insight để tiếp cận đúng người đang có ý định đi.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item system-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    </div>
+                    <div>
+                      <strong>Khác biệt bằng giá trị</strong>
+                      <span>Tập trung vào trải nghiệm, dịch vụ và giá trị chuyến đi.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item system-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                    </div>
+                    <div>
+                      <strong>Landing page theo hành vi mua</strong>
+                      <span>Nội dung mạch lạc, dẫn dắt từ cảm hứng đến quyết định.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item system-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
+                    <div>
+                      <strong>Quy trình chăm sóc tự động</strong>
+                      <span>Nuôi dưỡng, tư vấn, chốt tour và remarketing theo hệ thống.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="comp-result">
+                <div class="comp-result-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                </div>
+                <div>
+                  <strong>KẾT QUẢ AURIX ĐEM LẠI</strong>
+                  <p>Tăng lượng khách chất lượng - Tăng tỷ lệ chốt tour - Tăng giá trị đơn hàng<br/>Giảm chi phí quảng cáo - Tạo lợi thế cạnh tranh bền vững.</p>
+                </div>
+              </div>
+              <div class="image-comparison-wrapper">
+                <h4 class="comparison-title">Trực quan hóa sự thay đổi</h4>
+                <div class="image-comparison" id="travel-slider" style="--pos: 50%;">
+                  <img src="assets/travel-before.png" alt="Trước khi có Aurix" class="img-before" />
+                  <img src="assets/travel-after.png" alt="Sau khi có Aurix" class="img-after" />
+                  
+                  <div class="comparison-label label-before">Trạng thái cũ</div>
+                  <div class="comparison-label label-after">Hệ thống Aurix</div>
+                  
+                  <div class="slider-handle">
+                    <div class="slider-button">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                      </svg>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                      </svg>
+                    </div>
+                  </div>
+                  
+                  <!-- Native range input for bulletproof dragging -->
+                  <input type="range" min="0" max="100" value="50" class="slider-input" oninput="this.parentNode.style.setProperty('--pos', this.value + '%')">
+                </div>
+              </div>
+
+              <div class="comp-footer">
+                <span>Aurix - Thiết kế hệ thống marketing theo hành vi mua thật của khách du lịch.</span>
+                <a class="btn btn-primary" href="#contact">XEM HỆ THỐNG CHI TIẾT →</a>
+              </div>
+            </div>
+
+            <div class="tab-content" id="tab-fitness">
+              <div class="tab-header">
+                <h3>Nút thắt sinh tử của mảng Fitness & Wellness</h3>
+                <p>Bài toán sống còn không nằm ở việc thu hút lead giá rẻ nhất thời, mà là lỗ hổng trong trải nghiệm khiến phòng tập <strong style="color: var(--soft-gold);">liên tục đánh mất hội viên gia hạn</strong>.</p>
+              </div>
+
+              <div class="comparison-grid">
+                <!-- Cột trái: Sai lầm -->
+                <div class="comp-col error-col">
+                  <div class="comp-col-header">
+                    <span class="icon-circle icon-x">✖</span> SAI LẦM PHỔ BIẾN
+                  </div>
+                  <div class="comp-item error-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                    </div>
+                    <div>
+                      <strong>Chỉ chạy quảng cáo giảm giá</strong>
+                      <span>Thu hút sai đối tượng, chỉ quan tâm khuyến mãi.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item error-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                    </div>
+                    <div>
+                      <strong>Tập trung vào số lượng lead</strong>
+                      <span>Nhiều lead nhưng không chất lượng, chi phí cao, tỉ lệ chuyển đổi thấp.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item error-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    </div>
+                    <div>
+                      <strong>Phễu rời rạc, không nuôi dưỡng</strong>
+                      <span>Để lead tự trôi, không chăm sóc nên không quay lại.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item error-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                    </div>
+                    <div>
+                      <strong>Nội dung chỉ xoay quanh giá</strong>
+                      <span>Không truyền tải giá trị & kết quả hội viên nhận được.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item error-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    </div>
+                    <div>
+                      <strong>Không có hệ thống giữ chân</strong>
+                      <span>Hội viên tập vài buổi rồi bỏ, không có chương trình gắn kết.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Cột phải: Hệ thống -->
+                <div class="comp-col system-col">
+                  <div class="comp-col-header">
+                    <span class="icon-circle icon-check">✔</span> HỆ THỐNG AURIX XÂY DỰNG
+                  </div>
+                  <div class="comp-item system-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                    </div>
+                    <div>
+                      <strong>Xác định đúng chân dung hội viên</strong>
+                      <span>Nhắm đúng người có nhu cầu thay đổi và khả năng chi trả.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item system-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                    </div>
+                    <div>
+                      <strong>Phễu 5 bước tối ưu chuyển đổi</strong>
+                      <span>Từ nhận biết → quan tâm → trải nghiệm → tư vấn → mua gói.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item system-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    </div>
+                    <div>
+                      <strong>Nuôi dưỡng tự động & cá nhân hóa</strong>
+                      <span>Email/SMS/Zalo chăm sóc theo hành vi, tăng tỉ lệ quay lại.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item system-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.5 6.5h11v11h-11z"></path><path d="M2.5 12h4"></path><path d="M17.5 12h4"></path><path d="M12 2.5v4"></path><path d="M12 17.5v4"></path></svg>
+                    </div>
+                    <div>
+                      <strong>Nội dung tập trung vào kết quả</strong>
+                      <span>Truyền cảm hứng, case thật, hành trình thay đổi của hội viên.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item system-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                    </div>
+                    <div>
+                      <strong>Hệ thống giữ chân & tái mua</strong>
+                      <span>Onboarding, chương trình thành viên, tái kích hoạt & giới thiệu bạn bè.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="comp-result">
+                <div class="comp-result-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                </div>
+                <div>
+                  <strong>KẾT QUẢ AURIX ĐEM LẠI</strong>
+                  <p>Tăng tỉ lệ chuyển đổi gấp 2 – 3 lần • Giảm chi phí marketing 30 – 50%<br/>Giữ chân hội viên lâu hơn • Tăng doanh thu bền vững.</p>
+                </div>
+              </div>
+
+              <div class="image-comparison-wrapper">
+                <h4 class="comparison-title">Trực quan hóa sự thay đổi</h4>
+                <div class="image-comparison" id="fitness-slider" style="--pos: 50%;">
+                  <img src="assets/before-fitness.png" alt="Trước khi có Aurix" class="img-before" />
+                  <img src="assets/after-fitness.png" alt="Sau khi có Aurix" class="img-after" />
+                  
+                  <div class="comparison-label label-before">Trạng thái cũ</div>
+                  <div class="comparison-label label-after">Hệ thống Aurix</div>
+                  
+                  <div class="slider-handle">
+                    <div class="slider-button">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                      </svg>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                      </svg>
+                    </div>
+                  </div>
+                  
+                  <!-- Native range input for bulletproof dragging -->
+                  <input type="range" min="0" max="100" value="50" class="slider-input" oninput="this.parentNode.style.setProperty('--pos', this.value + '%')">
+                </div>
+              </div>
+
+              <div class="comp-footer">
+                <span>Aurix - Thiết kế hệ thống marketing Fitness theo hành vi mua thật.</span>
+                <a class="btn btn-primary" href="#contact">XEM HỆ THỐNG CHI TIẾT →</a>
+              </div>
+            </div>
+
+            <div class="tab-content" id="tab-giao-duc">
+              <div class="tab-header">
+                <h3>Lỗ hổng chuyển đổi của mô hình Đào tạo</h3>
+                <p>Dù chất lượng giảng dạy xuất sắc, nhiều trung tâm vẫn dậm chân tại chỗ vì thiếu kịch bản nuôi dưỡng, dẫn đến việc <strong style="color: var(--soft-gold);">bỏ lỡ hàng ngàn học viên tiềm năng</strong>.</p>
+              </div>
+
+              <div class="comparison-grid">
+                <!-- Cột trái: Sai lầm -->
+                <div class="comp-col error-col">
+                  <div class="comp-col-header">
+                    <span class="icon-circle icon-x">✖</span> SAI LẦM PHỔ BIẾN
+                  </div>
+                  <div class="comp-item error-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                    </div>
+                    <div>
+                      <strong>Chỉ tập trung chạy quảng cáo</strong>
+                      <span>Phụ thuộc ads, tắt ads là không có học viên mới, chi phí ngày càng tăng.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item error-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>
+                    </div>
+                    <div>
+                      <strong>Sai thông điệp, sai đối tượng</strong>
+                      <span>Nói về khóa học quá nhiều, không chạm đúng nhu cầu và nỗi đau của học viên.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item error-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    </div>
+                    <div>
+                      <strong>Thiếu phễu & hành trình học viên</strong>
+                      <span>Không có quy trình nurturing, bỏ lỡ nhiều học viên tiềm năng.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item error-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                    </div>
+                    <div>
+                      <strong>Nội dung rời rạc, không chiến lược</strong>
+                      <span>Không có hệ thống nội dung theo từng giai đoạn trong hành trình mua.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item error-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    </div>
+                    <div>
+                      <strong>Chăm sóc yếu, không giữ kết nối</strong>
+                      <span>Tư vấn chậm, phản hồi lâu, học viên quan tâm nhưng không được follow đúng cách.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Cột phải: Hệ thống -->
+                <div class="comp-col system-col">
+                  <div class="comp-col-header">
+                    <span class="icon-circle icon-check">✔</span> HỆ THỐNG AURIX XÂY DỰNG
+                  </div>
+                  <div class="comp-item system-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    </div>
+                    <div>
+                      <strong>Chiến lược nội dung theo hành trình</strong>
+                      <span>Xây nội dung giáo dục, truyền cảm hứng, dẫn dắt học viên từ nhận thức đến đăng ký.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item system-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                    </div>
+                    <div>
+                      <strong>Đúng người - đúng nhu cầu - đúng thời điểm</strong>
+                      <span>Sử dụng data và insight để tiếp cận đúng đối tượng, đúng thông điệp.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item system-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                    </div>
+                    <div>
+                      <strong>Phễu 5 bước tối ưu chuyển đổi</strong>
+                      <span>Từ thu hút → nuôi dưỡng → tư vấn → chốt đơn → chăm sóc sau đăng ký.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item system-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
+                    </div>
+                    <div>
+                      <strong>Hệ thống nội dung đa dạng & nhất quán</strong>
+                      <span>Video, bài viết, webinar, case study... theo chiến lược rõ ràng, tăng niềm tin & chuyển đổi.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item system-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>
+                    </div>
+                    <div>
+                      <strong>Quy trình chăm sóc tự động & cá nhân hóa</strong>
+                      <span>Email/Zalo automation, remarketing, CRM để không bỏ lỡ bất kỳ học viên tiềm năng nào.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="comp-result">
+                <div class="comp-result-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                </div>
+                <div>
+                  <strong>KẾT QUẢ AURIX ĐEM LẠI</strong>
+                  <div style="display: flex; gap: 16px; font-size: 14px; flex-wrap: wrap;">
+                    <span style="border-right: 1px solid rgba(255,255,255,0.2); padding-right: 16px;">Tăng số lượng học viên chất lượng</span>
+                    <span style="border-right: 1px solid rgba(255,255,255,0.2); padding-right: 16px;">Tăng tỉ lệ đăng ký khóa học</span>
+                    <span style="border-right: 1px solid rgba(255,255,255,0.2); padding-right: 16px;">Giảm chi phí marketing từ 30 – 50%</span>
+                    <span><strong style="color: var(--soft-gold);">Tăng doanh thu bền vững & danh tiếng thương hiệu</strong></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="image-comparison-wrapper">
+                <h4 class="comparison-title">Trực quan hóa sự thay đổi</h4>
+                <div class="image-comparison" id="edu-slider" style="--pos: 50%;">
+                  <img src="assets/before-edu.png" alt="Trước khi có Aurix" class="img-before" />
+                  <img src="assets/after-edu.png" alt="Sau khi có Aurix" class="img-after" />
+                  
+                  <div class="comparison-label label-before">Trạng thái cũ</div>
+                  <div class="comparison-label label-after">Hệ thống Aurix</div>
+                  
+                  <div class="slider-handle">
+                    <div class="slider-button">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                      </svg>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                      </svg>
+                    </div>
+                  </div>
+                  
+                  <!-- Native range input for bulletproof dragging -->
+                  <input type="range" min="0" max="100" value="50" class="slider-input" oninput="this.parentNode.style.setProperty('--pos', this.value + '%')">
+                </div>
+              </div>
+
+              <div class="comp-footer">
+                <span>Aurix - Thiết kế hệ thống marketing Đào tạo theo hành vi mua thật.</span>
+                <a class="btn btn-primary" href="#contact">XEM HỆ THỐNG CHI TIẾT →</a>
+              </div>
+            </div>
+
+            <div class="tab-content" id="tab-spa">
+              <div class="tab-header">
+                <h3>Vòng lặp sinh tử của ngành Spa & Thẩm mỹ viện</h3>
+                <p>Nhiều cơ sở chi hàng chục triệu chạy quảng cáo mỗi tháng nhưng khách đến thưa thớt, kịch bản tư vấn yếu dẫn đến <strong style="color: var(--soft-gold);">đốt tiền mà không chốt được liệu trình giá trị cao</strong>.</p>
+              </div>
+
+              <div class="comparison-grid">
+                <!-- Cột trái: Sai lầm -->
+                <div class="comp-col error-col">
+                  <div class="comp-col-header">
+                    <span class="icon-circle icon-x">✖</span> SAI LẦM PHỔ BIẾN
+                  </div>
+                  <div class="comp-item error-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                    </div>
+                    <div>
+                      <strong>Quảng cáo phễu giá rẻ, khó upsell</strong>
+                      <span>Hút khách trải nghiệm giá rẻ nhưng không có kịch bản để up-sale liệu trình chính.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item error-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                    </div>
+                    <div>
+                      <strong>Đánh mất niềm tin vì nội dung hời hợt</strong>
+                      <span>Chỉ đăng ảnh đẹp hoặc mượn mẫu, thiếu case study chân thực khiến khách hàng e dè.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item error-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    </div>
+                    <div>
+                      <strong>Khách ib hỏi giá rồi "đã xem"</strong>
+                      <span>Tư vấn viên chỉ báo giá máy móc, không biết cách khơi gợi nhu cầu và theo sát (follow-up).</span>
+                    </div>
+                  </div>
+                  <div class="comp-item error-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    </div>
+                    <div>
+                      <strong>Bỏ quên khách hàng cũ</strong>
+                      <span>Không có quy trình chăm sóc sau liệu trình, mất đi nguồn doanh thu tái mua khổng lồ.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item error-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                    </div>
+                    <div>
+                      <strong>Cạnh tranh khô máu về giá</strong>
+                      <span>Liên tục đua giảm giá với đối thủ thay vì nâng tầm định vị thương hiệu.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Cột phải: Hệ thống -->
+                <div class="comp-col system-col">
+                  <div class="comp-col-header">
+                    <span class="icon-circle icon-check">✔</span> HỆ THỐNG AURIX XÂY DỰNG
+                  </div>
+                  <div class="comp-item system-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    </div>
+                    <div>
+                      <strong>Chiến lược mồi câu thông minh</strong>
+                      <span>Thiết kế phễu dịch vụ tinh gọn: từ dịch vụ phễu thu hút đến kịch bản upsell liệu trình cao cấp.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item system-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                    </div>
+                    <div>
+                      <strong>Trang đích & Nội dung định vị chuyên gia</strong>
+                      <span>Đóng gói hình ảnh bác sĩ/chuyên gia, show case study chân thực để đập tan sự hoài nghi.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item system-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    </div>
+                    <div>
+                      <strong>Quy trình chốt sale & bám đuổi (Follow-up)</strong>
+                      <span>Chuẩn hóa kịch bản trả lời inbox, kịch bản chốt hẹn trực tiếp và hệ thống Zalo ZNS nhắc lịch.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item system-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
+                    <div>
+                      <strong>Tự động hóa chăm sóc khách cũ</strong>
+                      <span>Luồng tin nhắn tự động hỏi thăm sau làm dịch vụ, tặng voucher kích thích quay lại.</span>
+                    </div>
+                  </div>
+                  <div class="comp-item system-item">
+                    <div class="comp-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    </div>
+                    <div>
+                      <strong>Nâng tầm định vị thương hiệu (Branding)</strong>
+                      <span>Thoát khỏi vòng xoáy giá rẻ nhờ thiết kế hệ thống visual sang trọng và đẳng cấp.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="comp-result">
+                <div class="comp-result-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                </div>
+                <div>
+                  <strong>KẾT QUẢ AURIX ĐEM LẠI</strong>
+                  <div style="display: flex; gap: 16px; font-size: 14px; flex-wrap: wrap;">
+                    <span style="border-right: 1px solid rgba(255,255,255,0.2); padding-right: 16px;">Tăng tỷ lệ khách đến cơ sở (Show-up rate)</span>
+                    <span style="border-right: 1px solid rgba(255,255,255,0.2); padding-right: 16px;">Tăng tỷ lệ chốt liệu trình cao cấp</span>
+                    <span><strong style="color: var(--soft-gold);">Doanh thu ổn định từ khách quay lại & giới thiệu</strong></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="image-comparison-wrapper">
+                <h4 class="comparison-title">Trực quan hóa sự thay đổi</h4>
+                <div class="image-comparison" id="spa-slider" style="--pos: 50%;">
+                  <!-- Thay ảnh before/after spa thực tế của bạn vào đây -->
+                  <img src="assets/before-fitness.png" alt="Trước khi có Aurix" class="img-before" />
+                  <img src="assets/after-fitness.png" alt="Sau khi có Aurix" class="img-after" />
+                  
+                  <div class="comparison-label label-before">Trạng thái cũ</div>
+                  <div class="comparison-label label-after">Hệ thống Aurix</div>
+                  
+                  <div class="slider-handle">
+                    <div class="slider-button">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                      </svg>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                      </svg>
+                    </div>
+                  </div>
+                  
+                  <input type="range" min="0" max="100" value="50" class="slider-input" oninput="this.parentNode.style.setProperty('--pos', this.value + '%')">
+                </div>
+              </div>
+
+              <div class="comp-footer">
+                <span>Aurix - Thiết kế hệ thống marketing Spa, Thẩm mỹ viện đẳng cấp.</span>
+                <a class="btn btn-primary" href="#contact">XEM HỆ THỐNG CHI TIẾT →</a>
+              </div>
+            </div>
+
+
+          </div>
+        </section>
+
+<section>
+          <div class="container">
+            <div class="section-heading" style="align-items: center;">
+              <div>
+                <span class="eyebrow">Sự khác biệt của Aurix</span>
+                <h2>Khác biệt của Aurix là <strong style="color: var(--gold);">không tối ưu kênh lẻ</strong>, mà tối ưu toàn bộ hành trình tạo doanh thu.</h2>
+              </div>
+              <div class="heading-visual" style="text-align: right;">
+                <img src="assets/aurix-difference.png" alt="Sự khác biệt của hệ thống Aurix" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 12px 30px rgba(0,0,0,0.2);" />
+              </div>
+            </div>
+            <div class="comparison" style="margin-bottom: 40px;">
+              <div class="compare-box">
+                <h3>Agency quảng cáo thông thường</h3>
+                <ul>
+                  <li>Chỉ tập trung chạy quảng cáo, viết bài hoặc khoe giá ra tin nhắn rẻ.</li>
+                  <li>Bỏ mặc phần sau: gọi tư vấn, nhắc hẹn, chăm sóc và chốt đơn.</li>
+                  <li>Không đo lường được tiền quảng cáo có thực sự tạo ra doanh thu hay không.</li>
+                </ul>
+              </div>
+              <div class="compare-box gold">
+                <h3>Hệ thống Tăng trưởng Aurix</h3>
+                <ul>
+                  <li><strong style="color: var(--soft-gold);">Tối ưu toàn bộ hành trình:</strong> Quảng cáo → Trang đích → Tư vấn → Chăm sóc → Doanh thu.</li>
+                  <li>Thiết kế ưu đãi, <strong style="color: var(--soft-gold);">bằng chứng niềm tin và quy trình bám đuổi chuyên sâu.</strong></li>
+                  <li><strong style="color: var(--soft-gold);">Tối ưu dựa trên kết quả thật:</strong> Lượng đặt chỗ, khách đến tận nơi, và số hợp đồng ký kết.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+<section id="system" class="system-band">
+          <div class="container">
+            <div class="section-heading">
+              <div>
+                <span class="eyebrow">Mô hình Vận hành Aurix</span>
+                <h2>Từ điểm chạm đầu tiên đến khi tạo ra doanh thu: <strong style="color: var(--gold);">Một dòng chảy chuyển đổi được kiểm soát.</strong></h2>
+              </div>
+            </div>
+            <div class="system-map">
+              <div class="diagnostic">
+                <h3>Kiểm tra hệ thống Marketing</h3>
+                <ul class="check-list" style="margin-top: 16px;">
+                  <li>Đánh giá lại <strong style="color: var(--gold);">toàn bộ phễu</strong> từ lúc khách bấm vào quảng cáo đến khi chốt sale.</li>
+                  <li>Rà soát lại chất lượng <strong style="color: var(--gold);">ưu đãi, nội dung, hình ảnh</strong> và kịch bản tư vấn.</li>
+                  <li>Đề xuất <strong style="color: var(--gold);">lộ trình triển khai</strong> 30-90 ngày cam kết bám sát mục tiêu tăng trưởng.</li>
+                </ul>
+              </div>
+              <div class="flow-steps">
+                <div class="step">
+                  <span class="step-number">01</span>
+                  <div>
+                    <strong>Data Insight</strong>
+                    <span><strong style="color: var(--soft-gold);">Chuẩn hóa dữ liệu lead</strong>, nguồn kênh, lịch hẹn, trạng thái tư vấn và doanh thu.</span>
+                  </div>
+                </div>
+                <div class="step">
+                  <span class="step-number">02</span>
+                  <div>
+                    <strong>System Design</strong>
+                    <span>Thiết kế <strong style="color: var(--soft-gold);">offer, proof assets, landing page</strong>, CRM flow và dashboard quản trị.</span>
+                  </div>
+                </div>
+                <div class="step">
+                  <span class="step-number">03</span>
+                  <div>
+                    <strong>Performance Loop</strong>
+                    <span>Tối ưu conversion, show-up, follow-up và <strong style="color: var(--soft-gold);">chuyển kết quả thành playbook lặp lại.</strong></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+<section class="case-study-section">
+          <!-- Flow lines background -->
+          <div class="visual-signature" aria-hidden="true" style="opacity: 0.3; top: 0;">
+            <svg class="flow-lines" viewBox="0 0 1440 800" preserveAspectRatio="none">
+              <path d="M-100,600 C300,500 600,100 1540,200" stroke="rgba(229,201,139,0.15)" stroke-width="1.5" fill="none" vector-effect="non-scaling-stroke"></path>
+              <path d="M-100,700 C400,600 800,200 1540,300" stroke="rgba(255,255,255,0.05)" stroke-width="1" fill="none" vector-effect="non-scaling-stroke"></path>
+              <circle cx="200" cy="550" r="3" fill="var(--soft-gold)"></circle>
+              <circle cx="1000" cy="220" r="2" fill="var(--white)"></circle>
+              <circle cx="1200" cy="270" r="4" fill="var(--soft-gold)"></circle>
+            </svg>
+          </div>
+
+          <div class="container" style="position: relative; z-index: 2;">
+            <div class="case-study-header text-center">
+              <span class="eyebrow uppercase-gold">Khách hàng thành công cùng Aurix</span>
+              <h2 class="serif-heading">3 ngành khác nhau<br>— cùng tăng trưởng nhờ một hệ thống</h2>
+              <p class="subtext">Du lịch, Fitness, Đào tạo không thiếu khách.<br>Họ chỉ thiếu một hệ thống để tạo dòng khách ổn định.</p>
+            </div>
+
+            <div class="case-grid swipe-carousel">
+              <div class="case-card">
+                <img src="assets/C.E.O-a-chau.png" alt="Case Study Du lịch" />
+              </div>
+              <div class="case-card">
+                <img src="assets/C.E.O-fitness.png" alt="Case Study Fitness" />
+              </div>
+              <div class="case-card">
+                <img src="assets/C.E.O-anh-ngu.png" alt="Case Study Đào tạo" />
+              </div>
+            </div>
+
+            <div class="case-study-cta text-center">
+              <h3>Bạn không cần thêm khách.<br>Bạn cần một hệ thống tạo khách ổn định.</h3>
+              <a href="#contact" class="btn btn-primary">Nhận blueprint hệ thống marketing →</a>
+            </div>
+          </div>
+        </section>
+
+<section id="audit">
+          <div class="container">
+            <div class="section-heading">
+              <div>
+                <span class="eyebrow">Gói Giải Pháp Khởi Điểm</span>
+                <h2>Bắt đầu bằng Kiểm tra hệ thống để biết doanh thu đang rò rỉ ở đâu.</h2>
+              </div>
+              <p>
+                Kiểm tra hệ thống giúp doanh nghiệp biết nên sửa offer, landing page, nội dung chứng thực, quảng cáo, CRM hay kịch bản tư vấn trước khi tăng ngân sách.
+              </p>
+            </div>
+            <div class="audit-layout-grid">
+              <!-- Cột trái -->
+              <div class="audit-layout-col">
+                <div class="audit-card">
+                  <h3>Trong buổi kiểm tra hệ thống, Aurix phân tích 5 lớp tạo doanh thu dịch vụ.</h3>
+                  <div class="deliverables">
+                    <div class="deliverable">
+                      <b>1</b>
+                      <div>
+                        <strong>Sản phẩm & Ưu đãi</strong>
+                        <span>Đánh giá mức độ hấp dẫn của <strong style="color: var(--white);">lời hứa dịch vụ</strong>, <strong style="color: var(--white);">ưu đãi mồi câu</strong> và các <strong style="color: var(--white);">rào cản</strong> khiến khách chưa ra quyết định.</span>
+                      </div>
+                    </div>
+                    <div class="deliverable">
+                      <b>2</b>
+                      <div>
+                        <strong>Phễu & Quy trình chốt sale</strong>
+                        <span>Rà soát trải nghiệm xuyên suốt từ điểm chạm <strong style="color: var(--white);">quảng cáo</strong>, <strong style="color: var(--white);">trang đích</strong>, đến kịch bản <strong style="color: var(--white);">chốt sale và CRM</strong>.</span>
+                      </div>
+                    </div>
+                    <div class="deliverable">
+                      <b>3</b>
+                      <div>
+                        <strong>Kênh & Chất lượng khách</strong>
+                        <span>Phân tích <strong style="color: var(--white);">hiệu suất thực tế</strong> của các kênh, đo lường <strong style="color: var(--white);">tỷ lệ chuyển đổi</strong> và <strong style="color: var(--white);">chi phí</strong> để có một khách hàng mới.</span>
+                      </div>
+                    </div>
+                    <div class="deliverable">
+                      <b>4</b>
+                      <div>
+                        <strong>Hệ thống nội dung niềm tin</strong>
+                        <span>Kiểm tra sức mạnh của các <strong style="color: var(--white);">bằng chứng</strong> (review, case study, hình ảnh thật) giúp <strong style="color: var(--white);">xóa bỏ sự hoài nghi</strong> của khách.</span>
+                      </div>
+                    </div>
+                    <div class="deliverable">
+                      <b>5</b>
+                      <div>
+                        <strong>Hệ thống đo lường dữ liệu</strong>
+                        <span>Đánh giá khả năng <strong style="color: var(--white);">tracking nguồn khách</strong>, tỷ lệ <strong style="color: var(--white);">chốt hẹn</strong>, <strong style="color: var(--white);">doanh thu</strong> và các <strong style="color: var(--white);">cảnh báo hiệu suất</strong> theo thời gian thực.</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Cột phải -->
+              <div class="audit-layout-col">
+                <div class="ad-proof-copy" style="height: auto;">
+                  <span class="eyebrow">Bức Tranh Toàn Cảnh</span>
+                  <h3>Bắt bệnh đúng chỗ trước khi đổ thêm tiền chạy quảng cáo.</h3>
+                  <p>
+                    Chúng tôi không cung cấp những buổi <strong style="color: var(--white);">"tư vấn miễn phí" sáo rỗng</strong>. Bằng việc <strong style="color: var(--white);">chẩn đoán toàn diện</strong> phễu dịch vụ, Aurix giúp bạn nhìn thấu toàn bộ hành trình khách hàng: từ lúc họ thấy quảng cáo đến khi <strong style="color: var(--white);">rút ví trả tiền</strong>. Bạn sẽ biết <strong style="color: var(--white);">chính xác doanh thu đang rơi rớt ở khâu nào</strong> và làm thế nào để <strong style="color: var(--white);">bít lại</strong>.
+                  </p>
+                </div>
+                <aside class="side-note" style="display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                  <strong>Đầu ra doanh nghiệp nhận được</strong>
+                  <p>
+                    Một bản chẩn đoán chỉ rõ các <strong style="color: var(--white);">điểm "rò rỉ" doanh thu</strong>, <strong style="color: var(--white);">tài sản cần xây</strong> và <strong style="color: var(--white);">lộ trình hành động 30-90 ngày</strong> theo sát <strong style="color: var(--white);">mục tiêu tăng trưởng</strong> (đơn hàng, hội viên, tuyển sinh).
+                    Sau buổi kiểm tra hệ thống, nếu nhận thấy sự phù hợp, Aurix sẽ tiếp tục <strong style="color: var(--white);">đồng hành cùng bạn</strong> để <strong style="color: var(--white);">triển khai toàn bộ hệ thống</strong> này.
+                  </p>
+                  <div class="side-action">
+                    <a class="btn btn-primary" href="#contact">Đăng ký kiểm tra hệ thống miễn phí →</a>
+                  </div>
+                </aside>
+              </div>
+            </div>
+          </div>
+        </section>
+
+<section id="solution" class="offer">
+          <div class="container">
+            <div class="section-heading">
+              <div>
+                <span class="eyebrow">Hệ Sinh Thái Giải Pháp</span>
+                <h2>Giải pháp Aurix xoay quanh một mục tiêu: biến quan tâm thành <em style="color: var(--gold);">hành động có thể đo được.</em></h2>
+              </div>
+              <p>
+                Không chỉ tạo nhận diện. Aurix xây các tài sản và quy trình giúp khách <strong style="color: var(--soft-gold);">để lại thông tin, đặt lịch, đến tư vấn, mua dịch vụ và quay lại.</strong>
+              </p>
+            </div>
+            <div class="offer-grid">
+              <article class="panel">
+                <svg class="icon" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                  <circle cx="24" cy="24" r="14" stroke="currentColor" stroke-width="2" />
+                  <path d="M24 10v8M24 30v8M10 24h8M30 24h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                <h3>Chiến lược Mồi câu & Ưu đãi</h3>
+                <p>Định vị dịch vụ, phân khúc khách, gói ưu đãi, lý do tin và thông điệp theo từng ngành.</p>
+                <ul>
+                  <li>Phân tích tâm lý khách hàng Du lịch/Fitness/Đào tạo.</li>
+                  <li>Thiết kế mồi câu, ưu đãi và thông điệp thuyết phục.</li>
+                  <li>Lộ trình triển khai theo mùa vụ, khóa học hoặc chiến dịch.</li>
+                </ul>
+              </article>
+              <article class="panel">
+                <svg class="icon" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                  <path d="M10 34h28M14 30V18M24 30V12M34 30V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  <path d="M14 18l10-6 10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <h3>Hệ thống Chuyển đổi Doanh thu</h3>
+                <p>Thiết lập quảng cáo, landing page, tracking, CRM và dashboard đo từ <strong style="color: var(--soft-gold);">lead đến doanh thu.</strong></p>
+                <ul>
+                  <li>Kế hoạch chạy quảng cáo tập trung vào <strong style="color: var(--soft-gold);">đơn hàng/lịch hẹn.</strong></li>
+                  <li>Theo dõi sát sao luồng khách từ form đến khi chốt đơn.</li>
+                  <li>Tối ưu <strong style="color: var(--soft-gold);">chi phí ra khách mới và tỷ lệ đến tận nơi.</strong></li>
+                </ul>
+              </article>
+              <article class="panel">
+                <svg class="icon" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                  <path d="M12 16h24v20H12V16Z" stroke="currentColor" stroke-width="2" />
+                  <path d="M16 12h16M18 24h12M18 30h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                <h3>Nội dung Bảo chứng Niềm tin</h3>
+                <p>Xây hệ nội dung tạo niềm tin, ảnh/video chứng thực, trang chuyển đổi và <strong style="color: var(--soft-gold);">kịch bản nuôi dưỡng.</strong></p>
+                <ul>
+                  <li>Xây dựng Landing Page chuyên biệt theo ngành.</li>
+                  <li>Kịch bản chăm sóc bám đuổi qua Zalo/Email/SMS.</li>
+                  <li>Hệ thống đánh giá, hình ảnh thực tế, và giải đáp thắc mắc.</li>
+                </ul>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="team-section" style="padding-top: 60px; padding-bottom: 80px;">
+          <div class="container">
+            <div class="section-heading" style="display: block; text-align: center; max-width: 800px; margin: 0 auto 48px;">
+              <span class="eyebrow" style="justify-content: center; margin-bottom: 16px;">Đội Ngũ Chuyên Gia</span>
+              <h2>Hệ thống mạnh mẽ được vận hành bởi những con người <em style="color: var(--gold); font-style: normal;">thấu hiểu kinh doanh.</em></h2>
+            </div>
+            <div class="team-image-container" style="max-width: 1000px; margin: 0 auto; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4); border: 1px solid rgba(229, 201, 139, 0.15); position: relative;">
+              <img src="assets/aurix-team.png" alt="Đội ngũ chuyên gia của Aurix Vietnam" width="1000" height="562" loading="lazy" style="width: 100%; height: auto; display: block; filter: brightness(0.95) contrast(1.05);" />
+            </div>
+            <div class="team-caption" style="max-width: 800px; margin: -40px auto 0; position: relative; z-index: 2; text-align: center; font-size: 16px; color: rgba(255, 255, 255, 0.85); line-height: 1.8; background: rgba(15, 42, 46, 0.95); backdrop-filter: blur(12px); border: 1px solid rgba(229, 201, 139, 0.2); border-radius: 12px; padding: 36px 48px; box-shadow: 0 20px 40px rgba(0,0,0,0.2);">
+              <p style="margin: 0 0 24px;">Tại Aurix, chúng tôi không chỉ là những nhà quảng cáo hay lập trình viên. Đội ngũ của chúng tôi bao gồm các chiến lược gia kinh doanh, chuyên gia dữ liệu và những nhà sáng tạo nội dung tâm huyết. Chúng tôi tin rằng công nghệ chỉ thực sự phát huy sức mạnh khi nó giải quyết được bài toán <strong style="color: var(--soft-gold); font-weight: 600;">con người và lợi nhuận.</strong></p>
+              <a class="btn btn-primary" href="#contact" style="padding: 16px 32px; font-size: 15px;">Trò chuyện cùng chuyên gia Aurix →</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="faq">
+          <div class="container">
+            <div class="section-heading">
+              <div>
+                <span class="eyebrow">Hỗ Trợ Ra Quyết Định</span>
+                <h2>Những câu hỏi thực tế của chủ doanh nghiệp dịch vụ trước khi bắt đầu.</h2>
+              </div>
+              <p>
+                Aurix ưu tiên nói rõ <strong style="color: var(--white);">điều kiện, chỉ số và phạm vi</strong> trước khi triển khai để <strong style="color: var(--white);">tránh kỳ vọng mơ hồ</strong>.
+              </p>
+            </div>
+            <div class="faq-grid">
+              <div class="faq-item">
+                <h3>Aurix có chỉ chạy quảng cáo không?</h3>
+                <p>Không. Với ngành dịch vụ, <strong style="color: var(--white);">quảng cáo chỉ tạo đầu vào</strong>. Aurix nhìn cả <strong style="color: var(--white);">offer, landing page, bằng chứng niềm tin, CRM, tư vấn và doanh thu</strong>.</p>
+              </div>
+              <div class="faq-item">
+                <h3>Lead nhiều nhưng sales chốt kém thì sao?</h3>
+                <p>Đó chính là lý do cần <strong style="color: var(--white);">kiểm tra hệ thống</strong>. Aurix đánh giá <strong style="color: var(--white);">chất lượng lead, tốc độ phản hồi, script tư vấn, lý do từ chối và trạng thái CRM</strong>.</p>
+              </div>
+              <div class="faq-item">
+                <h3>Doanh nghiệp chưa có nhiều dữ liệu có làm được không?</h3>
+                <p>Làm được nếu đã có <strong style="color: var(--white);">dịch vụ rõ</strong> và sẵn sàng <strong style="color: var(--white);">chuẩn hóa tracking</strong>. Giai đoạn đầu sẽ ưu tiên thiết lập <strong style="color: var(--white);">phễu, offer, nội dung chứng thực và dữ liệu nền</strong>.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="workflow" class="process-section">
+          <div class="container">
+            <div class="section-heading" style="display: block; text-align: center; max-width: 800px; margin: 0 auto 48px;">
+              <span class="eyebrow" style="justify-content: center;">Hệ thống bài bản</span>
+              <h2>Quy trình làm việc của Aurix với doanh nghiệp</h2>
+            </div>
+            
+            <div class="process-timeline">
+              <svg class="process-line" viewBox="0 0 1000 100" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="3" result="blur" />
+                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                  </filter>
+                </defs>
+                <path d="M0,50 Q125,20 250,50 T500,50 T750,50 T1000,50" fill="none" stroke="rgba(229, 201, 139, 0.3)" stroke-width="2" />
+                <path d="M0,50 Q125,20 250,50 T500,50 T750,50 T1000,50" fill="none" stroke="var(--soft-gold)" stroke-width="1" filter="url(#glow)" />
+              </svg>
+              
+              <div class="process-grid">
+                <!-- Step 1 -->
+                <div class="process-step">
+                  <div class="step-number-bg">1</div>
+                  <div class="step-icon-wrap">
+                    <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><polyline points="8 11 10 9 12 11 14 7"></polyline></svg>
+                  </div>
+                  <h3>PHÂN TÍCH</h3>
+                  <p>Nghiên cứu doanh nghiệp, thị trường & khách hàng để xác định cơ hội tăng trưởng.</p>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="process-step">
+                  <div class="step-number-bg">2</div>
+                  <div class="step-icon-wrap">
+                    <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle><line x1="22" y1="2" x2="14" y2="10"></line></svg>
+                  </div>
+                  <h3>CHIẾN LƯỢC</h3>
+                  <p>Xây dựng chiến lược marketing & hệ thống phù hợp với mục tiêu kinh doanh.</p>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="process-step">
+                  <div class="step-number-bg">3</div>
+                  <div class="step-icon-wrap">
+                    <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                  </div>
+                  <h3>TRIỂN KHAI</h3>
+                  <p>Triển khai đồng bộ các hoạt động marketing dựa trên hệ thống, quy trình và công nghệ.</p>
+                </div>
+                
+                <!-- Step 4 -->
+                <div class="process-step">
+                  <div class="step-number-bg">4</div>
+                  <div class="step-icon-wrap">
+                    <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="18" y="3" width="4" height="18"></rect><rect x="10" y="8" width="4" height="13"></rect><rect x="2" y="13" width="4" height="8"></rect><polyline points="2 9 8 3 14 9 22 1"></polyline></svg>
+                  </div>
+                  <h3>ĐO LƯỜNG & TỐI ƯU</h3>
+                  <p>Theo dõi hiệu quả, đo lường dữ liệu và tối ưu liên tục để đảm bảo tăng trưởng bền vững.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="projects" class="blueprint-showcase">
+          <div class="container">
+            <div class="section-heading" style="display: block; text-align: center; max-width: 800px; margin: 0 auto 48px;">
+              <span class="eyebrow" style="justify-content: center;">Thư Viện Blueprint</span>
+              <h2>Các dự án được Aurix thiết kế và lên ý tưởng</h2>
+              <p style="margin-top: 16px;">
+                Không chỉ là hình ảnh đẹp, mỗi Blueprint dưới đây là bản thiết kế kiến trúc của một cỗ máy tạo doanh thu hoàn chỉnh – từ định vị thương hiệu, hệ thống nội dung, đến phễu chuyển đổi khách hàng.
+              </p>
+            </div>
+          </div>
+          
+          <div class="blueprint-track-container">
+            <button class="blueprint-nav-btn blueprint-prev-btn" aria-label="Previous blueprint">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <div class="blueprint-track">
+              <div class="blueprint-card">
+                <div class="blueprint-img-wrap">
+                  <img src="assets/Dự%20án/lavie-spa-aurix.webp" alt="Lavie Spa Wellness Blueprint" class="blueprint-zoom-img" loading="lazy" decoding="async" width="1000" height="1000" data-title="Lavie Spa &amp; Wellness" data-desc="Triển khai hệ thống nhận diện thương hiệu sang trọng, chuẩn hóa UI/UX Landing Page tỷ lệ chuyển đổi cao và xây dựng chuỗi kịch bản phễu nội dung thu hút khách hàng cao cấp." />
+                  <div class="blueprint-hover-overlay">
+                    <span class="zoom-text"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg> Phóng to Blueprint</span>
+                  </div>
+                </div>
+              </div>
+              <div class="blueprint-card">
+                <div class="blueprint-img-wrap">
+                  <img src="assets/Dự%20án/dental-aurix.webp" alt="Dental Clinic Blueprint" class="blueprint-zoom-img" loading="lazy" decoding="async" width="1000" height="1000" data-title="Nha Khoa Thẩm Mỹ Á Châu" data-desc="Chuẩn hóa hành trình khách hàng từ nhận biết đến tư vấn trực tiếp. Xây dựng bộ tài liệu chứng thực và landing page tối ưu chi phí thu thập lead." />
+                  <div class="blueprint-hover-overlay">
+                    <span class="zoom-text"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg> Phóng to Blueprint</span>
+                  </div>
+                </div>
+              </div>
+              <div class="blueprint-card">
+                <div class="blueprint-img-wrap">
+                  <img src="assets/Dự%20án/fitcore-aurix.webp" alt="Fitcore Fitness Blueprint" class="blueprint-zoom-img" loading="lazy" decoding="async" width="1000" height="1000" data-title="Fitcore Fitness Center" data-desc="Thiết kế hệ thống phễu thu hút hội viên trải nghiệm. Tối ưu hóa giao diện trực quan, đồng bộ màu sắc thương hiệu và kịch bản chốt sale tự động qua Zalo OA." />
+                  <div class="blueprint-hover-overlay">
+                    <span class="zoom-text"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg> Phóng to Blueprint</span>
+                  </div>
+                </div>
+              </div>
+              <div class="blueprint-card">
+                <div class="blueprint-img-wrap">
+                  <img src="assets/Dự%20án/brightway-aurix.webp" alt="Brightway Education Blueprint" class="blueprint-zoom-img" loading="lazy" decoding="async" width="1000" height="1000" data-title="Tổ chức Giáo dục Brightway" data-desc="Tái cấu trúc phễu tuyển sinh đa kênh. Đóng gói lộ trình học thành các gói giá trị cao, kết hợp landing page chuyên sâu giúp tăng 35% tỷ lệ học viên đăng ký tư vấn." />
+                  <div class="blueprint-hover-overlay">
+                    <span class="zoom-text"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg> Phóng to Blueprint</span>
+                  </div>
+                </div>
+              </div>
+              <div class="blueprint-card">
+                <div class="blueprint-img-wrap">
+                  <img src="assets/Dự%20án/moc-vi-aurix.webp" alt="Moc Vi Restaurant Blueprint" class="blueprint-zoom-img" loading="lazy" decoding="async" width="1000" height="1000" data-title="Chuỗi nhà hàng Mộc Vị" data-desc="Xây dựng hệ thống menu điện tử và phễu kích cầu đặt bàn. Đồng bộ hóa nhận diện visual trên mạng xã hội với không gian thực tế." />
+                  <div class="blueprint-hover-overlay">
+                    <span class="zoom-text"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg> Phóng to Blueprint</span>
+                  </div>
+                </div>
+              </div>
+              <div class="blueprint-card">
+                <div class="blueprint-img-wrap">
+                  <img src="assets/Dự%20án/wanderlust-aurix.webp" alt="Wanderlust Travel Blueprint" class="blueprint-zoom-img" loading="lazy" decoding="async" width="1000" height="1000" data-title="Wanderlust Travel" data-desc="Tối ưu hóa phễu bán tour du lịch cao cấp. Thiết kế landing page trực quan hóa lịch trình, làm nổi bật trải nghiệm độc bản giúp tăng tỷ lệ chuyển đổi khách hàng VVIP." />
+                  <div class="blueprint-hover-overlay">
+                    <span class="zoom-text"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg> Phóng to Blueprint</span>
+                  </div>
+                </div>
+              </div>
+              <div class="blueprint-card">
+                <div class="blueprint-img-wrap">
+                  <img src="assets/Dự%20án/lumina-aurix.webp" alt="Lumina Beauty Blueprint" class="blueprint-zoom-img" loading="lazy" decoding="async" width="1000" height="1000" data-title="Lumina Beauty Clinic" data-desc="Hệ thống Marketing tự động hóa việc thu thập và chăm sóc khách hàng. Chuẩn hóa hình ảnh đội ngũ chuyên gia nhằm gia tăng niềm tin." />
+                  <div class="blueprint-hover-overlay">
+                    <span class="zoom-text"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg> Phóng to Blueprint</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="blueprint-nav-btn blueprint-next-btn" aria-label="Next blueprint">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <div class="mobile-swipe-hint">
+              <span>Vuốt sang phải để xem thêm</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M12 5l7 7-7 7"></path></svg>
+            </div>
+          </div>
+        </section>
+
+<section id="contact" class="cta">
+          <div class="container">
+            <div class="cta-box">
+              <div>
+                <span class="eyebrow">Bắt đầu bằng việc kiểm tra miễn phí cho doanh nghiệp của bạn</span>
+                <h2>Biến lead rời rạc thành lịch hẹn, tư vấn và doanh thu có thể đo được.</h2>
+                <p class="hero-copy">
+                  Để lại thông tin. Aurix sẽ rà soát ngành, mô hình dịch vụ, kênh đang chạy và điểm nghẽn hiện tại để đề xuất hướng kiểm tra phù hợp.
+                </p>
+              </div>
+              <form class="lead-form" onsubmit="event.preventDefault(); window.location.href='thankyou/index.html';">
+                <label>
+                  Họ tên
+                  <input type="text" name="name" placeholder="Nguyễn Minh Anh" required />
+                </label>
+                <label>
+                  Số điện thoại
+                  <input type="tel" name="phone" placeholder="09xx xxx xxx" required />
+                </label>
+                <label>
+                  Quy mô nhu cầu
+                  <select name="need" required>
+                    <option value="">Chọn mục tiêu chính</option>
+                    <option>Tăng booking / lịch tư vấn</option>
+                    <option>Tăng trial / hội viên fitness</option>
+                    <option>Tăng tuyển sinh / học viên</option>
+                    <option>Chuẩn hóa CRM, dữ liệu và follow-up</option>
+                  </select>
+                </label>
+                <label>
+                  Bối cảnh hiện tại
+                  <textarea name="message" placeholder="Ngành dịch vụ, mục tiêu booking/trial/enrollment, kênh đang triển khai, điểm nghẽn hiện tại..."></textarea>
+                </label>
+                <button class="btn btn-primary" type="submit">Gửi yêu cầu kiểm tra hệ thống miễn phí →</button>
+                <span class="form-note">Aurix phản hồi trong vòng 1 ngày làm việc.</span>
+                <div style="margin-top: 20px; padding: 14px; background: rgba(229, 201, 139, 0.08); border-radius: 8px; border-left: 3px solid var(--gold); font-size: 13px; color: rgba(255, 255, 255, 0.8);">
+                  <strong style="color: var(--gold); display: block; margin-bottom: 4px;">Cam kết từ Aurix:</strong> Chúng tôi sẽ chỉ ra ít nhất 3 điểm rò rỉ doanh thu trong hệ thống hiện tại của bạn ngay trong buổi kiểm tra, hoàn toàn không có rủi ro hay ràng buộc mua hàng.
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="container footer-inner">
+          <div class="footer-grid">
+            <div class="footer-col brand-col">
+              <a class="brand" href="#top" aria-label="Aurix Vietnam" style="margin-bottom: 20px; display: inline-block;">
+                <img src="assets/logo-trang-aurix.webp" alt="Aurix Vietnam Logo" style="height: 36px; width: auto;" />
+              </a>
+              <p>Aurix xây dựng hệ thống marketing dựa trên dữ liệu, quy trình và hiệu suất để doanh nghiệp dịch vụ tăng trưởng bền vững.</p>
+            </div>
+            <div class="footer-col">
+              <h4>Thông tin liên hệ</h4>
+              <ul>
+                <li><strong>CÔNG TY TNHH AURIX VIỆT NAM</strong></li>
+                <li><strong>Hotline:</strong> <a href="tel:0943434489">09 4343 4489</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h4>Giải pháp</h4>
+              <ul>
+                <li><a href="#industries">Giải pháp ngành Du lịch</a></li>
+                <li><a href="#industries">Giải pháp ngành Fitness</a></li>
+                <li><a href="#industries">Giải pháp ngành Đào tạo</a></li>
+                <li><a href="#audit">Dịch vụ Kiểm tra hệ thống</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h4>Chính sách</h4>
+              <ul>
+                <li><a href="#">Chính sách bảo mật</a></li>
+                <li><a href="#">Điều khoản dịch vụ</a></li>
+                <li><a href="#">Chính sách hoàn tiền</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <span>&copy; 2026 Aurix Vietnam Co., Ltd. Tất cả các quyền được bảo lưu.</span>
+            <span>Công nghệ • Giải pháp • Tăng trưởng</span>
+          </div>
+        </div>
+      </footer>
+
+      <div class="sticky-cta" aria-label="CTA nhanh">
+        <a class="btn btn-primary" href="#contact">Nhận kiểm tra hệ thống miễn phí →</a>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            // Remove active class from all buttons and contents
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
+
+            // Add active class to clicked button
+            btn.classList.add('active');
+
+            // Show corresponding content
+            const tabId = btn.getAttribute('data-tab');
+            document.getElementById('tab-' + tabId).classList.add('active');
+          });
+        });
+
+        // Mobile Menu Toggle Logic
+        const menuToggle = document.getElementById('menu-toggle');
+        const mainNav = document.getElementById('main-nav');
+        
+        if (menuToggle && mainNav) {
+          menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+          });
+
+          // Đóng menu khi click vào một link
+          const navLinks = mainNav.querySelectorAll('a');
+          navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+              mainNav.classList.remove('active');
+            });
+          });
+        }
+        // Lightbox Logic for Marketing Carousel & Blueprints
+        const lightbox = document.getElementById('lightbox-modal');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const closeBtn = document.querySelector('.lightbox-close');
+        const zoomableImages = document.querySelectorAll('.marketing-slide img, .blueprint-zoom-img');
+
+        if (lightbox && lightboxImg && closeBtn && zoomableImages.length > 0) {
+          zoomableImages.forEach(img => {
+            img.addEventListener('click', function() {
+              lightboxImg.src = this.src;
+              
+              const title = this.getAttribute('data-title');
+              const desc = this.getAttribute('data-desc');
+              const infoPanel = document.getElementById('lightbox-info');
+              
+              if (infoPanel) {
+                if (title || desc) {
+                  document.getElementById('lightbox-title').textContent = title || '';
+                  document.getElementById('lightbox-desc').textContent = desc || '';
+                  infoPanel.style.display = 'flex';
+                } else {
+                  infoPanel.style.display = 'none';
+                }
+              }
+              
+              lightbox.classList.add('active');
+              document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            });
+          });
+
+          // Close lightbox
+          const closeLightbox = () => {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+          };
+
+          closeBtn.addEventListener('click', closeLightbox);
+          lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+              closeLightbox();
+            }
+          });
+        }
+
+        // Carousel Navigation Arrows Logic (Marketing)
+        const marketingCarousel = document.querySelector('.marketing-carousel');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+
+        if (marketingCarousel && prevBtn && nextBtn) {
+          prevBtn.addEventListener('click', () => {
+            marketingCarousel.scrollBy({ left: -344, behavior: 'smooth' }); // 320px width + 24px gap
+          });
+          nextBtn.addEventListener('click', () => {
+            marketingCarousel.scrollBy({ left: 344, behavior: 'smooth' });
+          });
+        }
+
+        // Carousel Navigation Arrows Logic (Blueprints)
+        const blueprintTrack = document.querySelector('.blueprint-track');
+        const blueprintPrevBtn = document.querySelector('.blueprint-prev-btn');
+        const blueprintNextBtn = document.querySelector('.blueprint-next-btn');
+
+        if (blueprintTrack && blueprintPrevBtn && blueprintNextBtn) {
+          blueprintPrevBtn.addEventListener('click', () => {
+            // Scroll by roughly 65% of window width
+            blueprintTrack.scrollBy({ left: -(window.innerWidth * 0.65), behavior: 'smooth' });
+          });
+          blueprintNextBtn.addEventListener('click', () => {
+            blueprintTrack.scrollBy({ left: window.innerWidth * 0.65, behavior: 'smooth' });
+          });
+        }
+      });
+    </script>
+    
+    <!-- Lightbox Modal -->
+    <div id="lightbox-modal" class="lightbox-modal">
+      <span class="lightbox-close">&times;</span>
+      <div class="lightbox-container">
+        <div class="lightbox-img-wrap">
+          <img id="lightbox-img" class="lightbox-content" src="" alt="Zoomed Image" />
+        </div>
+        <div id="lightbox-info" class="lightbox-info" style="display: none;">
+          <h3 id="lightbox-title"></h3>
+          <p id="lightbox-desc"></p>
+        </div>
+      </div>
+    </div>
+    <!-- Floating Action Buttons -->
+    <div class="fab-container">
+      <a href="https://zalo.me/0943434489" target="_blank" rel="noopener noreferrer" class="fab-btn zalo" aria-label="Chat Zalo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+          <line x1="8" y1="12" x2="8.01" y2="12"></line>
+          <line x1="12" y1="12" x2="12.01" y2="12"></line>
+          <line x1="16" y1="12" x2="16.01" y2="12"></line>
+        </svg>
+      </a>
+      <a href="tel:0943434489" class="fab-btn call" aria-label="Gọi điện thoại">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+        </svg>
+      </a>
+      <a href="#top" class="fab-btn top" aria-label="Lên đầu trang">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="19" x2="12" y2="5"></line>
+          <polyline points="5 12 12 5 19 12"></polyline>
+        </svg>
+      </a>
+    </div>
+  </body>
+</html>

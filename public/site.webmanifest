@@ -1,0 +1,23 @@
+{
+  "name": "Aurix — Growth System Builder",
+  "short_name": "Aurix",
+  "description": "Aurix xây hệ thống tăng trưởng cho doanh nghiệp dịch vụ cao cấp.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B1220",
+  "theme_color": "#0B1220",
+  "lang": "vi",
+  "icons": [
+    {
+      "src": "/assets/Logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /cam-on/
+Disallow: /api/
+Disallow: /admin
+
+Sitemap: https://aurixvietnam.vn/sitemap.xml

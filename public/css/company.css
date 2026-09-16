@@ -1,0 +1,118 @@
+/* ==========================================================================
+   AURIX — Gói dịch vụ & Đội ngũ
+   ========================================================================== */
+
+.pkg-grid { align-items: stretch; }
+
+.pkg {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Gói phổ biến được viền vàng để mắt dừng lại trước */
+.pkg-popular {
+  border-color: var(--line);
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(212, 175, 55, 0.085) 0%, transparent 62%),
+    var(--surface-2);
+}
+
+/* Nhãn nằm TRONG thẻ: .card có overflow:hidden nên mọi thứ nhô ra ngoài mép
+   đều bị cắt mất. */
+.pkg-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 8px;
+}
+.pkg-name {
+  margin: 0;
+  font-size: 22px;
+  color: var(--fg);
+}
+.pkg-flag {
+  padding: 5px 13px;
+  border-radius: 999px;
+  background: var(--gold-grad);
+  color: var(--ink-900);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.pkg-dur {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 0 0 22px;
+  padding: 13px 16px;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+.pkg-dur span { font-size: 13px; color: var(--fg-mute); }
+.pkg-dur b { font-size: 15px; color: var(--gold-300); font-weight: 600; }
+
+.pkg-cta { margin-top: 22px; }
+.pkg-cta .btn { width: 100%; justify-content: center; }
+
+.pkg-list {
+  list-style: none;
+  padding: 0;
+  margin: 22px 0 0;
+  display: grid;
+  gap: 12px;
+}
+.pkg-list li {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 11px;
+  align-items: start;
+  font-size: 14.5px;
+  color: var(--fg-soft);
+  line-height: 1.6;
+}
+.pkg-list li > span:first-child { padding-top: 4px; }
+
+@media (max-width: 960px) {
+  .pkg-grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- Đội ngũ ---------- */
+.team-card { display: flex; flex-direction: column; }
+
+.team-avatar {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  border: 1px solid var(--line);
+  background: rgba(212, 175, 55, 0.06);
+  margin-bottom: 20px;
+}
+.team-avatar .spark { width: 17px; height: 17px; }
+
+.team-role {
+  font-size: 12.5px;
+  color: var(--gold-300);
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.45;
+}
+
+.team-focus {
+  margin: 18px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-mute);
+}

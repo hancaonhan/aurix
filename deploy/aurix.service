@@ -1,0 +1,66 @@
+# =============================================================================
+# AURIX — unit systemd
+#
+# Cài đặt:
+#   sudo cp deploy/aurix.service /etc/systemd/system/aurix.service
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now aurix
+#
+# Xem nhật ký:   journalctl -u aurix -f
+# Khởi động lại: sudo systemctl restart aurix
+# =============================================================================
+[Unit]
+Description=Aurix — Growth System Builder
+Documentation=https://aurixvietnam.vn
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=aurix
+Group=aurix
+WorkingDirectory=/var/www/aurix
+EnvironmentFile=/var/www/aurix/.env
+ExecStart=/usr/bin/node server/server.js
+
+# Khởi động lại khi sập, nhưng không lặp vô hạn nếu lỗi cấu hình
+Restart=always
+RestartSec=3
+StartLimitBurst=5
+StartLimitIntervalSec=60
+
+# Dừng êm: server.js đóng kết nối đang chạy rồi mới thoát
+KillSignal=SIGTERM
+TimeoutStopSec=15
+
+# ---------- Cô lập tiến trình ----------
+# Máy chủ chỉ cần đọc mã nguồn và ghi vào thư mục dữ liệu; mọi quyền khác bị cắt.
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+ProtectClock=true
+ProtectHostname=true
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+CapabilityBoundingSet=
+AmbientCapabilities=
+
+# Chỉ hai thư mục này được ghi
+ReadWritePaths=/var/www/aurix/server/data /var/backups/aurix
+
+# Trần tài nguyên — một tiến trình chạy loạn không kéo sập cả máy chủ
+LimitNOFILE=8192
+MemoryMax=512M
+
+[Install]
+WantedBy=multi-user.target
