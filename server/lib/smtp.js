@@ -66,6 +66,19 @@ function conversation(socket, timeoutMs) {
 const b64 = s => Buffer.from(String(s), 'utf8').toString('base64');
 
 /**
+ * Lấy địa chỉ trần từ chuỗi kiểu `Tên <a@b.com>`.
+ *
+ * Giao thức SMTP chỉ nhận địa chỉ trần trong `MAIL FROM:` và `RCPT TO:` (RFC 5321);
+ * đưa cả tên hiển thị vào sẽ thành `MAIL FROM:<Tên <a@b.com>>` và máy chủ trả
+ * `555 5.5.2 Syntax error`. Tên hiển thị thuộc về tiêu đề thư, không thuộc giao thức.
+ */
+const bareAddr = s => {
+  const v = String(s ?? '').trim();
+  const m = v.match(/<([^<>]+)>\s*$/);
+  return (m ? m[1] : v).trim();
+};
+
+/**
  * Gửi một email qua SMTP.
  * @param {object} cfg   { host, port, user, pass, secure, timeoutMs }
  * @param {object} mail  { from, fromName, to, subject, text, html, replyTo }
@@ -114,10 +127,10 @@ export async function smtpSend(cfg, mail) {
       }
     }
 
-    const fromAddr = mail.from || user;
+    const fromAddr = bareAddr(mail.from || user);
     await conv.cmd(`MAIL FROM:<${fromAddr}>`, [250]);
     for (const rcpt of [].concat(mail.to)) {
-      await conv.cmd(`RCPT TO:<${rcpt}>`, [250, 251]);
+      await conv.cmd(`RCPT TO:<${bareAddr(rcpt)}>`, [250, 251]);
     }
     await conv.cmd('DATA', [354]);
 
