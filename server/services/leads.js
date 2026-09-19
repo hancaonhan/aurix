@@ -5,8 +5,10 @@
  * phạm vi (nhân viên kinh doanh chỉ thấy khách được giao, trừ khi có quyền
  * rộng hơn), về vòng đời trạng thái, và về việc mọi thay đổi đều phải để lại
  * dấu vết kiểm toán.
+ *
+ * Mọi hàm chạm cơ sở dữ liệu ở đây **bất đồng bộ**. Nơi gọi phải `await`.
  */
-import db from '../db/index.js';
+import { all, one, run } from '../db/index.js';
 import { err } from '../core/errors.js';
 import { can } from '../security/rbac.js';
 
@@ -29,54 +31,63 @@ const SORTABLE = new Set(['created_at', 'updated_at', 'score', 'id', 'status']);
  * `leads.delete` (tức nhân viên kinh doanh) chỉ nhìn thấy khách chưa ai nhận
  * hoặc do chính mình phụ trách.
  */
-export function listLeads({
+export async function listLeads({
   limit = 50, offset = 0, status, source, industry, q,
   assignedTo, sort = 'created_at', dir = 'desc', viewer = null, scopeToViewer = false
 } = {}) {
   const where = [];
   const args = [];
+  /* Postgres đánh số tham số nên phải cấp số theo thứ tự thêm vào. Hàm này trả
+     về `$n` tiếp theo và đẩy giá trị vào mảng — giữ hai thứ luôn khớp nhau. */
+  const p = v => { args.push(v); return '$' + args.length; };
 
-  if (status && isStatus(status)) { where.push('l.status = ?'); args.push(status); }
-  if (source) { where.push('l.source = ?'); args.push(source); }
-  if (industry) { where.push('l.industry = ?'); args.push(industry); }
+  if (status && isStatus(status)) where.push(`l.status = ${p(status)}`);
+  if (source) where.push(`l.source = ${p(source)}`);
+  if (industry) where.push(`l.industry = ${p(industry)}`);
   if (assignedTo === 'none') where.push('l.assigned_to IS NULL');
-  else if (assignedTo) { where.push('l.assigned_to = ?'); args.push(Number(assignedTo)); }
+  else if (assignedTo) where.push(`l.assigned_to = ${p(Number(assignedTo))}`);
 
   if (q) {
-    where.push('(l.name LIKE ? OR l.phone LIKE ? OR l.email LIKE ? OR l.company LIKE ?)');
-    const like = `%${String(q).slice(0, 80)}%`;
-    args.push(like, like, like, like);
+    /* ILIKE, không phải LIKE: `LIKE` của SQLite không phân biệt hoa thường với
+       ký tự ASCII, còn của Postgres thì phân biệt. Dùng LIKE ở đây sẽ làm ô tìm
+       kiếm im lặng bỏ sót kết quả — một thay đổi hành vi rất khó nhận ra. */
+    const like = p(`%${String(q).slice(0, 80)}%`);
+    where.push(`(l.name ILIKE ${like} OR l.phone ILIKE ${like} OR l.email ILIKE ${like} OR l.company ILIKE ${like})`);
   }
 
   if (scopeToViewer && viewer) {
-    where.push('(l.assigned_to = ? OR l.assigned_to IS NULL)');
-    args.push(viewer.id);
+    where.push(`(l.assigned_to = ${p(viewer.id)} OR l.assigned_to IS NULL)`);
   }
 
   const clause = where.length ? 'WHERE ' + where.join(' AND ') : '';
   const orderCol = SORTABLE.has(sort) ? sort : 'created_at';
   const orderDir = String(dir).toLowerCase() === 'asc' ? 'ASC' : 'DESC';
 
-  const rows = db.prepare(`
-    SELECT l.*, u.name AS assignee_name
-    FROM leads l LEFT JOIN users u ON u.id = l.assigned_to
-    ${clause}
-    ORDER BY l.${orderCol} ${orderDir}
-    LIMIT ? OFFSET ?
-  `).all(...args, Math.min(Number(limit) || 50, 500), Number(offset) || 0);
+  const lim = p(Math.min(Number(limit) || 50, 500));
+  const off = p(Number(offset) || 0);
 
-  const total = db.prepare(`SELECT COUNT(*) c FROM leads l ${clause}`).get(...args).c;
+  const [rows, total] = await Promise.all([
+    all(`
+      SELECT l.*, u.name AS assignee_name
+      FROM leads l LEFT JOIN users u ON u.id = l.assigned_to
+      ${clause}
+      ORDER BY l.${orderCol} ${orderDir}
+      LIMIT ${lim} OFFSET ${off}
+    `, args),
+    // Bỏ hai tham số cuối (LIMIT/OFFSET) vì câu đếm không dùng tới chúng.
+    one(`SELECT COUNT(*) c FROM leads l ${clause}`, args.slice(0, -2))
+  ]);
 
-  return { rows: rows.map(shape), total, limit: Number(limit), offset: Number(offset) };
+  return { rows: rows.map(shape), total: total.c, limit: Number(limit), offset: Number(offset) };
 }
 
-export function getLead(id) {
-  const row = db.prepare(`
+export async function getLead(id) {
+  const row = await one(`
     SELECT l.*, u.name AS assignee_name
-    FROM leads l LEFT JOIN users u ON u.id = l.assigned_to WHERE l.id = ?
-  `).get(Number(id));
+    FROM leads l LEFT JOIN users u ON u.id = l.assigned_to WHERE l.id = $1
+  `, [Number(id)]);
   if (!row) throw err.notFound('Không tìm thấy khách tiềm năng này.');
-  return { ...shape(row), notes: listNotes(row.id) };
+  return { ...shape(row), notes: await listNotes(row.id) };
 }
 
 /** Chỉ người phụ trách, hoặc người có quyền xoá (quản trị trở lên), mới sửa được. */
@@ -87,54 +98,53 @@ export function assertCanEdit(lead, viewer) {
   }
 }
 
-export function setStatus(id, status) {
+export async function setStatus(id, status) {
   if (!isStatus(status)) throw err.validation('Trạng thái không hợp lệ.');
-  const r = db.prepare(`UPDATE leads SET status = ?, updated_at = datetime('now') WHERE id = ?`)
-    .run(status, Number(id));
-  if (!r.changes) throw err.notFound('Không tìm thấy khách tiềm năng này.');
+  const n = await run(`UPDATE leads SET status = $1, updated_at = now() WHERE id = $2`, [status, Number(id)]);
+  if (!n) throw err.notFound('Không tìm thấy khách tiềm năng này.');
 }
 
-export function assign(id, userId) {
+export async function assign(id, userId) {
   if (userId !== null) {
-    const u = db.prepare(`SELECT id FROM users WHERE id = ? AND active = 1`).get(Number(userId));
+    const u = await one(`SELECT id FROM users WHERE id = $1 AND active`, [Number(userId)]);
     if (!u) throw err.validation('Người phụ trách không tồn tại hoặc đã bị khoá.');
   }
-  const r = db.prepare(`UPDATE leads SET assigned_to = ?, updated_at = datetime('now') WHERE id = ?`)
-    .run(userId === null ? null : Number(userId), Number(id));
-  if (!r.changes) throw err.notFound('Không tìm thấy khách tiềm năng này.');
+  const n = await run(`UPDATE leads SET assigned_to = $1, updated_at = now() WHERE id = $2`,
+    [userId === null ? null : Number(userId), Number(id)]);
+  if (!n) throw err.notFound('Không tìm thấy khách tiềm năng này.');
 }
 
-export function setValue(id, valueVnd) {
+export async function setValue(id, valueVnd) {
   const v = Number(valueVnd);
   if (!Number.isFinite(v) || v < 0 || v > 1e12) throw err.validation('Giá trị hợp đồng không hợp lệ.');
-  db.prepare(`UPDATE leads SET value_vnd = ?, updated_at = datetime('now') WHERE id = ?`)
-    .run(Math.round(v), Number(id));
+  await run(`UPDATE leads SET value_vnd = $1, updated_at = now() WHERE id = $2`, [Math.round(v), Number(id)]);
 }
 
-export function deleteLead(id) {
-  const r = db.prepare(`DELETE FROM leads WHERE id = ?`).run(Number(id));
-  if (!r.changes) throw err.notFound('Không tìm thấy khách tiềm năng này.');
+export async function deleteLead(id) {
+  const n = await run(`DELETE FROM leads WHERE id = $1`, [Number(id)]);
+  if (!n) throw err.notFound('Không tìm thấy khách tiềm năng này.');
 }
 
 /* ---------- Ghi chú ---------- */
-export function addNote(leadId, { body, author }) {
+export async function addNote(leadId, { body, author }) {
   const text = String(body || '').trim().slice(0, 4000);
   if (text.length < 2) throw err.validation('Ghi chú quá ngắn.');
-  const r = db.prepare(`
-    INSERT INTO lead_notes (lead_id, author_id, author_name, body) VALUES (?, ?, ?, ?)
-  `).run(Number(leadId), author?.id ?? null, author?.name ?? null, text);
-  db.prepare(`UPDATE leads SET updated_at = datetime('now') WHERE id = ?`).run(Number(leadId));
-  return Number(r.lastInsertRowid);
+  const r = await one(`
+    INSERT INTO lead_notes (lead_id, author_id, author_name, body) VALUES ($1, $2, $3, $4)
+    RETURNING id
+  `, [Number(leadId), author?.id ?? null, author?.name ?? null, text]);
+  await run(`UPDATE leads SET updated_at = now() WHERE id = $1`, [Number(leadId)]);
+  return r.id;
 }
 
 export const listNotes = leadId =>
-  db.prepare(`SELECT id, created_at, author_name, body FROM lead_notes WHERE lead_id = ? ORDER BY id DESC`)
-    .all(Number(leadId));
+  all(`SELECT id, created_at, author_name, body FROM lead_notes WHERE lead_id = $1 ORDER BY id DESC`,
+    [Number(leadId)]);
 
 /* ---------- Kết xuất ---------- */
 /** CSV có BOM UTF-8 để Excel bản tiếng Việt mở không bị vỡ dấu. */
-export function exportCsv(filters = {}) {
-  const { rows } = listLeads({ ...filters, limit: 5000, offset: 0 });
+export async function exportCsv(filters = {}) {
+  const { rows } = await listLeads({ ...filters, limit: 5000, offset: 0 });
   const cols = ['id', 'createdAt', 'name', 'phone', 'email', 'company', 'industry', 'service',
     'source', 'status', 'score', 'tier', 'assigneeName', 'valueVnd', 'message'];
   const head = ['Mã', 'Thời điểm', 'Họ tên', 'Điện thoại', 'Email', 'Công ty', 'Ngành', 'Dịch vụ',
@@ -153,24 +163,42 @@ export function exportCsv(filters = {}) {
 }
 
 /* ---------- Số liệu tổng quan ---------- */
-export function summary() {
-  const one = sql => db.prepare(sql).get();
+export async function summary() {
+  /* Tám phép đếm một dòng gộp vào một lần đi mạng. Với CSDL ở xa, tách ra thành
+     tám lượt sẽ cộng dồn gần một giây chỉ để mở trang tổng quan. */
+  const [s, byStatus, bySource, byIndustry, daily] = await Promise.all([
+    one(`
+      SELECT
+        (SELECT COUNT(*) FROM leads)                                                AS leads_total,
+        (SELECT COUNT(*) FROM leads WHERE created_at::date = current_date)          AS leads_today,
+        (SELECT COUNT(*) FROM leads WHERE created_at >= now() - interval '7 days')  AS leads_7d,
+        (SELECT COUNT(*) FROM leads WHERE created_at >= now() - interval '30 days') AS leads_30d,
+        (SELECT COUNT(*) FROM leads WHERE status='won')                             AS won,
+        (SELECT COALESCE(SUM(value_vnd),0) FROM leads WHERE status='won')           AS won_value,
+        (SELECT COUNT(*) FROM diagnostics)                                          AS diagnostics,
+        (SELECT ROUND(AVG(overall),1) FROM diagnostics)                             AS avg_score
+    `),
+    all(`SELECT status, COUNT(*) c FROM leads GROUP BY status`),
+    all(`SELECT source, COUNT(*) c FROM leads GROUP BY source ORDER BY c DESC`),
+    all(`SELECT industry, COUNT(*) c FROM leads WHERE industry IS NOT NULL GROUP BY industry ORDER BY c DESC LIMIT 10`),
+    all(`
+      SELECT created_at::date AS d, COUNT(*) c FROM leads
+      WHERE created_at >= now() - interval '30 days' GROUP BY d ORDER BY d
+    `)
+  ]);
+
   return {
-    leadsTotal: one(`SELECT COUNT(*) c FROM leads`).c,
-    leadsToday: one(`SELECT COUNT(*) c FROM leads WHERE date(created_at) = date('now')`).c,
-    leads7d: one(`SELECT COUNT(*) c FROM leads WHERE created_at >= datetime('now','-7 days')`).c,
-    leads30d: one(`SELECT COUNT(*) c FROM leads WHERE created_at >= datetime('now','-30 days')`).c,
-    won: one(`SELECT COUNT(*) c FROM leads WHERE status='won'`).c,
-    wonValue: one(`SELECT COALESCE(SUM(value_vnd),0) v FROM leads WHERE status='won'`).v,
-    diagnostics: one(`SELECT COUNT(*) c FROM diagnostics`).c,
-    avgScore: one(`SELECT ROUND(AVG(overall),1) a FROM diagnostics`).a,
-    byStatus: db.prepare(`SELECT status, COUNT(*) c FROM leads GROUP BY status`).all(),
-    bySource: db.prepare(`SELECT source, COUNT(*) c FROM leads GROUP BY source ORDER BY c DESC`).all(),
-    byIndustry: db.prepare(`SELECT industry, COUNT(*) c FROM leads WHERE industry IS NOT NULL GROUP BY industry ORDER BY c DESC LIMIT 10`).all(),
-    daily: db.prepare(`
-      SELECT date(created_at) d, COUNT(*) c FROM leads
-      WHERE created_at >= datetime('now','-30 days') GROUP BY d ORDER BY d
-    `).all()
+    leadsTotal: s.leads_total,
+    leadsToday: s.leads_today,
+    leads7d: s.leads_7d,
+    leads30d: s.leads_30d,
+    won: s.won,
+    wonValue: s.won_value,
+    diagnostics: s.diagnostics,
+    avgScore: s.avg_score,
+    byStatus, bySource, byIndustry,
+    // `created_at::date` về dưới dạng Date; bảng điều khiển cần chuỗi YYYY-MM-DD.
+    daily: daily.map(r => ({ d: String(r.d).slice(0, 10), c: r.c }))
   };
 }
 

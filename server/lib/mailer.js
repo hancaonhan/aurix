@@ -74,7 +74,7 @@ const row = (k, v) => v
 /* ==========================================================================
    1. Thông báo nội bộ khi có khách mới
    ========================================================================== */
-export function queueLeadNotification(lead, id, { inbox } = {}) {
+export async function queueLeadNotification(lead, id, { inbox } = {}) {
   const dx = lead.score != null
     ? `<tr><td style="padding:7px 0;color:#7E8CA3;font-size:13px;">Điểm chẩn đoán</td><td style="padding:7px 0;"><b style="color:#E8C468;font-size:18px;">${lead.score}/100</b></td></tr>`
     : '';
@@ -111,7 +111,7 @@ export function queueLeadNotification(lead, id, { inbox } = {}) {
     lead.message ? `\nNội dung:\n${lead.message}` : ''
   ].filter(Boolean).join('\n');
 
-  return queueMail({
+  return await queueMail({
     kind: 'lead_notification',
     to: inbox || MAIL_TO,
     replyTo: lead.email,
@@ -125,7 +125,7 @@ export function queueLeadNotification(lead, id, { inbox } = {}) {
 /* ==========================================================================
    2. Báo cáo chẩn đoán gửi cho khách
    ========================================================================== */
-export function queueDiagnosticReport(lead, id, result) {
+export async function queueDiagnosticReport(lead, id, result) {
   if (!result) return null;
 
   const bars = result.layers.map(l => {
@@ -199,7 +199,7 @@ export function queueDiagnosticReport(lead, id, result) {
     `Đặt lịch chẩn đoán trực tiếp: ${site.origin}/lien-he/`
   ].filter(Boolean).join('\n');
 
-  return queueMail({
+  return await queueMail({
     kind: 'diagnostic_report',
     to: lead.email,
     replyTo: MAIL_TO,
@@ -219,11 +219,11 @@ export async function drainOutbox() {
   if (running) return;
   running = true;
   try {
-    const batch = dueMail(10);
+    const batch = await dueMail(10);
     for (const m of batch) {
       if (!mailEnabled) {
         console.log(`  [thư · chế độ nháp] ${m.kind} → ${m.recipient} · "${m.subject}"`);
-        markMailSent(m.id);
+        await markMailSent(m.id);
         continue;
       }
       try {
@@ -236,11 +236,11 @@ export async function drainOutbox() {
           html: m.html,
           text: m.text
         });
-        markMailSent(m.id);
+        await markMailSent(m.id);
         console.log(`  [thư] đã gửi ${m.kind} → ${m.recipient}`);
       } catch (err) {
         const attempts = m.attempts + 1;
-        markMailFailed(m.id, attempts, err.message);
+        await markMailFailed(m.id, attempts, err.message);
         console.error(`  [thư] lỗi lần ${attempts} — ${m.kind} → ${m.recipient}: ${err.message}`);
       }
     }

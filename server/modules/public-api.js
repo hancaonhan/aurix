@@ -10,7 +10,7 @@ import { scoreDiagnostic } from '../lib/scoring.js';
 import { saveLead, saveDiagnostic, logEvent } from '../lib/db.js';
 import { queueLeadNotification, queueDiagnosticReport, drainOutbox } from '../lib/mailer.js';
 import { publicSettings, getSetting } from '../services/settings.js';
-import { schemaStatus } from '../db/index.js';
+import { SCHEMA_VERSION } from '../db/index.js';
 import { err } from '../core/errors.js';
 import config from '../core/config.js';
 
@@ -31,7 +31,7 @@ export function register(router) {
   router.get('/api/health', ctx => ctx.json(200, {
     ok: true,
     uptime: Math.round(process.uptime()),
-    schema: schemaStatus().latest
+    schema: SCHEMA_VERSION
   }));
 
   /* ---------- Tham số site cho frontend ---------- */
@@ -49,7 +49,7 @@ export function register(router) {
     const result = scoreDiagnostic(answers, { leakCapPercent: getSetting('diagnostic.leakCapPercent') });
 
     try {
-      saveDiagnostic({
+      await saveDiagnostic({
         industry: result.industry,
         revenue: Number(answers.revenue) || null,
         overall: result.overall,
@@ -76,28 +76,28 @@ export function register(router) {
 
     // Bot rơi vào bẫy trường ẩn: trả về như thành công để không lộ cơ chế.
     if (v.spam) {
-      logEvent('spam_blocked', { ipHash: ctx.ipHash });
+      await logEvent('spam_blocked', { ipHash: ctx.ipHash });
       return ctx.json(200, { ok: true, message: 'Đã nhận.' });
     }
     if (!v.ok) throw err.validation(v.errors[0]);
 
     let id;
     try {
-      id = saveLead({ ...v.value, ipHash: ctx.ipHash, userAgent: ctx.userAgent });
+      id = await saveLead({ ...v.value, ipHash: ctx.ipHash, userAgent: ctx.userAgent });
     } catch (e) {
       ctx.log.error('Không lưu được khách tiềm năng', { error: e.message });
       throw err.internal({ stage: 'saveLead' });
     }
 
     ctx.log.info('Khách tiềm năng mới', { id, source: v.value.source });
-    logEvent('lead_created', { id, source: v.value.source });
+    await logEvent('lead_created', { id, source: v.value.source });
 
     // Thư chỉ được xếp vào hàng đợi ở đây; một tiến trình nền lo việc gửi.
     try {
-      queueLeadNotification(v.value, id, { inbox: getSetting('lead.notifyInbox') });
+      await queueLeadNotification(v.value, id, { inbox: getSetting('lead.notifyInbox') });
       const cached = recentDiagnostics.get(ctx.ipHash);
       if (v.value.source === 'diagnostic' && cached && getSetting('lead.autoReply')) {
-        queueDiagnosticReport(v.value, id, cached.result);
+        await queueDiagnosticReport(v.value, id, cached.result);
       }
     } catch (e) {
       ctx.log.error('Không xếp được thư vào hàng đợi', { error: e.message });
@@ -118,6 +118,6 @@ export function register(router) {
     ok: true,
     name: 'aurix-backend',
     env: config.env,
-    schema: schemaStatus().latest
+    schema: SCHEMA_VERSION
   }));
 }

@@ -13,7 +13,6 @@
     "build": "node scripts/build.js",
     "audit": "node scripts/audit.js",
     "check": "node scripts/build.js && node scripts/audit.js && node server/cli.js doctor",
-
     "cli": "node server/cli.js",
     "doctor": "node server/cli.js doctor",
     "migrate": "node server/cli.js migrate",
@@ -22,12 +21,14 @@
     "user:create": "node server/cli.js user:create",
     "user:list": "node server/cli.js user:list",
     "audit:tail": "node server/cli.js audit:tail",
-
     "assets": "node scripts/fonts.js && node scripts/images.js",
     "images": "node scripts/images.js",
     "fonts": "node scripts/fonts.js"
   },
   "devDependencies": {
     "sharp": "^0.35.4"
+  },
+  "dependencies": {
+    "pg": "^8.23.0"
   }
 }

@@ -41,7 +41,7 @@ export function register(router) {
       throw e;
     }
 
-    const { cookie, csrfToken } = createSession({
+    const { cookie, csrfToken } = await createSession({
       userId: user.id, ipHash: ctx.ipHash, userAgent: ctx.userAgent
     });
 
@@ -57,9 +57,9 @@ export function register(router) {
   }, { rateLimit: 'login', rateLimitKey: '/api/auth/login', csrf: false });
 
   /* ---------- Đăng xuất ---------- */
-  router.post('/api/auth/logout', ctx => {
+  router.post('/api/auth/logout', async ctx => {
     if (ctx.session) {
-      destroySession(ctx.session.id);
+      await destroySession(ctx.session.id);
       audit({ actor: ctx.user, action: 'auth.logout', ipHash: ctx.ipHash });
     }
     return ctx.json(200, { ok: true }, { 'Set-Cookie': clearCookie() });
@@ -68,13 +68,13 @@ export function register(router) {
   /* ---------- Tôi là ai ---------- *
    * Giao diện gọi tuyến này lúc tải để biết đang đăng nhập bằng tài khoản nào
    * và được phép nhìn thấy những mục nào trên thanh điều hướng.             */
-  router.get('/api/auth/me', ctx => {
+  router.get('/api/auth/me', async ctx => {
     if (!ctx.user) return ctx.json(200, { ok: true, user: null });
     return ctx.json(200, {
       ok: true,
       user: profile(ctx.user),
       csrfToken: ctx.session?.csrfToken ?? null,
-      sessions: listUserSessions(ctx.user.id).length
+      sessions: (await listUserSessions(ctx.user.id)).length
     });
   }, { allowPasswordChange: true });
 
@@ -82,7 +82,7 @@ export function register(router) {
   router.post('/api/auth/password', async ctx => {
     const { currentPassword, newPassword } = await ctx.body();
 
-    const row = getUserByEmail(ctx.user.email);
+    const row = await getUserByEmail(ctx.user.email);
     const ok = await verifyPassword(String(currentPassword || ''), row.password_hash);
     if (!ok) {
       audit({ actor: ctx.user, action: 'auth.password.change', ipHash: ctx.ipHash, result: 'denied' });
@@ -97,21 +97,21 @@ export function register(router) {
 
     // setPassword đã huỷ mọi phiên — cấp lại phiên mới cho thiết bị hiện tại để
     // người dùng không bị đá ra ngay giữa chừng.
-    const { cookie, csrfToken } = createSession({
+    const { cookie, csrfToken } = await createSession({
       userId: ctx.user.id, ipHash: ctx.ipHash, userAgent: ctx.userAgent
     });
 
     return ctx.json(200, {
       ok: true,
       message: 'Đã đổi mật khẩu. Mọi thiết bị khác đã bị đăng xuất.',
-      user: profile(getUser(ctx.user.id)),
+      user: profile(await getUser(ctx.user.id)),
       csrfToken
     }, { 'Set-Cookie': cookie });
   }, { auth: true, allowPasswordChange: true, rateLimit: 'login' });
 
   /* ---------- Đăng xuất khỏi mọi thiết bị ---------- */
-  router.post('/api/auth/logout-all', ctx => {
-    destroyUserSessions(ctx.user.id);
+  router.post('/api/auth/logout-all', async ctx => {
+    await destroyUserSessions(ctx.user.id);
     audit({ actor: ctx.user, action: 'auth.logout.all', ipHash: ctx.ipHash });
     return ctx.json(200, { ok: true }, { 'Set-Cookie': clearCookie() });
   }, { auth: true, allowPasswordChange: true });

@@ -55,7 +55,7 @@ export async function guard(ctx, options = {}) {
   }
 
   /* ---------- Phiên đăng nhập ---------- */
-  const session = readSession(ctx.req.headers.cookie, { userAgent: ctx.userAgent });
+  const session = await readSession(ctx.req.headers.cookie, { userAgent: ctx.userAgent });
   if (session) {
     ctx.session = session;
     ctx.user = session.user;

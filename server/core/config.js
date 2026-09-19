@@ -87,8 +87,31 @@ export const config = {
   /** Số lớp reverse proxy đáng tin phía trước. 0 = không tin x-forwarded-for. */
   trustProxy: num('AURIX_TRUST_PROXY', 1),
 
-  /* --- Lưu trữ --- */
-  dbPath: str('AURIX_DB', join(ROOT, 'server', 'data', 'aurix.db')),
+  /* --- Cơ sở dữ liệu --- */
+  /**
+   * Chuỗi kết nối PostgreSQL. Vibe Host tự tiêm `DATABASE_URL` vào container
+   * (và `POSTGRES_URL` làm tên thứ hai), nên production không cần khai gì; ở máy
+   * phát triển thì đặt trong `.env`.
+   */
+  databaseUrl: str('DATABASE_URL') || str('POSTGRES_URL'),
+  /**
+   * Bật TLS khi nối tới CSDL. **Mặc định tắt** vì endpoint PostgreSQL của Vibe
+   * Host không hỗ trợ TLS — bật lên sẽ nhận `The server does not support SSL
+   * connections` và máy chủ không khởi động được.
+   *
+   * Không tắt TLS ở đây là hạ bảo mật: trong cụm Vibe Host, website và CSDL nói
+   * chuyện qua mạng nội bộ nên lưu lượng không ra Internet. Nhưng khi nối từ
+   * ngoài qua `n1.tinhgon.xyz` thì đường truyền **không mã hoá** — chỉ dùng để
+   * phát triển, và nhớ tắt "Truy cập từ bên ngoài" khi xong.
+   *
+   * Đổi CSDL sang nhà cung cấp có TLS (Neon, Supabase, RDS…) thì đặt
+   * `AURIX_DB_SSL=true`.
+   */
+  dbSsl: bool('AURIX_DB_SSL', false),
+  /** Số kết nối tối đa trong pool. Vibe Host giới hạn 100 cho cả instance. */
+  dbPoolMax: num('AURIX_DB_POOL', 10),
+
+  /* --- Lưu trữ tệp --- */
   backupDir: str('AURIX_BACKUP_DIR', join(ROOT, 'server', 'data', 'backups')),
 
   /* --- Bảo mật --- */
@@ -143,6 +166,9 @@ export const config = {
 /** Kiểm tra cấu hình trước khi mở cổng. Trả về danh sách cảnh báo. */
 export function auditConfig() {
   const warn = [];
+  if (!config.databaseUrl) {
+    warn.push('DATABASE_URL chưa đặt — máy chủ không nối được cơ sở dữ liệu và sẽ không khởi động.');
+  }
   if (config.isProd) {
     if (!config.origin.startsWith('https://')) warn.push('AURIX_ORIGIN nên dùng https ở môi trường thật.');
     if (!config.mail.enabled) warn.push('Chưa cấu hình SMTP — thư thông báo khách tiềm năng sẽ nằm lại trong hàng đợi.');

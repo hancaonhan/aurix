@@ -2,8 +2,8 @@ node_modules/
 
 # Bí mật — không bao giờ đưa lên kho mã
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
 
 # Dữ liệu chạy thật
 server/data/*.db

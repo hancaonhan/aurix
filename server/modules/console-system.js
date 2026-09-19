@@ -1,12 +1,12 @@
 /**
  * Số liệu, cấu hình site, hàng đợi thư, nhật ký kiểm toán, trạng thái hệ thống.
  */
-import { statSync } from 'node:fs';
 import * as leadsService from '../services/leads.js';
 import { listAudit } from '../services/audit.js';
 import { audit } from '../services/audit.js';
 import { grouped, setSettings, allSettings } from '../services/settings.js';
-import { mailStats, db } from '../lib/db.js';
+import { mailStats } from '../lib/db.js';
+import { all, one, run } from '../db/index.js';
 import { mailEnabled, drainOutbox } from '../lib/mailer.js';
 import { schemaStatus } from '../db/index.js';
 import { size as rateLimitSize } from '../security/ratelimit.js';
@@ -16,21 +16,23 @@ import { liveIndustries } from '../../site/data/content.js';
 
 export function register(router) {
   /* ---------- Bảng số liệu ---------- */
-  router.get('/api/console/stats', ctx => ctx.json(200, {
+  router.get('/api/console/stats', async ctx => ctx.json(200, {
     ok: true,
-    summary: leadsService.summary(),
+    summary: await leadsService.summary(),
     industries: liveIndustries().map(i => ({ key: i.key, label: i.label }))
   }), { permission: 'stats.read', rateLimit: 'api' });
 
   /* ---------- Kết quả chẩn đoán ---------- */
-  router.get('/api/console/diagnostics', ctx => {
+  router.get('/api/console/diagnostics', async ctx => {
     const limit = Math.min(Number(ctx.query.limit) || 50, 500);
-    const rows = db.prepare(`
-      SELECT id, created_at, industry, revenue, overall, tier, leak_month
-      FROM diagnostics ORDER BY id DESC LIMIT ? OFFSET ?
-    `).all(limit, Number(ctx.query.offset) || 0);
-    const total = db.prepare(`SELECT COUNT(*) c FROM diagnostics`).get().c;
-    return ctx.json(200, { ok: true, rows, total });
+    const [rows, total] = await Promise.all([
+      all(`
+        SELECT id, created_at, industry, revenue, overall, tier, leak_month
+        FROM diagnostics ORDER BY id DESC LIMIT $1 OFFSET $2
+      `, [limit, Number(ctx.query.offset) || 0]),
+      one(`SELECT COUNT(*) c FROM diagnostics`)
+    ]);
+    return ctx.json(200, { ok: true, rows, total: total.c });
   }, { permission: 'diagnostics.read' });
 
   /* ---------- Cấu hình site ---------- */
@@ -39,8 +41,10 @@ export function register(router) {
 
   router.put('/api/console/settings', async ctx => {
     const patch = await ctx.body();
+    /* `allSettings()` trả về đối tượng đệm; `setSettings` nạp lại đệm thành một
+       đối tượng MỚI, nên `before` vẫn giữ nguyên giá trị cũ để so sánh. */
     const before = allSettings();
-    const after = setSettings(patch, ctx.user.id);
+    const after = await setSettings(patch, ctx.user.id);
 
     // Ghi lại đúng những khoá đã thực sự đổi giá trị, kèm giá trị cũ — đây là
     // thứ cần có khi ai đó hỏi "hôm qua ai tắt lớp cá nhân hoá".
@@ -54,28 +58,31 @@ export function register(router) {
   }, { permission: 'settings.write' });
 
   /* ---------- Hàng đợi thư ---------- */
-  router.get('/api/console/mail', ctx => {
-    const rows = db.prepare(`
-      SELECT id, created_at, kind, recipient, subject, status, attempts, last_error, sent_at
-      FROM outbox ORDER BY id DESC LIMIT 100
-    `).all();
-    return ctx.json(200, { ok: true, enabled: mailEnabled, stats: mailStats(), rows });
+  router.get('/api/console/mail', async ctx => {
+    const [rows, stats] = await Promise.all([
+      all(`
+        SELECT id, created_at, kind, recipient, subject, status, attempts, last_error, sent_at
+        FROM outbox ORDER BY id DESC LIMIT 100
+      `),
+      mailStats()
+    ]);
+    return ctx.json(200, { ok: true, enabled: mailEnabled, stats, rows });
   }, { permission: 'mail.read' });
 
   router.post('/api/console/mail/retry', async ctx => {
     // Đưa mọi thư đã bỏ cuộc trở lại hàng đợi rồi đẩy ngay một lượt.
-    const r = db.prepare(`
-      UPDATE outbox SET status='pending', attempts=0, next_try_at=datetime('now') WHERE status='failed'
-    `).run();
-    audit({ actor: ctx.user, action: 'mail.retry', detail: { count: Number(r.changes || 0) }, ipHash: ctx.ipHash });
+    const requeued = await run(`
+      UPDATE outbox SET status='pending', attempts=0, next_try_at=now() WHERE status='failed'
+    `) || 0;
+    audit({ actor: ctx.user, action: 'mail.retry', detail: { count: requeued }, ipHash: ctx.ipHash });
     await drainOutbox().catch(() => {});
-    return ctx.json(200, { ok: true, requeued: Number(r.changes || 0), stats: mailStats() });
+    return ctx.json(200, { ok: true, requeued, stats: await mailStats() });
   }, { permission: 'mail.retry' });
 
   /* ---------- Nhật ký kiểm toán ---------- */
-  router.get('/api/console/audit', ctx => ctx.json(200, {
+  router.get('/api/console/audit', async ctx => ctx.json(200, {
     ok: true,
-    rows: listAudit({
+    rows: await listAudit({
       limit: Math.min(Number(ctx.query.limit) || 200, 1000),
       offset: Number(ctx.query.offset) || 0,
       action: ctx.query.action,
@@ -87,9 +94,20 @@ export function register(router) {
    * Chỉ mở cho quyền `system.read`: những con số ở đây (đường dẫn tệp, kích
    * thước cơ sở dữ liệu) có ích cho người vận hành và cũng có ích cho kẻ tấn
    * công, nên không bao giờ nằm ở điểm cuối công khai.                       */
-  router.get('/api/console/system', ctx => {
+  router.get('/api/console/system', async ctx => {
+    /* Kích thước cơ sở dữ liệu giờ hỏi chính Postgres, không còn đo tệp trên
+       đĩa — CSDL nằm ở một dịch vụ khác, máy chủ web không thấy tệp nào. */
     let dbSize = null;
-    try { dbSize = statSync(config.dbPath).size; } catch { /* chưa có tệp */ }
+    let dbHost = null;
+    try {
+      const r = await one(`
+        SELECT pg_database_size(current_database()) AS bytes,
+               inet_server_addr()::text AS host,
+               current_setting('server_version') AS version
+      `);
+      dbSize = r.bytes;
+      dbHost = { host: r.host, version: r.version };
+    } catch { /* không nối được CSDL */ }
 
     const mem = process.memoryUsage();
     return ctx.json(200, {
@@ -99,12 +117,12 @@ export function register(router) {
         node: process.version,
         uptimeSeconds: Math.round(process.uptime()),
         memoryMb: Math.round(mem.rss / 1048576),
-        dbPath: config.dbPath,
+        database: dbHost,
         dbSizeMb: dbSize === null ? null : Number((dbSize / 1048576).toFixed(2)),
-        schema: schemaStatus(),
+        schema: await schemaStatus(),
         rateLimitBuckets: rateLimitSize(),
         mailEnabled,
-        activeSessions: db.prepare(`SELECT COUNT(*) c FROM sessions WHERE expires_at > datetime('now')`).get().c,
+        activeSessions: (await one(`SELECT COUNT(*) c FROM sessions WHERE expires_at > now()`)).c,
         trustProxy: config.trustProxy,
         origin: config.origin
       }
@@ -112,8 +130,8 @@ export function register(router) {
   }, { permission: 'system.read' });
 
   /* ---------- Dọn dẹp thủ công ---------- */
-  router.post('/api/console/system/purge-sessions', ctx => {
-    const n = purgeExpiredSessions();
+  router.post('/api/console/system/purge-sessions', async ctx => {
+    const n = await purgeExpiredSessions();
     audit({ actor: ctx.user, action: 'system.purge.sessions', detail: { removed: n }, ipHash: ctx.ipHash });
     return ctx.json(200, { ok: true, removed: n });
   }, { permission: 'system.write' });

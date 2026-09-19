@@ -11,15 +11,23 @@ import { createServer } from 'node:http';
 import config, { auditConfig } from './core/config.js';
 import log from './core/logger.js';
 import { createHandler, router } from './app.js';
-import { migrate, schemaStatus } from './db/index.js';
+import { migrate, SCHEMA_VERSION, close as closeDb } from './db/index.js';
 import { countUsers } from './services/users.js';
+import { refreshOverlay } from '../site/lib/overlay.js';
 import { purgeExpiredSessions } from './security/session.js';
 import { startMailWorker, mailEnabled } from './lib/mailer.js';
 import { CONSOLE_PATH } from './modules/console.js';
 
-/* ---------- Kiểm tra trước khi mở cổng ---------- */
-migrate();
+/* ---------- Kiểm tra trước khi mở cổng ---------- *
+ * Lược đồ phải xong TRƯỚC khi nhận request đầu tiên, và lớp phủ nội dung phải
+ * được nạp trước khi dựng trang đầu tiên — `overlay()` đọc đồng bộ từ đệm nên
+ * đệm rỗng sẽ cho ra trang thiếu nội dung đã sửa. `await` cấp cao nhất dùng
+ * được vì Aurix là ESM.                                                     */
+await migrate();
+await refreshOverlay();
 for (const warning of auditConfig()) log.warn(warning);
+
+const users = await countUsers();
 
 const server = createServer(createHandler());
 
@@ -42,9 +50,9 @@ server.listen(config.port, config.host, () => {
     `Bảng điều khiển  ${url}${CONSOLE_PATH}`,
     '─'.repeat(52),
     `Môi trường       ${config.env}`,
-    `Lược đồ          v${schemaStatus().latest}`,
+    `Lược đồ          v${SCHEMA_VERSION}`,
     `Tuyến API        ${router.list().length}`,
-    `Tài khoản        ${countUsers()}${countUsers() ? '' : c.reset + '  ← chưa có ai! chạy: node server/cli.js user:create'}`,
+    `Tài khoản        ${users}${users ? '' : c.reset + '  ← chưa có ai! chạy: node server/cli.js user:create'}`,
     `Thư              ${mailEnabled ? 'SMTP đã cấu hình' : 'chế độ nháp (chưa có SMTP)'}`,
     '─'.repeat(52)
   ]);
@@ -53,8 +61,8 @@ server.listen(config.port, config.host, () => {
 });
 
 /* Dọn phiên hết hạn mỗi giờ. `unref` để tác vụ này không giữ tiến trình sống. */
-setInterval(() => {
-  const removed = purgeExpiredSessions();
+setInterval(async () => {
+  const removed = await purgeExpiredSessions();
   if (removed) log.debug('Đã dọn phiên hết hạn', { removed });
 }, 3600_000).unref();
 
@@ -67,7 +75,13 @@ for (const signal of ['SIGINT', 'SIGTERM']) {
     if (shuttingDown) process.exit(1);
     shuttingDown = true;
     log.info('Đang dừng máy chủ…');
-    server.close(() => { log.info('Đã dừng.'); process.exit(0); });
+    // Đóng pool sau khi request cuối đã xong: `pg` giữ socket mở nên không đóng
+    // thì tiến trình treo tới lúc bị giết cứng.
+    server.close(async () => {
+      await closeDb().catch(() => {});
+      log.info('Đã dừng.');
+      process.exit(0);
+    });
     setTimeout(() => process.exit(0), 8000).unref();
   });
 }

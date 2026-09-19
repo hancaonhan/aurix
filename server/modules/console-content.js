@@ -9,19 +9,19 @@ import { audit } from '../services/audit.js';
 
 export function register(router) {
   /* ---------- Danh mục ---------- */
-  router.get('/api/console/content', ctx =>
-    ctx.json(200, { ok: true, ...content.listCollections(), publish: content.publishState() }),
+  router.get('/api/console/content', async ctx =>
+    ctx.json(200, { ok: true, ...(await content.listCollections()), publish: await content.publishState() }),
     { permission: 'content.read', rateLimit: 'api' });
 
   /* ---------- Một bộ sưu tập ---------- */
-  router.get('/api/console/content/c/:key', ctx =>
-    ctx.json(200, { ok: true, ...content.listItems(ctx.params.key) }),
+  router.get('/api/console/content/c/:key', async ctx =>
+    ctx.json(200, { ok: true, ...await content.listItems(ctx.params.key) }),
     { permission: 'content.read' });
 
   /* ---------- Thêm mục ---------- */
   router.post('/api/console/content/c/:key', async ctx => {
     const { data } = await ctx.body();
-    const out = content.createItem(ctx.params.key, data, ctx.user.id);
+    const out = await content.createItem(ctx.params.key, data, ctx.user.id);
     audit({
       actor: ctx.user, action: 'content.create', target: `${ctx.params.key}:${data?.[out.idField]}`,
       ipHash: ctx.ipHash
@@ -34,7 +34,7 @@ export function register(router) {
    * ký, nếu đảo lại thì ':id' sẽ nuốt mất chữ 'order'.                       */
   router.put('/api/console/content/c/:key/order', async ctx => {
     const { ids } = await ctx.body();
-    const out = content.reorder(ctx.params.key, ids, ctx.user.id);
+    const out = await content.reorder(ctx.params.key, ids, ctx.user.id);
     audit({ actor: ctx.user, action: 'content.reorder', target: ctx.params.key, ipHash: ctx.ipHash });
     return ctx.json(200, { ok: true, ...out });
   }, { permission: 'content.write' });
@@ -42,7 +42,7 @@ export function register(router) {
   /* ---------- Sửa mục ---------- */
   router.put('/api/console/content/c/:key/:id', async ctx => {
     const { data } = await ctx.body();
-    const out = content.saveItem(ctx.params.key, ctx.params.id, data, ctx.user.id);
+    const out = await content.saveItem(ctx.params.key, ctx.params.id, data, ctx.user.id);
     audit({
       actor: ctx.user, action: 'content.update', target: `${ctx.params.key}:${ctx.params.id}`,
       ipHash: ctx.ipHash
@@ -51,8 +51,8 @@ export function register(router) {
   }, { permission: 'content.write' });
 
   /* ---------- Xoá mục ---------- */
-  router.delete('/api/console/content/c/:key/:id', ctx => {
-    const out = content.deleteItem(ctx.params.key, ctx.params.id, ctx.user.id);
+  router.delete('/api/console/content/c/:key/:id', async ctx => {
+    const out = await content.deleteItem(ctx.params.key, ctx.params.id, ctx.user.id);
     audit({
       actor: ctx.user, action: 'content.delete', target: `${ctx.params.key}:${ctx.params.id}`,
       ipHash: ctx.ipHash
@@ -61,8 +61,8 @@ export function register(router) {
   }, { permission: 'content.write' });
 
   /* ---------- Khôi phục bản gốc ---------- */
-  router.post('/api/console/content/c/:key/:id/restore', ctx => {
-    const out = content.restoreItem(ctx.params.key, ctx.params.id);
+  router.post('/api/console/content/c/:key/:id/restore', async ctx => {
+    const out = await content.restoreItem(ctx.params.key, ctx.params.id);
     audit({
       actor: ctx.user, action: 'content.restore', target: `${ctx.params.key}:${ctx.params.id}`,
       ipHash: ctx.ipHash
@@ -71,13 +71,13 @@ export function register(router) {
   }, { permission: 'content.write' });
 
   /* ---------- Đối tượng đơn lẻ ---------- */
-  router.get('/api/console/content/s/:key', ctx =>
-    ctx.json(200, { ok: true, ...content.getSingleton(ctx.params.key) }),
+  router.get('/api/console/content/s/:key', async ctx =>
+    ctx.json(200, { ok: true, ...await content.getSingleton(ctx.params.key) }),
     { permission: 'content.read' });
 
   router.put('/api/console/content/s/:key', async ctx => {
     const { data } = await ctx.body();
-    const out = content.saveSingleton(ctx.params.key, data, ctx.user.id);
+    const out = await content.saveSingleton(ctx.params.key, data, ctx.user.id);
     audit({ actor: ctx.user, action: 'content.update', target: `s:${ctx.params.key}`, ipHash: ctx.ipHash });
     return ctx.json(200, { ok: true, ...out });
   }, { permission: 'content.write' });

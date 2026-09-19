@@ -5,9 +5,11 @@ Viết tài liệu, comment, thông điệp lỗi và giao diện **bằng tiế
 
 ## Nguyên tắc bất di bất dịch
 
-1. **Không thêm phụ thuộc runtime.** Máy chủ chạy bằng thư viện chuẩn của Node
-   (`node:http`, `node:sqlite`, `node:crypto`, `node:zlib`). `sharp` là phụ thuộc
-   **chỉ dùng lúc dựng ảnh**. Đừng đề xuất Express, Prisma, React.
+1. **Hạn chế phụ thuộc runtime.** Máy chủ chạy bằng thư viện chuẩn của Node
+   (`node:http`, `node:crypto`, `node:zlib`) cộng **đúng một** phụ thuộc runtime:
+   `pg` để nói chuyện với PostgreSQL. `sharp` là phụ thuộc **chỉ dùng lúc dựng
+   ảnh**. Đừng đề xuất Express, Prisma, React, hay bất cứ gói nào khác.
+   `node:sqlite` đã bị bỏ — xem mục "Cơ sở dữ liệu" bên dưới.
 2. **Không sửa `public/*.html`** — sinh từ `site/` bằng `npm run build`, sửa là mất.
    `public/js/*.js` và `public/css/*.css` thì ngược lại: sửa trực tiếp.
 3. **Không sửa migration đã chạy** trong `server/db/migrations.js` — thêm mục mới.

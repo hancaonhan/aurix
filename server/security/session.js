@@ -7,14 +7,17 @@
  *
  * Bảo vệ đã cài:
  *   - mã phiên ngẫu nhiên 32 byte, cơ sở dữ liệu chỉ lưu **băm SHA-256**;
- *     lộ tệp .db cũng không mạo danh được phiên nào
+ *     lộ cơ sở dữ liệu cũng không mạo danh được phiên nào
  *   - cookie HttpOnly + SameSite=Lax + Secure (ở môi trường HTTPS), có chữ ký
  *     HMAC để loại sớm cookie rác mà không cần chạm cơ sở dữ liệu
  *   - mỗi phiên mang một mã CSRF riêng
  *   - phiên gắn với dấu vân tay trình duyệt; đổi User-Agent thì phiên bị huỷ
+ *
+ * Mọi hàm chạm cơ sở dữ liệu ở đây **bất đồng bộ**. `parseCookies` và
+ * `clearCookie` thì không — chúng chỉ xử lý chuỗi.
  */
 import { randomBytes, createHash, createHmac, timingSafeEqual } from 'node:crypto';
-import db from '../db/index.js';
+import { all, one, run } from '../db/index.js';
 import config from '../core/config.js';
 
 export const COOKIE_NAME = 'aurix_sid';
@@ -45,33 +48,34 @@ function serializeCookie(name, value, { maxAge, secure, expire = false } = {}) {
   return bits.join('; ');
 }
 
-/* ---------- Câu lệnh chuẩn bị sẵn ---------- */
-const stmtInsert = db.prepare(`
+/* ---------- Truy vấn ----------
+ * `now() + ($n || ' seconds')::interval` là cách Postgres nhận khoảng thời gian
+ * từ tham số: không nội suy chuỗi vào SQL nên không mở đường cho SQL injection.
+ */
+const SQL_INSERT = `
   INSERT INTO sessions (id, user_id, expires_at, csrf_token, ip_hash, user_agent)
-  VALUES (?, ?, datetime('now', ?), ?, ?, ?)
-`);
-const stmtFind = db.prepare(`
+  VALUES ($1, $2, now() + ($3 || ' seconds')::interval, $4, $5, $6)
+`;
+const SQL_FIND = `
   SELECT s.*, u.email, u.name AS user_name, u.role, u.active, u.must_change_pw
   FROM sessions s JOIN users u ON u.id = s.user_id
-  WHERE s.id = ? AND s.expires_at > datetime('now')
-`);
-const stmtTouch = db.prepare(`
-  UPDATE sessions SET last_seen = datetime('now'), expires_at = datetime('now', ?) WHERE id = ?
-`);
-const stmtDelete = db.prepare(`DELETE FROM sessions WHERE id = ?`);
-const stmtDeleteUser = db.prepare(`DELETE FROM sessions WHERE user_id = ?`);
+  WHERE s.id = $1 AND s.expires_at > now()
+`;
+const SQL_TOUCH = `
+  UPDATE sessions SET last_seen = now(), expires_at = now() + ($1 || ' seconds')::interval WHERE id = $2
+`;
 
 /**
  * Mở phiên mới.
  * @returns {{ cookie: string, csrfToken: string }} chuỗi Set-Cookie và mã CSRF
  */
-export function createSession({ userId, ipHash, userAgent }) {
+export async function createSession({ userId, ipHash, userAgent }) {
   const raw = randomBytes(32).toString('base64url');
   const id = sha256(raw);
   const csrfToken = randomBytes(24).toString('base64url');
   const ttl = config.security.sessionTtl;
 
-  stmtInsert.run(id, userId, `+${ttl} seconds`, csrfToken, ipHash || null, fingerprint(userAgent));
+  await run(SQL_INSERT, [id, userId, String(ttl), csrfToken, ipHash || null, fingerprint(userAgent)]);
 
   // Giá trị cookie = mã gốc + chữ ký. Chữ ký để loại cookie giả ngay ở tầng
   // HTTP, tiết kiệm một lượt truy vấn cơ sở dữ liệu cho mọi request rác.
@@ -83,7 +87,7 @@ export function createSession({ userId, ipHash, userAgent }) {
 }
 
 /** Đọc phiên từ header Cookie. Trả về null nếu không hợp lệ, hết hạn hoặc bị khoá. */
-export function readSession(cookieHeader, { userAgent } = {}) {
+export async function readSession(cookieHeader, { userAgent } = {}) {
   const raw = parseCookies(cookieHeader)[COOKIE_NAME];
   if (!raw) return null;
 
@@ -96,19 +100,19 @@ export function readSession(cookieHeader, { userAgent } = {}) {
   if (mac.length !== expected.length) return null;
   if (!timingSafeEqual(Buffer.from(mac), Buffer.from(expected))) return null;
 
-  const row = stmtFind.get(sha256(token));
+  const row = await one(SQL_FIND, [sha256(token)]);
   if (!row) return null;
-  if (!row.active) { stmtDeleteUser.run(row.user_id); return null; }
+  if (!row.active) { await destroyUserSessions(row.user_id); return null; }
 
   // Đổi trình duyệt giữa chừng là dấu hiệu cookie bị đánh cắp — huỷ phiên.
   if (row.user_agent && row.user_agent !== fingerprint(userAgent)) {
-    stmtDelete.run(row.id);
+    await destroySession(row.id);
     return null;
   }
 
   let refreshed = null;
   if (config.security.sessionRolling) {
-    stmtTouch.run(`+${config.security.sessionTtl} seconds`, row.id);
+    await run(SQL_TOUCH, [String(config.security.sessionTtl), row.id]);
     refreshed = serializeCookie(COOKIE_NAME, raw, {
       maxAge: config.security.sessionTtl, secure: config.security.secureCookies
     });
@@ -129,20 +133,20 @@ export function readSession(cookieHeader, { userAgent } = {}) {
   };
 }
 
-export function destroySession(sessionId) {
-  if (sessionId) stmtDelete.run(sessionId);
+export async function destroySession(sessionId) {
+  if (sessionId) await run(`DELETE FROM sessions WHERE id = $1`, [sessionId]);
 }
 
 /** Đăng xuất một tài khoản khỏi mọi thiết bị — dùng khi khoá hoặc đổi mật khẩu. */
-export function destroyUserSessions(userId) {
-  stmtDeleteUser.run(userId);
+export async function destroyUserSessions(userId) {
+  await run(`DELETE FROM sessions WHERE user_id = $1`, [userId]);
 }
 
 export function listUserSessions(userId) {
-  return db.prepare(`
+  return all(`
     SELECT id, created_at, last_seen, expires_at FROM sessions
-    WHERE user_id = ? AND expires_at > datetime('now') ORDER BY last_seen DESC
-  `).all(userId);
+    WHERE user_id = $1 AND expires_at > now() ORDER BY last_seen DESC
+  `, [userId]);
 }
 
 export const clearCookie = () =>
@@ -152,7 +156,6 @@ export const clearCookie = () =>
 const fingerprint = ua => (ua ? sha256(String(ua)).slice(0, 16) : null);
 
 /** Dọn phiên hết hạn. Gọi định kỳ từ server. */
-export function purgeExpiredSessions() {
-  const r = db.prepare(`DELETE FROM sessions WHERE expires_at <= datetime('now')`).run();
-  return Number(r.changes || 0);
+export async function purgeExpiredSessions() {
+  return (await run(`DELETE FROM sessions WHERE expires_at <= now()`)) || 0;
 }

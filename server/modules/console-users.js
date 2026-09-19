@@ -14,9 +14,9 @@ import { err } from '../core/errors.js';
 
 export function register(router) {
   /* ---------- Danh sách tài khoản và bảng vai trò ---------- */
-  router.get('/api/console/users', ctx => ctx.json(200, {
+  router.get('/api/console/users', async ctx => ctx.json(200, {
     ok: true,
-    users: users.listUsers(),
+    users: await users.listUsers(),
     roles: Object.fromEntries(Object.entries(ROLES).map(([k, r]) => [k, {
       label: r.label, desc: r.desc, permissions: r.permissions
     }])),
@@ -52,7 +52,7 @@ export function register(router) {
   /* ---------- Sửa tài khoản ---------- */
   router.patch('/api/console/users/:id', async ctx => {
     const id = Number(ctx.params.id);
-    const target = users.getUser(id);
+    const target = await users.getUser(id);
     if (!target) throw err.notFound('Không tìm thấy tài khoản.');
 
     const { name, role, active } = await ctx.body();
@@ -70,7 +70,7 @@ export function register(router) {
       throw err.forbidden('Không thể tự khoá tài khoản của chính mình.');
     }
 
-    const updated = users.updateUser(id, { name, role, active });
+    const updated = await users.updateUser(id, { name, role, active });
     audit({
       actor: ctx.user, action: 'user.update', target: `user:${id}`,
       detail: { name, role, active }, ipHash: ctx.ipHash
@@ -81,7 +81,7 @@ export function register(router) {
   /* ---------- Đặt lại mật khẩu cho người khác ---------- */
   router.post('/api/console/users/:id/reset-password', async ctx => {
     const id = Number(ctx.params.id);
-    const target = users.getUser(id);
+    const target = await users.getUser(id);
     if (!target) throw err.notFound('Không tìm thấy tài khoản.');
     if (!canManageRole(ctx.user.role, target.role)) throw err.forbidden();
 
@@ -98,15 +98,15 @@ export function register(router) {
   }, { permission: 'users.write' });
 
   /* ---------- Xoá tài khoản ---------- */
-  router.delete('/api/console/users/:id', ctx => {
+  router.delete('/api/console/users/:id', async ctx => {
     const id = Number(ctx.params.id);
     if (id === ctx.user.id) throw err.forbidden('Không thể tự xoá tài khoản của chính mình.');
 
-    const target = users.getUser(id);
+    const target = await users.getUser(id);
     if (!target) throw err.notFound('Không tìm thấy tài khoản.');
     if (!canManageRole(ctx.user.role, target.role)) throw err.forbidden();
 
-    users.deleteUser(id);
+    await users.deleteUser(id);
     audit({
       actor: ctx.user, action: 'user.delete', target: `user:${id}`,
       detail: { email: target.email }, ipHash: ctx.ipHash

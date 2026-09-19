@@ -15,35 +15,53 @@
  * Tệp này cố ý chỉ phụ thuộc vào kết nối cơ sở dữ liệu — không kéo theo bất cứ
  * thứ gì của máy chủ, để `scripts/build.js` nạp được mà không khởi động server.
  */
-import db from '../../server/db/index.js';
+import { all } from '../../server/db/index.js';
 
 /* Đọc một lượt cho cả tiến trình dựng trang, làm mới sau vài giây khi chạy máy
    chủ. Một trang dựng ra gọi hàm này hàng trăm lần; truy vấn lại mỗi lần là
-   lãng phí thuần tuý. */
+   lãng phí thuần tuý.
+ *
+ * ĐỌC VẪN ĐỒNG BỘ — có ý thức. `overlay()` được gọi giữa lúc dựng HTML, hàng
+ * trăm lần cho mỗi trang; biến nó thành bất đồng bộ sẽ lan `await` vào từng hàm
+ * dựng giao diện. Thay vào đó đệm được nạp bằng `refreshOverlay()` và làm mới ở
+ * chế độ nền khi quá hạn, y như `services/settings.js`.
+ *
+ * Không có cơ sở dữ liệu thì coi như không có lớp phủ nào và nội dung gốc trong
+ * `site/data/` vẫn ra đủ — nhờ vậy `npm run build` chạy được trên máy chưa khai
+ * `DATABASE_URL`. */
 const TTL_MS = 3000;
-let cache = null;
+let cache = {};
 let cachedAt = 0;
+let loading = null;
 
-function rows() {
-  if (cache && Date.now() - cachedAt < TTL_MS) return cache;
-  cachedAt = Date.now();
-  cache = {};
+async function load() {
+  const next = {};
   try {
-    for (const r of db.prepare(`SELECT * FROM content`).all()) {
-      (cache[r.collection] ??= []).push(r);
+    for (const r of await all(`SELECT * FROM content`)) {
+      (next[r.collection] ??= []).push(r);
     }
   } catch {
-    // Chưa chạy migration (ví dụ lần dựng đầu tiên trên máy mới): coi như không
-    // có lớp phủ nào. Nội dung gốc vẫn ra đủ.
-    cache = {};
+    // Không có CSDL, chưa chạy migration, hoặc mất mạng: bỏ lớp phủ, giữ bản gốc.
+  }
+  cache = next;
+  cachedAt = Date.now();
+  return cache;
+}
+
+function rows() {
+  if (Date.now() - cachedAt >= TTL_MS && !loading) {
+    loading = load().catch(() => {}).finally(() => { loading = null; });
   }
   return cache;
 }
 
+/** Nạp lớp phủ và chờ xong. Máy chủ gọi một lần lúc khởi động. */
+export const refreshOverlay = () => load();
+
 /** Buộc đọc lại ngay — gọi sau mỗi thao tác ghi từ bảng điều khiển. */
 export function invalidateOverlay() {
-  cache = null;
   cachedAt = 0;
+  return load();
 }
 
 const parse = s => { try { return s ? JSON.parse(s) : null; } catch { return null; } };

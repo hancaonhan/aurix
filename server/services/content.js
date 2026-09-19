@@ -17,7 +17,7 @@
  */
 import { spawn } from 'node:child_process';
 import { join } from 'node:path';
-import db from '../db/index.js';
+import { all, one, run as dbRun, tx } from '../db/index.js';
 import { err } from '../core/errors.js';
 import log from '../core/logger.js';
 import { ROOT } from '../core/config.js';
@@ -153,29 +153,34 @@ export const SINGLETONS = {
 /* ==========================================================================
    Đọc
    ========================================================================== */
-const patchesOf = collection =>
-  Object.fromEntries(db.prepare(`SELECT * FROM content WHERE collection = ?`).all(collection)
+const patchesOf = async collection =>
+  Object.fromEntries((await all(`SELECT * FROM content WHERE collection = $1`, [collection]))
     .map(r => [r.item_id, r]));
 
-export function listCollections() {
+export async function listCollections() {
+  /* Một truy vấn đếm cho mọi bộ sưu tập, thay vì một truy vấn mỗi bộ. Trước đây
+     là hơn 20 lượt đi mạng chỉ để mở trang nội dung. */
+  const rows = await all(`SELECT collection, COUNT(*) c FROM content GROUP BY collection`);
+  const count = Object.fromEntries(rows.map(r => [r.collection, r.c]));
+
   return {
     collections: Object.fromEntries(Object.entries(COLLECTIONS).map(([key, c]) => [key, {
       label: c.label, group: c.group, idField: c.idField, help: c.help ?? null,
       count: c.data().length,
-      changed: db.prepare(`SELECT COUNT(*) c FROM content WHERE collection = ?`).get(key).c
+      changed: count[key] ?? 0
     }])),
     singletons: Object.fromEntries(Object.entries(SINGLETONS).map(([key, c]) => [key, {
       label: c.label, group: c.group, help: c.help ?? null,
-      changed: db.prepare(`SELECT COUNT(*) c FROM content WHERE collection = ?`).get(key).c > 0
+      changed: (count[key] ?? 0) > 0
     }]))
   };
 }
 
-export function listItems(key) {
+export async function listItems(key) {
   const def = COLLECTIONS[key];
   if (!def) throw err.notFound('Không có bộ sưu tập này.');
 
-  const patches = patchesOf(key);
+  const patches = await patchesOf(key);
   const items = def.data().map(item => {
     const id = String(item[def.idField]);
     // `__source` do lớp phủ gắn vào; mục chưa từng bị đụng tới thì không có.
@@ -220,33 +225,33 @@ function validate(data) {
   return json;
 }
 
-const stmtUpsert = db.prepare(`
+const SQL_UPSERT = `
   INSERT INTO content (collection, item_id, data, origin, deleted, position, updated_by)
-  VALUES (?, ?, ?, ?, ?, ?, ?)
-  ON CONFLICT(collection, item_id) DO UPDATE SET
+  VALUES ($1, $2, $3, $4, $5, $6, $7)
+  ON CONFLICT (collection, item_id) DO UPDATE SET
     data = excluded.data, origin = excluded.origin, deleted = excluded.deleted,
     position = COALESCE(excluded.position, content.position),
-    updated_at = datetime('now'), updated_by = excluded.updated_by
-`);
+    updated_at = now(), updated_by = excluded.updated_by
+`;
 
 /** Sửa một mục có sẵn, hoặc sửa tiếp một mục đã thêm mới. */
-export function saveItem(key, itemId, data, actorId = null) {
+export async function saveItem(key, itemId, data, actorId = null) {
   const def = COLLECTIONS[key];
   if (!def) throw err.notFound('Không có bộ sưu tập này.');
 
   const json = validate(data);
   const exists = def.data().some(i => String(i[def.idField]) === String(itemId));
-  const current = db.prepare(`SELECT origin FROM content WHERE collection = ? AND item_id = ?`)
-    .get(key, String(itemId));
+  const current = await one(`SELECT origin FROM content WHERE collection = $1 AND item_id = $2`,
+    [key, String(itemId)]);
 
   if (!exists && !current) throw err.notFound('Không tìm thấy mục này.');
 
-  stmtUpsert.run(key, String(itemId), json, current?.origin ?? 'override', 0, null, actorId);
-  invalidateOverlay();
+  await dbRun(SQL_UPSERT, [key, String(itemId), json, current?.origin ?? 'override', false, null, actorId]);
+  await invalidateOverlay();
   return listItems(key);
 }
 
-export function createItem(key, data, actorId = null) {
+export async function createItem(key, data, actorId = null) {
   const def = COLLECTIONS[key];
   if (!def) throw err.notFound('Không có bộ sưu tập này.');
 
@@ -255,14 +260,14 @@ export function createItem(key, data, actorId = null) {
   if (id.length > 200) throw err.validation('Mã mục quá dài.');
 
   const taken = def.data().some(i => String(i[def.idField]) === id)
-    || db.prepare(`SELECT 1 FROM content WHERE collection = ? AND item_id = ?`).get(key, id);
+    || await one(`SELECT 1 FROM content WHERE collection = $1 AND item_id = $2`, [key, id]);
   if (taken) throw err.conflict(`Đã có mục mang mã "${id}".`);
 
   const json = validate(data);
-  const last = db.prepare(`SELECT MAX(position) p FROM content WHERE collection = ?`).get(key).p;
+  const { p: last } = await one(`SELECT MAX(position) p FROM content WHERE collection = $1`, [key]);
 
-  stmtUpsert.run(key, id, json, 'new', 0, (last ?? def.data().length) + 1, actorId);
-  invalidateOverlay();
+  await dbRun(SQL_UPSERT, [key, id, json, 'new', false, (last ?? def.data().length) + 1, actorId]);
+  await invalidateOverlay();
   return listItems(key);
 }
 
@@ -273,12 +278,12 @@ export function createItem(key, data, actorId = null) {
  * dấu ẩn — mã nguồn là bản chuẩn, không được phép bị một thao tác trên giao
  * diện làm sai lệch, và nhờ vậy lúc nào cũng khôi phục lại được.
  */
-export function deleteItem(key, itemId, actorId = null) {
+export async function deleteItem(key, itemId, actorId = null) {
   const def = COLLECTIONS[key];
   if (!def) throw err.notFound('Không có bộ sưu tập này.');
 
   const id = String(itemId);
-  const patch = db.prepare(`SELECT origin FROM content WHERE collection = ? AND item_id = ?`).get(key, id);
+  const patch = await one(`SELECT origin FROM content WHERE collection = $1 AND item_id = $2`, [key, id]);
   const exists = def.data().some(i => String(i[def.idField]) === id);
 
   if (!exists && !patch) throw err.notFound('Không tìm thấy mục này.');
@@ -287,50 +292,57 @@ export function deleteItem(key, itemId, actorId = null) {
   // sẵn trong mã nguồn: danh sách từ def.data() đã hoà cả hai lớp, nên không
   // dùng nó để phán đoán được.
   if (patch?.origin === 'new') {
-    db.prepare(`DELETE FROM content WHERE collection = ? AND item_id = ?`).run(key, id);
+    await dbRun(`DELETE FROM content WHERE collection = $1 AND item_id = $2`, [key, id]);
   } else {
-    stmtUpsert.run(key, id, null, patch?.origin ?? 'override', 1, null, actorId);
+    await dbRun(SQL_UPSERT, [key, id, null, patch?.origin ?? 'override', true, null, actorId]);
   }
 
-  invalidateOverlay();
+  await invalidateOverlay();
   return listItems(key);
 }
 
 /** Bỏ mọi thay đổi của một mục, trả về đúng bản trong mã nguồn. */
-export function restoreItem(key, itemId) {
+export async function restoreItem(key, itemId) {
   if (!COLLECTIONS[key] && !SINGLETONS[key]) throw err.notFound('Không có mục này.');
-  db.prepare(`DELETE FROM content WHERE collection = ? AND item_id = ?`).run(key, String(itemId));
-  invalidateOverlay();
+  await dbRun(`DELETE FROM content WHERE collection = $1 AND item_id = $2`, [key, String(itemId)]);
+  await invalidateOverlay();
   return COLLECTIONS[key] ? listItems(key) : getSingleton(key);
 }
 
-export function saveSingleton(key, data, actorId = null) {
+export async function saveSingleton(key, data, actorId = null) {
   if (!SINGLETONS[key]) throw err.notFound('Không có mục này.');
-  stmtUpsert.run(key, key, validate(data), 'override', 0, null, actorId);
-  invalidateOverlay();
+  await dbRun(SQL_UPSERT, [key, key, validate(data), 'override', false, null, actorId]);
+  await invalidateOverlay();
   return getSingleton(key);
 }
 
 /** Sắp xếp lại: mảng mã mục theo đúng thứ tự mong muốn. */
-export function reorder(key, ids, actorId = null) {
+export async function reorder(key, ids, actorId = null) {
   const def = COLLECTIONS[key];
   if (!def) throw err.notFound('Không có bộ sưu tập này.');
   if (!Array.isArray(ids)) throw err.validation('Danh sách thứ tự không hợp lệ.');
 
+  const patches = await patchesOf(key);
   const known = new Set([
     ...def.data().map(i => String(i[def.idField])),
-    ...Object.keys(patchesOf(key))
+    ...Object.keys(patches)
   ]);
 
-  ids.forEach((id, index) => {
-    if (!known.has(String(id))) return;
-    const patch = db.prepare(`SELECT data, origin, deleted FROM content WHERE collection = ? AND item_id = ?`)
-      .get(key, String(id));
-    stmtUpsert.run(key, String(id), patch?.data ?? null,
-      patch?.origin ?? 'override', patch?.deleted ?? 0, index, actorId);
+  /* Cả lượt sắp xếp nằm trong một giao dịch: đứt giữa đường sẽ để lại thứ tự
+     nửa cũ nửa mới, và người dùng không có cách nào biết mà sửa. */
+  await tx(async t => {
+    let index = 0;
+    for (const raw of ids) {
+      const id = String(raw);
+      if (!known.has(id)) continue;
+      const patch = patches[id];
+      await t.run(SQL_UPSERT, [key, id, patch?.data ?? null,
+        patch?.origin ?? 'override', patch?.deleted ?? false, index, actorId]);
+      index++;
+    }
   });
 
-  invalidateOverlay();
+  await invalidateOverlay();
   return listItems(key);
 }
 
@@ -346,9 +358,9 @@ export function reorder(key, ids, actorId = null) {
  */
 let publishing = false;
 
-export function publishState() {
-  const row = db.prepare(`SELECT MAX(updated_at) t FROM content`).get().t;
-  return { running: publishing, lastContentChange: row };
+export async function publishState() {
+  const row = await one(`SELECT MAX(updated_at) t FROM content`);
+  return { running: publishing, lastContentChange: row?.t ?? null };
 }
 
 export async function publish() {

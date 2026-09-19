@@ -15,8 +15,8 @@ const scoped = ctx => !can(ctx.user, 'leads.delete');
 
 export function register(router) {
   /* ---------- Danh sách ---------- */
-  router.get('/api/console/leads', ctx => {
-    const data = leads.listLeads({
+  router.get('/api/console/leads', async ctx => {
+    const data = await leads.listLeads({
       limit: Number(ctx.query.limit) || 50,
       offset: Number(ctx.query.offset) || 0,
       status: ctx.query.status,
@@ -33,29 +33,29 @@ export function register(router) {
   }, { permission: 'leads.read', rateLimit: 'api' });
 
   /* ---------- Một khách ---------- */
-  router.get('/api/console/leads/:id', ctx => {
-    const lead = leads.getLead(ctx.params.id);
+  router.get('/api/console/leads/:id', async ctx => {
+    const lead = await leads.getLead(ctx.params.id);
     if (scoped(ctx) && lead.assignedTo && lead.assignedTo !== ctx.user.id) throw err.forbidden();
     return ctx.json(200, { ok: true, lead });
   }, { permission: 'leads.read' });
 
   /* ---------- Đổi trạng thái ---------- */
   router.patch('/api/console/leads/:id/status', async ctx => {
-    const lead = leads.getLead(ctx.params.id);
+    const lead = await leads.getLead(ctx.params.id);
     leads.assertCanEdit(lead, ctx.user);
 
     const { status } = await ctx.body();
-    leads.setStatus(lead.id, status);
+    await leads.setStatus(lead.id, status);
     audit({
       actor: ctx.user, action: 'lead.status.change', target: `lead:${lead.id}`,
       detail: { from: lead.status, to: status }, ipHash: ctx.ipHash
     });
-    return ctx.json(200, { ok: true, lead: leads.getLead(lead.id) });
+    return ctx.json(200, { ok: true, lead: await leads.getLead(lead.id) });
   }, { permission: 'leads.write' });
 
   /* ---------- Phân công ---------- */
   router.patch('/api/console/leads/:id/assign', async ctx => {
-    const lead = leads.getLead(ctx.params.id);
+    const lead = await leads.getLead(ctx.params.id);
     leads.assertCanEdit(lead, ctx.user);
 
     const body = await ctx.body();
@@ -66,42 +66,42 @@ export function register(router) {
       throw err.forbidden('Bạn chỉ có thể tự nhận khách này.');
     }
 
-    leads.assign(lead.id, userId);
+    await leads.assign(lead.id, userId);
     audit({
       actor: ctx.user, action: 'lead.assign', target: `lead:${lead.id}`,
       detail: { to: userId }, ipHash: ctx.ipHash
     });
-    return ctx.json(200, { ok: true, lead: leads.getLead(lead.id) });
+    return ctx.json(200, { ok: true, lead: await leads.getLead(lead.id) });
   }, { permission: 'leads.write' });
 
   /* ---------- Giá trị hợp đồng ---------- */
   router.patch('/api/console/leads/:id/value', async ctx => {
-    const lead = leads.getLead(ctx.params.id);
+    const lead = await leads.getLead(ctx.params.id);
     leads.assertCanEdit(lead, ctx.user);
 
     const { valueVnd } = await ctx.body();
-    leads.setValue(lead.id, valueVnd);
+    await leads.setValue(lead.id, valueVnd);
     audit({
       actor: ctx.user, action: 'lead.value.set', target: `lead:${lead.id}`,
       detail: { valueVnd }, ipHash: ctx.ipHash
     });
-    return ctx.json(200, { ok: true, lead: leads.getLead(lead.id) });
+    return ctx.json(200, { ok: true, lead: await leads.getLead(lead.id) });
   }, { permission: 'leads.write' });
 
   /* ---------- Ghi chú ---------- */
   router.post('/api/console/leads/:id/notes', async ctx => {
-    const lead = leads.getLead(ctx.params.id);
+    const lead = await leads.getLead(ctx.params.id);
     leads.assertCanEdit(lead, ctx.user);
 
     const { body } = await ctx.body();
-    const id = leads.addNote(lead.id, { body, author: ctx.user });
+    const id = await leads.addNote(lead.id, { body, author: ctx.user });
     audit({ actor: ctx.user, action: 'lead.note.add', target: `lead:${lead.id}`, ipHash: ctx.ipHash });
-    return ctx.json(201, { ok: true, id, notes: leads.listNotes(lead.id) });
+    return ctx.json(201, { ok: true, id, notes: await leads.listNotes(lead.id) });
   }, { permission: 'leads.write' });
 
   /* ---------- Xoá ---------- */
-  router.delete('/api/console/leads/:id', ctx => {
-    leads.deleteLead(ctx.params.id);
+  router.delete('/api/console/leads/:id', async ctx => {
+    await leads.deleteLead(ctx.params.id);
     audit({ actor: ctx.user, action: 'lead.delete', target: `lead:${ctx.params.id}`, ipHash: ctx.ipHash });
     return ctx.json(200, { ok: true });
   }, { permission: 'leads.delete' });
@@ -109,8 +109,8 @@ export function register(router) {
   /* ---------- Kết xuất CSV ---------- *
    * Kết xuất là hành vi mang dữ liệu cá nhân ra khỏi hệ thống, nên luôn được
    * ghi vào nhật ký kiểm toán kèm bộ lọc đã dùng.                            */
-  router.get('/api/console/leads.csv', ctx => {
-    const csv = leads.exportCsv({
+  router.get('/api/console/leads.csv', async ctx => {
+    const csv = await leads.exportCsv({
       status: ctx.query.status,
       source: ctx.query.source,
       q: ctx.query.q,

@@ -9,8 +9,9 @@
  * khoá tuỳ ý, vì một bảng khoá-giá trị tự do sẽ nhanh chóng thành bãi rác và là
  * một lỗ hổng lưu trữ dữ liệu chưa kiểm tra.
  */
-import db from '../db/index.js';
+import { all, run, tx } from '../db/index.js';
 import { err } from '../core/errors.js';
+import log from '../core/logger.js';
 
 /**
  * type: 'text' | 'longtext' | 'bool' | 'number' | 'url' | 'phone'
@@ -56,54 +57,83 @@ export const SCHEMA = {
   }
 };
 
-const stmtGet = db.prepare(`SELECT value FROM settings WHERE key = ?`);
-const stmtAll = db.prepare(`SELECT key, value, updated_at FROM settings`);
-const stmtSet = db.prepare(`
-  INSERT INTO settings (key, value, updated_by) VALUES (?, ?, ?)
-  ON CONFLICT(key) DO UPDATE SET value = excluded.value, updated_at = datetime('now'), updated_by = excluded.updated_by
-`);
+const SQL_ALL = `SELECT key, value, updated_at FROM settings`;
+const SQL_SET = `
+  INSERT INTO settings (key, value, updated_by) VALUES ($1, $2, $3)
+  ON CONFLICT (key) DO UPDATE SET value = excluded.value, updated_at = now(), updated_by = excluded.updated_by
+`;
 
 /* Bộ nhớ đệm trong tiến trình: các giá trị này được đọc ở mọi request nhưng gần
    như không bao giờ đổi, nên đọc cơ sở dữ liệu mỗi lần là lãng phí.
-   Ghi qua API thì xoá đệm ngay; ngoài ra đệm vẫn tự hết hạn sau vài giây để một
-   lệnh `cli.js settings:set` chạy từ SSH cũng có hiệu lực mà không cần khởi
-   động lại máy chủ. */
+   Ghi qua API thì nạp lại đệm ngay; ngoài ra đệm vẫn tự hết hạn sau vài giây để
+   một lệnh `cli.js settings:set` chạy từ SSH cũng có hiệu lực mà không cần khởi
+   động lại máy chủ.
+
+   PHẦN ĐỌC VẪN ĐỒNG BỘ — có ý thức. `allSettings()` được gọi ở mọi request và ở
+   giữa lúc dựng HTML; biến nó thành bất đồng bộ sẽ lan `await` ra hàng chục chỗ
+   mà không đổi được gì về hành vi. Thay vào đó đệm được nạp một lần lúc nạp
+   module, và làm mới ở chế độ nền khi quá hạn. Hệ quả: một giá trị vừa ghi từ
+   tiến trình khác có thể chậm tối đa `CACHE_TTL_MS` mới thấy — y như trước. */
 const CACHE_TTL_MS = 5000;
 let cache = null;
 let cachedAt = 0;
+let refreshing = null;
+
+async function load() {
+  /* Không nối được cơ sở dữ liệu thì dùng giá trị mặc định trong SCHEMA, không
+     ném lỗi. Nếu ném, mọi tiến trình import tệp này sẽ chết ngay lúc nạp module
+     — kể cả `cli.js doctor`, thứ tồn tại để chẩn đoán đúng tình huống đó. */
+  let stored = {};
+  try {
+    stored = Object.fromEntries((await all(SQL_ALL)).map(r => [r.key, r.value]));
+  } catch (e) {
+    log.warn('Không đọc được tham số site — dùng giá trị mặc định', { error: e.message });
+  }
+  const next = {};
+  for (const [key, def] of Object.entries(SCHEMA)) {
+    next[key] = key in stored ? decode(stored[key], def.type) : def.default;
+  }
+  cache = next;
+  cachedAt = Date.now();
+  return cache;
+}
+
+/* Nạp lần đầu ngay lúc nạp module, nhờ `await` cấp cao nhất của ESM. Mọi module
+   import tệp này đều đã có đệm sẵn, nên `allSettings()` không bao giờ trả null. */
+await load();
 
 export function allSettings() {
-  if (cache && Date.now() - cachedAt < CACHE_TTL_MS) return cache;
-  cachedAt = Date.now();
-  const stored = Object.fromEntries(stmtAll.all().map(r => [r.key, r.value]));
-  cache = {};
-  for (const [key, def] of Object.entries(SCHEMA)) {
-    cache[key] = key in stored ? decode(stored[key], def.type) : def.default;
+  if (Date.now() - cachedAt >= CACHE_TTL_MS && !refreshing) {
+    // Làm mới ở chế độ nền: request hiện tại dùng giá trị cũ, request sau dùng
+    // giá trị mới. Không chặn ai cả.
+    refreshing = load().catch(() => {}).finally(() => { refreshing = null; });
   }
   return cache;
 }
 
 export const getSetting = key => allSettings()[key];
 
-export function setSetting(key, value, actorId = null) {
+export async function setSetting(key, value, actorId = null) {
   const def = SCHEMA[key];
   if (!def) throw err.validation(`Tham số "${key}" không tồn tại.`);
   const encoded = encode(value, def, key);
-  stmtSet.run(key, encoded, actorId);
-  cache = null;
+  await run(SQL_SET, [key, encoded, actorId]);
+  await load();
   return decode(encoded, def.type);
 }
 
 /** Ghi nhiều tham số một lượt. Sai một tham số thì không ghi tham số nào. */
-export function setSettings(patch, actorId = null) {
+export async function setSettings(patch, actorId = null) {
   const pending = Object.entries(patch).map(([key, value]) => {
     const def = SCHEMA[key];
     if (!def) throw err.validation(`Tham số "${key}" không tồn tại.`);
     return [key, encode(value, def, key)];
   });
-  for (const [key, encoded] of pending) stmtSet.run(key, encoded, actorId);
-  cache = null;
-  return allSettings();
+  // Một giao dịch: sai giữa đường thì không tham số nào được ghi.
+  await tx(async t => {
+    for (const [key, encoded] of pending) await t.run(SQL_SET, [key, encoded, actorId]);
+  });
+  return load();
 }
 
 /** Trả về tham số theo nhóm — dùng để dựng biểu mẫu trong bảng điều khiển. */

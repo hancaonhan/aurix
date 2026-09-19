@@ -11,20 +11,44 @@
  */
 import { createInterface } from 'node:readline/promises';
 import { stdin, stdout } from 'node:process';
-import { copyFileSync, mkdirSync, readdirSync, statSync, unlinkSync } from 'node:fs';
+import { mkdirSync, readdirSync, readFileSync, statSync, unlinkSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { randomBytes } from 'node:crypto';
 
 import config, { auditConfig } from './core/config.js';
-import db, { migrate, schemaStatus } from './db/index.js';
+import { migrate, schemaStatus, all, one, tx, close as closeDb } from './db/index.js';
 import * as users from './services/users.js';
-import { listAudit, pruneAudit, audit } from './services/audit.js';
+import { listAudit, pruneAudit, auditSync } from './services/audit.js';
 import { SCHEMA, allSettings, setSetting } from './services/settings.js';
 import { ROLES, PERMISSIONS, permissionsOf } from './security/rbac.js';
 import { generatePassword } from './security/password.js';
 import { purgeExpiredSessions, destroyUserSessions } from './security/session.js';
 import { mailStats } from './lib/db.js';
 import { drainOutbox, mailEnabled } from './lib/mailer.js';
+
+/**
+ * Thứ tự các bảng khi sao lưu và khôi phục — **phải theo chiều khoá ngoại**:
+ * bảng được tham chiếu đứng trước bảng tham chiếu tới nó. Khôi phục nạp theo
+ * đúng thứ tự này và xoá theo thứ tự ngược lại.
+ *
+ * `schema_migrations` không nằm ở đây: lược đồ do `migrate()` dựng, không phải
+ * do bản sao lưu mang sang.
+ */
+const DUMP_TABLES = [
+  'users', 'settings', 'content', 'leads', 'lead_notes',
+  'diagnostics', 'events', 'outbox', 'audit_log', 'sessions'
+];
+
+/** Thử nối CSDL để `doctor` báo được trạng thái thật thay vì sập. */
+async function probeDb() {
+  if (!config.databaseUrl) return { ok: false, label: 'DATABASE_URL chưa đặt' };
+  try {
+    const r = await one(`SELECT current_database() AS db, inet_server_addr()::text AS host`);
+    return { ok: true, label: `${r.db} @ ${r.host ?? 'nội bộ'}` };
+  } catch (e) {
+    return { ok: false, label: `không nối được — ${e.message.slice(0, 60)}` };
+  }
+}
 
 const C = {
   gold: '\x1b[38;5;179m', dim: '\x1b[2m', red: '\x1b[31m', green: '\x1b[32m',
@@ -88,7 +112,9 @@ ${C.gold}${C.bold}AURIX${C.reset} — công cụ vận hành
     migrate                   Đưa lược đồ cơ sở dữ liệu lên bản mới nhất
     db:status                 Trạng thái lược đồ và kích thước dữ liệu
     routes                    Liệt kê toàn bộ tuyến API kèm quyền yêu cầu
-    backup [--keep=14]        Sao lưu cơ sở dữ liệu, giữ lại N bản gần nhất
+    backup [--keep=14]        Kết xuất toàn bộ dữ liệu ra JSON, giữ N bản gần nhất
+    db:restore --file=<tệp> [--yes]
+                              Khôi phục từ bản kết xuất (XOÁ dữ liệu hiện có)
     purge:sessions            Xoá phiên đăng nhập đã hết hạn
 
   ${C.bold}Tài khoản${C.reset}
@@ -116,17 +142,21 @@ ${C.gold}${C.bold}AURIX${C.reset} — công cụ vận hành
   async doctor() {
     title('Kiểm tra cấu hình');
 
+    const dbInfo = await probeDb();
+    const schema = dbInfo.ok ? await schemaStatus() : { latest: 0, pending: [] };
+    const userCount = dbInfo.ok ? await users.countUsers() : 0;
+
     const checks = [
       ['Môi trường', config.env, true],
       ['Origin công khai', config.origin, config.isDev || config.origin.startsWith('https://')],
-      ['Tệp cơ sở dữ liệu', config.dbPath, true],
-      ['Lược đồ', `v${schemaStatus().latest}`, schemaStatus().pending.length === 0],
+      ['Cơ sở dữ liệu', dbInfo.label, dbInfo.ok],
+      ['Lược đồ', `v${schema.latest}`, dbInfo.ok && schema.pending.length === 0],
       ['Bí mật phiên', config.security.sessionSecret ? 'đã đặt' : 'THIẾU', config.security.sessionSecret.length >= 32],
       ['Muối băm IP', process.env.AURIX_IP_SALT ? 'đã đặt' : 'ngẫu nhiên mỗi lần khởi động', Boolean(process.env.AURIX_IP_SALT) || config.isDev],
       ['Cookie Secure', config.security.secureCookies ? 'bật' : 'tắt', config.security.secureCookies || config.isDev],
       ['Lớp proxy tin cậy', String(config.trustProxy), true],
       ['SMTP', mailEnabled ? 'đã cấu hình' : 'chưa cấu hình', mailEnabled || config.isDev],
-      ['Tài khoản nội bộ', String(users.countUsers()), users.countUsers() > 0]
+      ['Tài khoản nội bộ', String(userCount), userCount > 0]
     ];
 
     for (const [label, value, pass] of checks) {
@@ -151,25 +181,33 @@ ${C.gold}${C.bold}AURIX${C.reset} — công cụ vận hành
   },
 
   async migrate() {
-    const applied = migrate();
+    const applied = await migrate();
     if (applied.length) applied.forEach(n => ok(`Đã áp dụng: ${n}`));
     else ok('Lược đồ đã ở bản mới nhất.');
   },
 
   async 'db:status'() {
-    const s = schemaStatus();
+    const s = await schemaStatus();
     title('Lược đồ cơ sở dữ liệu');
     for (const m of s.applied) say(`  ${C.green}${String(m.id).padStart(3)}${C.reset}  ${m.name}  ${C.dim}${m.applied_at}${C.reset}`);
     for (const m of s.pending) say(`  ${C.yellow}${String(m.id).padStart(3)}${C.reset}  ${m.name}  ${C.dim}chưa chạy${C.reset}`);
 
-    let size = 0;
-    try { size = statSync(config.dbPath).size; } catch { /* chưa có tệp */ }
-    const counts = ['leads', 'diagnostics', 'users', 'sessions', 'audit_log', 'outbox']
-      .map(t => `${t}=${db.prepare(`SELECT COUNT(*) c FROM ${t}`).get().c}`);
+    const info = await one(`
+      SELECT current_database() AS db, current_user AS usr,
+             current_setting('server_version') AS version,
+             pg_size_pretty(pg_database_size(current_database())) AS size
+    `);
+    /* Đếm mọi bảng trong một câu lệnh. Tên bảng lấy từ danh sách cố định bên
+       dưới, không từ dữ liệu người dùng, nên nội suy vào SQL ở đây là an toàn. */
+    const tables = ['leads', 'diagnostics', 'users', 'sessions', 'audit_log', 'outbox', 'content', 'settings', 'lead_notes', 'events'];
+    const counts = await one(
+      'SELECT ' + tables.map(t => `(SELECT COUNT(*) FROM ${t}) AS ${t}`).join(', ')
+    );
 
-    say(`\n  Tệp    ${config.dbPath}`);
-    say(`  Cỡ     ${(size / 1048576).toFixed(2)} MB`);
-    say(`  Bảng   ${counts.join('  ')}`);
+    say(`\n  Máy chủ   PostgreSQL ${info.version}`);
+    say(`  Database  ${info.db}  ${C.dim}(người dùng ${info.usr})${C.reset}`);
+    say(`  Dung lượng ${info.size}`);
+    say(`  Bảng      ${tables.map(t => `${t}=${counts[t]}`).join('  ')}`);
   },
 
   async routes() {
@@ -183,21 +221,33 @@ ${C.gold}${C.bold}AURIX${C.reset} — công cụ vận hành
     }
   },
 
+  /**
+   * Kết xuất toàn bộ dữ liệu ra một tệp JSON.
+   *
+   * Không dùng `pg_dump`: nó là tệp nhị phân của PostgreSQL, không có sẵn trên
+   * container Vibe Host và cũng không nên thêm vào ảnh chỉ để sao lưu. Bản kết
+   * xuất JSON đọc được bằng mắt, khôi phục được bằng `db:restore`, và chạy ở bất
+   * cứ đâu có Node.
+   *
+   * Đây là bản sao lưu **logic**, không phải bản sao nhị phân — nó giữ dữ liệu,
+   * không giữ lược đồ. Khôi phục cần một CSDL đã chạy migration.
+   */
   async backup() {
     const keep = Number(flag('keep', 14));
     mkdirSync(config.backupDir, { recursive: true });
 
-    // Ép SQLite gộp WAL vào tệp chính trước khi chép, nếu không bản sao có thể
-    // thiếu những giao dịch mới nhất.
-    db.exec('PRAGMA wal_checkpoint(TRUNCATE);');
+    const dump = { version: 1, at: new Date().toISOString(), tables: {} };
+    for (const t of DUMP_TABLES) dump.tables[t] = await all(`SELECT * FROM ${t} ORDER BY 1`);
 
     const stamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
-    const target = join(config.backupDir, `aurix-${stamp}.db`);
-    copyFileSync(config.dbPath, target);
-    ok(`Đã sao lưu: ${target} (${(statSync(target).size / 1048576).toFixed(2)} MB)`);
+    const target = join(config.backupDir, `aurix-${stamp}.json`);
+    writeFileSync(target, JSON.stringify(dump), 'utf8');
+
+    const rows = Object.values(dump.tables).reduce((n, r) => n + r.length, 0);
+    ok(`Đã sao lưu: ${target} (${(statSync(target).size / 1048576).toFixed(2)} MB · ${rows} dòng)`);
 
     const olds = readdirSync(config.backupDir)
-      .filter(f => f.startsWith('aurix-') && f.endsWith('.db'))
+      .filter(f => f.startsWith('aurix-') && f.endsWith('.json'))
       .sort().reverse().slice(keep);
     for (const f of olds) {
       unlinkSync(join(config.backupDir, f));
@@ -205,8 +255,77 @@ ${C.gold}${C.bold}AURIX${C.reset} — công cụ vận hành
     }
   },
 
+  /**
+   * Khôi phục từ một tệp kết xuất.
+   *
+   *   node server/cli.js db:restore --file=server/data/backups/aurix-....json
+   *
+   * Xoá sạch dữ liệu hiện có rồi nạp lại, tất cả trong một giao dịch: đứt giữa
+   * đường thì cơ sở dữ liệu trở về đúng trạng thái trước khi chạy.
+   */
+  async 'db:restore'() {
+    const file = flag('file');
+    if (!file) return bad('Thiếu --file=<đường dẫn tệp .json>');
+
+    const dump = JSON.parse(readFileSync(file, 'utf8'));
+    if (dump.version !== 1) return bad(`Không đọc được bản kết xuất phiên bản ${dump.version}.`);
+
+    const rows = Object.values(dump.tables).reduce((n, r) => n + r.length, 0);
+    say(`  Bản kết xuất lúc ${dump.at} · ${rows} dòng`);
+
+    /* `--yes` bỏ qua bước hỏi. Cần có vì khôi phục thường diễn ra đúng lúc tệ
+       nhất — qua SSH không cấp TTY, trong script triển khai — và `ask()` trả về
+       rỗng khi không có bàn phím, nên nếu chỉ hỏi thì lệnh sẽ luôn tự huỷ. */
+    if (flag('yes') !== true) {
+      const answer = await ask(`  ${C.yellow}Việc này XOÁ toàn bộ dữ liệu hiện có. Gõ "xac nhan" để tiếp tục: ${C.reset}`);
+      if (answer.trim() !== 'xac nhan') {
+        return bad(stdin.isTTY ? 'Đã huỷ.' : 'Cần --yes khi chạy không có bàn phím (SSH, script, CI).');
+      }
+    }
+
+    await tx(async t => {
+      // Xoá theo thứ tự ngược để khoá ngoại không chặn.
+      for (const table of [...DUMP_TABLES].reverse()) await t.run(`DELETE FROM ${table}`);
+
+      for (const table of DUMP_TABLES) {
+        for (const row of dump.tables[table] ?? []) {
+          const cols = Object.keys(row);
+          if (!cols.length) continue;
+          await t.run(
+            `INSERT INTO ${table} (${cols.map(c => `"${c}"`).join(', ')})
+             VALUES (${cols.map((_, i) => '$' + (i + 1)).join(', ')})`,
+            cols.map(c => row[c])
+          );
+        }
+      }
+
+      /* Cột IDENTITY có bộ đếm riêng, chèn thẳng id không làm nó nhích. Không
+         đặt lại thì bản ghi mới sẽ trùng khoá chính.
+       *
+       * Lọc theo `is_identity = 'YES'`, không chỉ theo "có cột id". Hai bảng là
+       * ngoại lệ và cả hai đều từng làm lệnh này gãy: `settings` dùng `key` làm
+       * khoá chính nên không có cột `id` gì cả, còn `sessions.id` là TEXT (băm
+       * SHA-256 của mã phiên) nên `MAX(id)` không so được với số. Chỉ cột
+       * IDENTITY mới có bộ đếm cần đặt lại. */
+      const withId = (await t.all(`
+        SELECT table_name FROM information_schema.columns
+        WHERE table_schema = 'public' AND column_name = 'id'
+          AND is_identity = 'YES' AND table_name = ANY($1)
+      `, [DUMP_TABLES])).map(r => r.table_name);
+
+      for (const table of withId) {
+        await t.run(`
+          SELECT setval(pg_get_serial_sequence($1, 'id'),
+                        GREATEST((SELECT COALESCE(MAX(id), 0) FROM ${table}), 1))
+        `, [table]);
+      }
+    });
+
+    ok(`Đã khôi phục ${rows} dòng từ ${file}`);
+  },
+
   async 'purge:sessions'() {
-    ok(`Đã xoá ${purgeExpiredSessions()} phiên hết hạn.`);
+    ok(`Đã xoá ${await purgeExpiredSessions()} phiên hết hạn.`);
   },
 
   /* ================= Tài khoản ================= */
@@ -238,7 +357,7 @@ ${C.gold}${C.bold}AURIX${C.reset} — công cụ vận hành
     const user = await users.createUser({
       email, name, role: finalRole, password, mustChangePassword: generated
     });
-    audit({ action: 'user.create', target: `user:${user.id}`, detail: { via: 'cli', role: finalRole } });
+    await auditSync({ action: 'user.create', target: `user:${user.id}`, detail: { via: 'cli', role: finalRole } });
 
     ok(`Đã tạo ${user.email} · ${ROLES[user.role].label}`);
     if (generated) {
@@ -248,7 +367,7 @@ ${C.gold}${C.bold}AURIX${C.reset} — công cụ vận hành
   },
 
   async 'user:list'() {
-    const rows = users.listUsers();
+    const rows = await users.listUsers();
     if (!rows.length) return say('  Chưa có tài khoản nào. Tạo bằng: node server/cli.js user:create');
     title(`Tài khoản (${rows.length})`);
     for (const u of rows) {
@@ -269,7 +388,7 @@ ${C.gold}${C.bold}AURIX${C.reset} — công cụ vận hành
     if (!row) return bad('Không tìm thấy tài khoản.');
 
     users.updateUser(row.id, { role });
-    audit({ action: 'user.update', target: `user:${row.id}`, detail: { via: 'cli', role } });
+    await auditSync({ action: 'user.update', target: `user:${row.id}`, detail: { via: 'cli', role } });
     ok(`${email} → ${ROLES[role].label}. Tài khoản đã bị đăng xuất khỏi mọi thiết bị.`);
   },
 
@@ -285,7 +404,7 @@ ${C.gold}${C.bold}AURIX${C.reset} — công cụ vận hành
     if (generated) password = generatePassword();
 
     await users.setPassword(row.id, password, { mustChange: generated });
-    audit({ action: 'user.password.reset', target: `user:${row.id}`, detail: { via: 'cli' } });
+    await auditSync({ action: 'user.password.reset', target: `user:${row.id}`, detail: { via: 'cli' } });
 
     ok(`Đã đổi mật khẩu cho ${email}.`);
     if (generated) say(`\n  Mật khẩu tạm: ${C.bold}${C.gold}${password}${C.reset}\n`);
@@ -295,9 +414,9 @@ ${C.gold}${C.bold}AURIX${C.reset} — công cụ vận hành
     const [email] = args.filter(a => !a.startsWith('--'));
     const row = users.getUserByEmail(email || '');
     if (!row) return bad('Không tìm thấy tài khoản.');
-    users.updateUser(row.id, { active: false });
-    destroyUserSessions(row.id);
-    audit({ action: 'user.lock', target: `user:${row.id}`, detail: { via: 'cli' } });
+    await users.updateUser(row.id, { active: false });
+    await destroyUserSessions(row.id);
+    await auditSync({ action: 'user.lock', target: `user:${row.id}`, detail: { via: 'cli' } });
     ok(`Đã khoá ${email} và đăng xuất khỏi mọi thiết bị.`);
   },
 
@@ -306,7 +425,7 @@ ${C.gold}${C.bold}AURIX${C.reset} — công cụ vận hành
     const row = users.getUserByEmail(email || '');
     if (!row) return bad('Không tìm thấy tài khoản.');
     users.updateUser(row.id, { active: true });
-    audit({ action: 'user.unlock', target: `user:${row.id}`, detail: { via: 'cli' } });
+    await auditSync({ action: 'user.unlock', target: `user:${row.id}`, detail: { via: 'cli' } });
     ok(`Đã mở khoá ${email}.`);
   },
 
@@ -333,28 +452,28 @@ ${C.gold}${C.bold}AURIX${C.reset} — công cụ vận hành
   async 'settings:set'() {
     const [key, ...rest] = args.filter(a => !a.startsWith('--'));
     if (!key || !rest.length) return bad('Cú pháp: settings:set <khoá> <giá trị>');
-    const value = setSetting(key, rest.join(' '));
-    audit({ action: 'settings.update', detail: { via: 'cli', key, to: value } });
+    const value = await setSetting(key, rest.join(' '));
+    await auditSync({ action: 'settings.update', detail: { via: 'cli', key, to: value } });
     ok(`${key} = ${value}`);
   },
 
   async 'mail:status'() {
     title('Hàng đợi thư');
     say(`  SMTP    ${mailEnabled ? `${C.green}đã cấu hình${C.reset}` : `${C.yellow}chưa cấu hình (chế độ nháp)${C.reset}`}`);
-    const stats = mailStats();
+    const stats = await mailStats();
     for (const [status, count] of Object.entries(stats)) say(`  ${status.padEnd(8)}${count}`);
     if (!Object.keys(stats).length) say('  (hàng đợi trống)');
   },
 
   async 'mail:drain'() {
-    const before = mailStats().pending || 0;
+    const before = (await mailStats()).pending || 0;
     await drainOutbox();
-    const after = mailStats().pending || 0;
+    const after = (await mailStats()).pending || 0;
     ok(`Đã xử lý ${Math.max(0, before - after)} thư. Còn chờ: ${after}.`);
   },
 
   async 'audit:tail'() {
-    const rows = listAudit({ limit: Number(flag('limit', 50)), action: flag('action') });
+    const rows = await listAudit({ limit: Number(flag('limit', 50)), action: flag('action') });
     title(`Nhật ký kiểm toán (${rows.length})`);
     for (const r of rows.reverse()) {
       const mark = r.result === 'ok' ? `${C.green}✓${C.reset}` : `${C.red}✗${C.reset}`;
@@ -365,7 +484,7 @@ ${C.gold}${C.bold}AURIX${C.reset} — công cụ vận hành
 
   async 'audit:prune'() {
     const days = Number(flag('days', 365));
-    ok(`Đã xoá ${pruneAudit(days)} bản ghi cũ hơn ${days} ngày.`);
+    ok(`Đã xoá ${await pruneAudit(days)} bản ghi cũ hơn ${days} ngày.`);
   }
 };
 
@@ -381,6 +500,10 @@ try {
 } catch (error) {
   bad(error.message);
   if (process.env.AURIX_DEBUG) console.error(error);
+  await closeDb().catch(() => {});
   process.exit(1);
 }
+/* Đóng pool trước khi thoát: `pg` giữ socket mở nên tiến trình sẽ treo thay vì
+   kết thúc, và trên CI thì đó là một job chạy mãi không xong. */
+await closeDb().catch(() => {});
 process.exit(process.exitCode ?? 0);
