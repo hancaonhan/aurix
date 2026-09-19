@@ -90,6 +90,10 @@ node server/cli.js db:restore --file=<tệp> [--yes]    # XOÁ dữ liệu hiệ
 - **Vibe Host có nút "AI gợi ý biến" đọc `.env.example` rồi tự điền lại biến.**
   Nó từng dựng lại `AURIX_DB` trỏ vào đường dẫn VPS và làm container crash. Kiểm
   danh sách biến trước khi lưu, và giữ `.env.example` luôn khớp thực tế.
+- **Biến nào có mặt trong `.env.example` mà để TRỐNG thì auto-config của Vibe
+  Host coi là bắt buộc và chặn triển khai** (`auto-config thiếu env: ...`). Thêm
+  biến mới vào tệp đó thì cho luôn giá trị mặc định dùng được, hoặc nhớ khai
+  trên bảng điều khiển trước khi deploy.
 - **IP nhà mạng đổi thì mất kết nối CSDL từ máy phát triển.** Danh sách IP ở tab
   "Truy cập từ bên ngoài" của CSDL trên Vibe Host chặn im lặng — `pg` treo tới
   hết thời gian chờ rồi báo `Connection terminated due to connection timeout`.
