@@ -26,7 +26,7 @@ export const doLuong = [
       { type: 'p', text: 'Ba khoản hay bị bỏ sót nhất, xếp theo mức độ nghiêm trọng:' },
       { type: 'list', items: [
         'Lương đội ngũ. Một bạn chạy quảng cáo lương hai mươi triệu, dành một nửa thời gian cho kênh này, là mười triệu mỗi tháng phải tính vào.',
-        'Chi phí sản xuất nội dung. Ảnh, video, thiết kế — kể cả khi do người trong công ty làm.',
+        'Chi phí sản xuất nội dung. Ảnh, video, thiết kế, kể cả khi do người trong công ty làm.',
         'Hoa hồng và thưởng cho sales. Đây là chi phí thu hút khách, không phải chi phí vận hành.'
       ]},
 
@@ -52,7 +52,7 @@ export const doLuong = [
       ]},
 
       { type: 'h2', text: 'Vì sao con số này quan trọng hơn bạn nghĩ' },
-      { type: 'p', text: 'Khi chưa biết CAC thật, mọi cuộc thảo luận ngân sách đều là tranh cãi cảm tính. Có CAC rồi, câu hỏi đổi từ "có nên tăng ngân sách không" thành "tăng bao nhiêu thì vẫn giữ được tỉ lệ ba lần" — một câu hỏi có đáp án.' },
+      { type: 'p', text: 'Khi chưa biết CAC thật, mọi cuộc thảo luận ngân sách đều là tranh cãi cảm tính. Có CAC rồi, câu hỏi đổi từ "có nên tăng ngân sách không" thành "tăng bao nhiêu thì vẫn giữ được tỉ lệ ba lần", một câu hỏi có đáp án.' },
       { type: 'p', text: 'Và quan trọng hơn: khi bạn đẩy được dữ liệu doanh thu thật ngược về nền tảng quảng cáo, hệ thống của họ bắt đầu tìm những người giống khách hàng đã trả tiền, thay vì tìm người hay bấm. Đó là lúc CAC bắt đầu giảm mà không cần bạn làm gì thêm.' },
 
       { type: 'faq', items: [
@@ -79,7 +79,7 @@ export const doLuong = [
     level: 'Nền tảng',
     related: ['he-thong-marketing'],
     body: [
-      { type: 'p', text: 'Hai doanh nghiệp cùng chi năm triệu để có một khách. Một bên thấy đắt và cắt ngân sách. Bên kia thấy rẻ và tăng gấp đôi. Cả hai đều đúng — vì họ đang nhìn hai con số giá trị vòng đời hoàn toàn khác nhau.' },
+      { type: 'p', text: 'Hai doanh nghiệp cùng chi năm triệu để có một khách. Một bên thấy đắt và cắt ngân sách. Bên kia thấy rẻ và tăng gấp đôi. Cả hai đều đúng, vì họ đang nhìn hai con số giá trị vòng đời hoàn toàn khác nhau.' },
 
       { type: 'h2', text: 'Công thức' },
       { type: 'formula', text: 'LTV = Giá trị trung bình mỗi lần mua × Số lần mua mỗi năm × Số năm gắn bó × Biên lợi nhuận gộp' },
@@ -137,7 +137,7 @@ export const doLuong = [
         'Trình duyệt Safari và các trình duyệt riêng tư xoá dấu vết theo dõi sau bảy ngày, có khi sau hai mươi bốn giờ.',
         'Người dùng bấm từ chối trên bảng đồng ý cookie, và phần lớn họ bấm từ chối.',
         'Phần mềm chặn quảng cáo khiến mã đo lường không chạy được.',
-        'Khách xem trên điện thoại rồi mua trên máy tính, hoặc gọi điện thay vì điền form — không có đường nào nối hai hành vi lại.'
+        'Khách xem trên điện thoại rồi mua trên máy tính, hoặc gọi điện thay vì điền form, không có đường nào nối hai hành vi lại.'
       ]},
       { type: 'p', text: 'Cộng lại, tỉ lệ mất dấu trong ngành dịch vụ Việt Nam thường ở mức ba mươi tới năm mươi phần trăm. Nghĩa là một phần lớn quyết định ngân sách của bạn đang dựa trên dữ liệu không đầy đủ.' },
 
@@ -251,7 +251,7 @@ export const doLuong = [
         ['Chia đều', 'Mỗi điểm chạm phần bằng nhau', 'Chu kỳ dài, nhiều kênh ngang sức'],
         ['Giảm dần theo thời gian', 'Càng gần lúc chốt càng nhiều công', 'Đa số doanh nghiệp dịch vụ']
       ]},
-      { type: 'p', text: 'Với ngành dịch vụ có chu kỳ cân nhắc từ một tới bốn tuần, mô hình giảm dần theo thời gian thường phản ánh thực tế sát nhất. Nhưng đừng bỏ nhiều công sức chọn mô hình — điều quan trọng hơn nằm ở phần dưới.' },
+      { type: 'p', text: 'Với ngành dịch vụ có chu kỳ cân nhắc từ một tới bốn tuần, mô hình giảm dần theo thời gian thường phản ánh thực tế sát nhất. Nhưng đừng bỏ nhiều công sức chọn mô hình, điều quan trọng hơn nằm ở phần dưới.' },
 
       { type: 'h2', text: 'Phép thử duy nhất đáng tin' },
       { type: 'p', text: 'Mọi mô hình phân bổ đều là giả định. Chỉ có một cách kiểm chứng thật: tắt kênh đó đi và xem điều gì xảy ra.' },
@@ -261,7 +261,7 @@ export const doLuong = [
         { t: 'So tổng doanh thu, không so doanh thu kênh đó', d: 'Nếu tổng giảm đúng bằng phần kênh đó từng nhận, nó thật sự tạo ra nhu cầu. Nếu tổng gần như không đổi, nó chỉ đang nhận công của kênh khác.' },
         { t: 'Bật lại và ghi lại kết luận', d: 'Lặp lại với kênh tiếp theo sau một tháng. Mỗi quý bạn kiểm chứng được hai tới ba kênh.' }
       ]},
-      { type: 'note', tone: 'warn', text: 'Đừng tắt kênh thương hiệu — tức quảng cáo hiện ra khi khách gõ đúng tên bạn — để làm phép thử. Kênh này gần như luôn nhận công của kênh khác, nhưng tắt nó thường đồng nghĩa nhường khách cho đối thủ đang đấu giá trên chính tên bạn.' },
+      { type: 'note', tone: 'warn', text: 'Đừng tắt kênh thương hiệu, tức quảng cáo hiện ra khi khách gõ đúng tên bạn, để làm phép thử. Kênh này gần như luôn nhận công của kênh khác, nhưng tắt nó thường đồng nghĩa nhường khách cho đối thủ đang đấu giá trên chính tên bạn.' },
 
       { type: 'h2', text: 'Cách trình bày để không ai cãi nhau' },
       { type: 'p', text: 'Thay vì một bảng duy nhất, Aurix thường dùng hai bảng đặt cạnh nhau: một bảng theo điểm chạm đầu để đánh giá khả năng tạo nhu cầu, một bảng theo điểm chạm cuối để đánh giá khả năng chốt. Kênh nào mạnh ở bảng một mà yếu ở bảng hai thì nhiệm vụ của nó là mở tệp, đừng bắt nó gánh chỉ tiêu doanh số.' },

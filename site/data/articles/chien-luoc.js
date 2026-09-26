@@ -47,7 +47,7 @@ export const chienLuoc = [
       ]},
 
       { type: 'h2', text: 'Ba cạm bẫy' },
-      { type: 'p', text: 'Thứ nhất, đổi quá nhiều thứ cùng lúc rồi không biết cái nào có tác dụng. Thứ hai, đánh giá kết quả quá sớm — ngành dịch vụ có độ trễ từ khi khách biết tới khi khách trả tiền, thường là hai tới sáu tuần. Thứ ba, bỏ dở giai đoạn một vì nó không cho kết quả nhìn thấy được.' },
+      { type: 'p', text: 'Thứ nhất, đổi quá nhiều thứ cùng lúc rồi không biết cái nào có tác dụng. Thứ hai, đánh giá kết quả quá sớm, ngành dịch vụ có độ trễ từ khi khách biết tới khi khách trả tiền, thường là hai tới sáu tuần. Thứ ba, bỏ dở giai đoạn một vì nó không cho kết quả nhìn thấy được.' },
 
       { type: 'quote', text: 'Bơm thêm nước vào thùng thủng là cách nhanh nhất để kết luận sai rằng thị trường đã bão hoà.', cite: 'Nguyên tắc làm việc của Aurix' },
 
@@ -69,7 +69,7 @@ export const chienLuoc = [
     level: 'Chiến lược',
     related: ['he-thong-marketing', 'sieu-chuyen-doi'],
     body: [
-      { type: 'p', text: 'Trong ba cách tăng lợi nhuận — bán cho nhiều người hơn, bán nhiều hơn cho mỗi người, và bán với giá cao hơn — cách thứ ba có tác động mạnh nhất và tốn ít công nhất. Nó cũng là cách gây sợ hãi nhất, nên hiếm khi được dùng.' },
+      { type: 'p', text: 'Trong ba cách tăng lợi nhuận, bán cho nhiều người hơn, bán nhiều hơn cho mỗi người, và bán với giá cao hơn, cách thứ ba có tác động mạnh nhất và tốn ít công nhất. Nó cũng là cách gây sợ hãi nhất, nên hiếm khi được dùng.' },
 
       { type: 'h2', text: 'Phép tính cho thấy mức độ đòn bẩy' },
       { type: 'p', text: 'Giả sử doanh thu một tỉ, chi phí tám trăm triệu, lợi nhuận hai trăm triệu. Tăng giá năm phần trăm, giữ nguyên lượng khách:' },

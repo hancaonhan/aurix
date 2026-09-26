@@ -112,7 +112,7 @@ export function articlePage(a) {
       <a href="/kien-thuc/?chu-de=${encodeURIComponent(a.topic)}" style="color:var(--gold-300)">${esc(a.topic)}</a>
     </nav>
     <p class="eyebrow"><span class="spark" aria-hidden="true"></span>${esc(a.topic)}${a.level && a.level !== a.topic ? ` · ${esc(a.level)}` : ''}</p>
-    <h1 style="font-size:clamp(30px,4.6vw,52px)">${esc(a.title)}</h1>
+    <h1 class="page-title">${esc(a.title)}</h1>
     <p class="lead" style="margin-top:20px">${esc(a.excerpt)}</p>
     <p class="article-meta">
       <time datetime="${attr(a.date)}">${fmtDate(a.date)}</time>
@@ -276,7 +276,7 @@ export function articlesIndexPage() {
   <div class="hero-aurora" aria-hidden="true"></div>
   <div class="wrap wrap-narrow" style="text-align:center">
     <p class="eyebrow" style="justify-content:center"><span class="spark" aria-hidden="true"></span>Kiến thức · ${articles.length} bài</p>
-    <h1 style="font-size:clamp(34px,5.4vw,58px)">Những câu khách hỏi nhiều nhất, trả lời cho hết</h1>
+    <h1 class="page-title">Những câu khách hỏi nhiều nhất, trả lời cho hết</h1>
     <p class="lead" style="margin:24px auto 0">Mỗi bài là một câu hỏi chúng tôi nghe đi nghe lại trong lúc làm việc với khách. Có công thức, có con số, đủ để bạn tự làm.</p>
   </div>
 </section>

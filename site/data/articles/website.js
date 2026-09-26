@@ -28,7 +28,7 @@ export const website = [
         'Form hỏi quá nhiều. Mỗi trường bạn thêm vào là một phần chuyển đổi mất đi.',
         'Trang tải chậm trên điện thoại. Phần lớn khách vào bằng 4G, không phải bằng máy tính văn phòng.',
         'Không có gì cho người chưa sẵn sàng mua. Phần lớn người xem chưa muốn mua hôm nay, và bạn không cho họ lý do nào để quay lại.',
-        'Khách để lại thông tin nhưng không ai gọi kịp. Trang không sai — khâu sau mới sai.'
+        'Khách để lại thông tin nhưng không ai gọi kịp. Trang không sai, khâu sau mới sai.'
       ]},
 
       { type: 'h2', text: 'Cách tự kiểm tra trong ba mươi phút' },
@@ -51,7 +51,7 @@ export const website = [
         ['6', 'Tối ưu tốc độ tải', '4 – 6 tuần'],
         ['7', 'Thiết kế lại toàn trang', '2 – 3 tháng']
       ]},
-      { type: 'p', text: 'Để ý rằng việc đắt nhất và mất thời gian nhất — thiết kế lại toàn trang — lại nằm cuối cùng. Phần lớn doanh nghiệp bắt đầu từ đó, và đó là lý do họ tốn nhiều mà đổi thay ít.' },
+      { type: 'p', text: 'Để ý rằng việc đắt nhất và mất thời gian nhất, thiết kế lại toàn trang, lại nằm cuối cùng. Phần lớn doanh nghiệp bắt đầu từ đó, và đó là lý do họ tốn nhiều mà đổi thay ít.' },
 
       { type: 'cta', text: 'Bài chẩn đoán sẽ chỉ ra bạn đang mắc ở chỗ nào trong bảy chỗ trên, và chỗ đó đang tốn bao nhiêu tiền mỗi tháng.' }
     ]
@@ -138,7 +138,7 @@ export const website = [
       { type: 'p', text: 'Lỗi thường gặp là viết về mình: "Chúng tôi là đơn vị hàng đầu trong lĩnh vực…". Khối mở đầu phải nói được ba điều trong một câu: bạn giúp ai, giúp đạt tới đâu, và bằng cách gì khác biệt. Nếu đối thủ có thể dán câu đó lên trang của họ mà không sai chỗ nào, câu đó chưa dùng được.' },
 
       { type: 'h3', text: 'Chi phí' },
-      { type: 'p', text: 'Giấu giá là bản năng tự nhiên, và nó khiến bạn mất đúng nhóm khách tốt nhất — nhóm biết mình muốn gì và không thích phải hỏi. Nếu không thể đưa giá chính xác, hãy đưa khoảng giá kèm những yếu tố quyết định khách rơi vào đâu trong khoảng đó.' },
+      { type: 'p', text: 'Giấu giá là bản năng tự nhiên, và nó khiến bạn mất đúng nhóm khách tốt nhất, nhóm biết mình muốn gì và không thích phải hỏi. Nếu không thể đưa giá chính xác, hãy đưa khoảng giá kèm những yếu tố quyết định khách rơi vào đâu trong khoảng đó.' },
 
       { type: 'h3', text: 'Ai không phù hợp' },
       { type: 'p', text: 'Phần này gần như không ai làm, và nó là phần tạo ra nhiều niềm tin nhất. Nói thẳng rằng bạn không phù hợp với nhóm nào chứng minh rằng bạn có tiêu chuẩn, đồng thời lọc bớt những cuộc gọi vô ích cho đội tư vấn.' },

@@ -4,7 +4,7 @@ import { overlayObject } from '../lib/overlay.js';
 const RAW_framework = {
   code: 'A.U.R.I.X',
   name: 'Aurix Growth OS',
-  promise: 'Năm tầng của một cỗ máy tăng trưởng, xếp đúng thứ tự phải làm. Thiếu một tầng, cả hệ thống rò rỉ.',
+  promise: 'Năm phần việc, sắp theo thứ tự nên làm. Làm tốt phần trước thì phần sau mới phát huy.',
   // Câu này giải thích vì sao Reach đứng thứ ba chứ không đứng đầu —
   // và vì sao Aurix không nhận chạy quảng cáo lẻ.
   principle: 'Đừng mua traffic khi chưa có nơi đón và chưa có thước đo.',

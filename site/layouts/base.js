@@ -8,7 +8,7 @@ export const BUILD = process.env.AURIX_BUILD || Date.now().toString(36);
 const CRITICAL = `
 :root{--ink-800:#0B1220;--gold-300:#E8C468;--fg:#F4F6FA}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:#0B1220;color:#F4F6FA;font-family:'Be Vietnam Pro','Segoe UI',system-ui,sans-serif;font-size:17px;line-height:1.72}
+body{margin:0;background:#0B1220;color:#F4F6FA;font-family:'Be Vietnam Pro','Segoe UI',system-ui,sans-serif;font-size:17px;line-height:1.72}@media(max-width:720px){body{font-size:15.5px;line-height:1.65}h1{font-size:28px}.nav{height:64px}.brand img{height:30px}.hero{padding-block:92px 36px}}
 .site-header{position:fixed;inset:0 0 auto;z-index:100}
 .nav{display:flex;align-items:center;gap:28px;height:80px;max-width:1240px;margin-inline:auto;padding-inline:clamp(20px,5vw,64px)}
 .brand img{height:38px;width:auto;display:block}
@@ -252,6 +252,7 @@ ${noindex ? '<meta name="robots" content="noindex, nofollow">' : '<meta name="ro
 <meta property="og:image" content="${attr(site.origin + ogImage)}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="${attr(fullTitle)}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${attr(fullTitle)}">
 <meta name="twitter:description" content="${attr(description)}">

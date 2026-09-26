@@ -32,7 +32,7 @@ const RAW_industryDetail = {
   'nha-khoa': {
     slug: 'nha-khoa',
     seoTitle: 'Marketing cho Phòng khám Nha khoa và Y tế',
-    seoDesc: 'Aurix thiết kế phễu tập trung vào ca giá trị cao cho phòng khám nha khoa: implant, chỉnh nha, thẩm mỹ răng — với bằng chứng chuyên môn đủ mạnh.',
+    seoDesc: 'Aurix thiết kế phễu tập trung vào ca giá trị cao cho phòng khám nha khoa: implant, chỉnh nha, thẩm mỹ răng, với bằng chứng chuyên môn đủ mạnh.',
     challengeTitle: 'Lead thì nhiều, ca lớn thì hiếm',
     challengeLead: 'Vấn đề của phòng khám không phải thiếu người hỏi, mà là người hỏi không đúng loại.',
     challenges: [
@@ -65,7 +65,7 @@ const RAW_industryDetail = {
       U: 'Theo dõi phụ huynh từ lần chạm đầu tới lúc đóng học phí, qua nhiều tháng',
       R: 'Nội dung hữu ích cho phụ huynh ngay cả khi họ chưa định đăng ký',
       I: 'Offer là buổi học thử có báo cáo đánh giá năng lực, không phải học thử suông',
-      X: 'Kịch bản chăm sóc sau buổi học thử — nơi phần lớn trung tâm đánh rơi khách'
+      X: 'Kịch bản chăm sóc sau buổi học thử, nơi phần lớn trung tâm đánh rơi khách'
     }
   },
 
@@ -105,7 +105,7 @@ const RAW_industryDetail = {
       U: 'Theo dõi khách qua nhiều mùa, biết ai sắp tới chu kỳ đi lại tiếp theo',
       R: 'Mua từ khoá theo điểm đến và theo mùa, không rải đều quanh năm',
       I: 'Offer là tư vấn lộ trình riêng, không phải danh sách tour có sẵn',
-      X: 'Tối ưu luồng từ lúc hỏi tới lúc đặt cọc — nơi rơi rớt nhiều nhất'
+      X: 'Tối ưu luồng từ lúc hỏi tới lúc đặt cọc, nơi rơi rớt nhiều nhất'
     }
   },
 

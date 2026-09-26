@@ -30,7 +30,7 @@ const RAW_packages = [
   {
     key: 'he-thong',
     name: 'Hệ thống',
-    tagline: 'Dựng cỗ máy đủ tầng, từ bản sắc tới chốt sale',
+    tagline: 'Làm trọn các tầng, từ thương hiệu tới chốt sale',
     duration: '3 – 4 tháng',
     popular: true,
     forWho: 'Doanh nghiệp đang chạm trần tăng trưởng, muốn xây một tài sản dùng được nhiều năm thay vì thuê dịch vụ theo tháng.',

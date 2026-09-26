@@ -25,7 +25,7 @@ export function industryPage(ind) {
     <div class="hero-grid" style="grid-template-columns:1.05fr 0.95fr">
       <div>
         <p class="eyebrow"><span class="spark" aria-hidden="true"></span>${esc(ind.label)}</p>
-        <h1 style="font-size:clamp(32px,5vw,56px)">${esc(ind.heroLine)}</h1>
+        <h1 class="page-title">${esc(ind.heroLine)}</h1>
         <p class="lead" style="margin-top:22px">${esc(ind.heroSub)}</p>
         <div class="hero-actions">
           ${btn({ href: cta.primary.href, label: 'Chẩn đoán cho ngành này', size: 'lg' })}
@@ -97,7 +97,7 @@ export function industryPage(ind) {
 ${cases.length ? `
 <section id="du-an">
   <div class="wrap">
-    ${sectionHead({ eyebrow: 'Dự án trong ngành', title: 'Chúng tôi đã làm việc này rồi', center: true })}
+    ${sectionHead({ eyebrow: 'Dự án trong ngành', title: 'Dự án cùng ngành', center: true })}
     <div class="grid g-3">${map(cases, (p, i) => projectCard(p, i))}</div>
   </div>
 </section>` : ''}
@@ -150,8 +150,8 @@ export function industriesIndexPage() {
   <div class="hero-aurora" aria-hidden="true"></div>
   <div class="wrap wrap-narrow" style="text-align:center">
     <p class="eyebrow" style="justify-content:center"><span class="spark" aria-hidden="true"></span>Ngành chuyên sâu</p>
-    <h1 style="font-size:clamp(34px,5.4vw,58px)">Chúng tôi đi sâu, không đi rộng</h1>
-    <p class="lead" style="margin:24px auto 0">Aurix tập trung vào những ngành dịch vụ có giá trị hợp đồng cao và chu kỳ ra quyết định dài — nơi một hệ thống tốt tạo ra khác biệt lớn nhất, và nơi chúng tôi đã đủ số lần lặp để biết chỗ nào thường rò rỉ.</p>
+    <h1 class="page-title">Các ngành Aurix phục vụ</h1>
+    <p class="lead" style="margin:24px auto 0">Aurix tập trung vào những ngành dịch vụ có giá trị hợp đồng cao và chu kỳ ra quyết định dài, nơi một hệ thống tốt tạo ra khác biệt lớn nhất, và nơi chúng tôi đã đủ số lần lặp để biết chỗ nào thường rò rỉ.</p>
   </div>
 </section>
 
@@ -182,8 +182,8 @@ ${ctaBand()}`;
 
   return layout({
     url: '/nganh/',
-    title: 'Ngành Aurix phục vụ — Spa, Nha khoa, Giáo dục, Fitness, Du lịch',
-    description: 'Aurix xây hệ thống marketing chuyên sâu cho spa, nha khoa, giáo dục, fitness, du lịch và bất động sản — những ngành dịch vụ có giá trị hợp đồng cao.',
+    title: 'Ngành Aurix phục vụ: Spa, Nha khoa, Giáo dục, Fitness, Du lịch',
+    description: 'Aurix xây hệ thống marketing chuyên sâu cho spa, nha khoa, giáo dục, fitness, du lịch và bất động sản, những ngành dịch vụ có giá trị hợp đồng cao.',
     breadcrumbs: [{ name: 'Trang chủ', url: '/' }, { name: 'Ngành', url: '/nganh/' }],
     schema: [{
       '@type': 'ItemList',

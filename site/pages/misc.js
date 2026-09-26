@@ -12,7 +12,7 @@ const pageHero = ({ eyebrow, title, lead }) => `
   <div class="hero-aurora" aria-hidden="true"></div>
   <div class="wrap wrap-narrow" style="text-align:center">
     <p class="eyebrow" style="justify-content:center"><span class="spark" aria-hidden="true"></span>${esc(eyebrow)}</p>
-    <h1 style="font-size:clamp(34px,5.4vw,62px)">${title}</h1>
+    <h1 class="page-title">${title}</h1>
     ${lead ? `<p class="lead" style="margin:24px auto 0">${lead}</p>` : ''}
   </div>
 </section>`;
@@ -22,7 +22,7 @@ export function methodPage() {
   const body = `
 ${pageHero({
   eyebrow: 'Phương pháp độc quyền',
-  title: '<span class="serif gold-text">A.U.R.I.X</span> — cách chúng tôi biến marketing thành một cỗ máy',
+  title: 'Phương pháp <span class="serif gold-text">A.U.R.I.X</span>',
   lead: framework.promise
 })}
 
@@ -92,7 +92,7 @@ ${ctaBand()}`;
 
   return layout({
     url: '/phuong-phap/',
-    title: 'Phương pháp A.U.R.I.X — Khung xây hệ thống tăng trưởng của Aurix',
+    title: 'Phương pháp A.U.R.I.X | Aurix',
     description: 'A.U.R.I.X là khung năm tầng Aurix dùng để xây hệ thống tăng trưởng: Adapt, Unify, Reach, Ignite, Xpand. Mỗi tầng gắn với một chỉ số đo được.',
     breadcrumbs: [{ name: 'Trang chủ', url: '/' }, { name: 'Phương pháp', url: '/phuong-phap/' }],
     body
@@ -104,8 +104,8 @@ export function projectsIndexPage() {
   const body = `
 ${pageHero({
   eyebrow: 'Dự án',
-  title: 'Hệ thống chúng tôi đã xây, và con số chúng đã tạo ra',
-  lead: 'Mỗi dự án dưới đây là một cỗ máy hoàn chỉnh: chiến lược, thiết kế, kỹ thuật và dữ liệu. Không có dự án nào chỉ là một website.'
+  title: 'Dự án tiêu biểu',
+  lead: 'Mỗi dự án gồm chiến lược, thiết kế, kỹ thuật và đo lường, kèm số liệu sau khi vận hành.'
 })}
 
 <section style="padding-top:0">
@@ -132,14 +132,14 @@ ${ctaBand({
 
   return layout({
     url: '/du-an/',
-    title: 'Dự án tiêu biểu — Hệ thống marketing Aurix đã triển khai',
+    title: 'Dự án tiêu biểu: Hệ thống marketing Aurix đã triển khai',
     description: 'Xem các hệ thống marketing, web cá nhân hoá và landing page Aurix đã xây cho spa, nha khoa, giáo dục, fitness, du lịch và nội thất cao cấp.',
     breadcrumbs: [{ name: 'Trang chủ', url: '/' }, { name: 'Dự án', url: '/du-an/' }],
     extraJs: ['/js/filter.js'],
     schema: [{
       '@type': 'ItemList',
       itemListElement: projects.map((p, i) => ({
-        '@type': 'ListItem', position: i + 1, name: `${p.client} — ${p.title}`, url: `${site.origin}/du-an/${p.slug}/`
+        '@type': 'ListItem', position: i + 1, name: `${p.client}: ${p.title}`, url: `${site.origin}/du-an/${p.slug}/`
       }))
     }],
     body
@@ -162,7 +162,7 @@ export function projectPage(p) {
     </nav>
     <div class="wrap-narrow" style="padding:0;margin:0">
       <p class="eyebrow"><span class="spark" aria-hidden="true"></span>${esc(p.industry)}</p>
-      <h1 style="font-size:clamp(32px,5vw,56px)">${esc(p.title)}</h1>
+      <h1 class="page-title">${esc(p.title)}</h1>
       <p class="lead" style="margin-top:22px">${esc(p.summary)}</p>
     </div>
     <div class="stat-row" style="margin-top:44px;grid-template-columns:repeat(${p.results.length},1fr)" data-reveal>
@@ -222,7 +222,7 @@ ${ctaBand()}`;
 
   return layout({
     url,
-    title: shorten(`${p.client} — ${p.title}`, 50) + ' | Dự án Aurix',
+    title: `Dự án ${p.client}: ngành ${p.industry.toLowerCase()} | Aurix`,
     description: shorten(`${p.summary} Kết quả: ${p.results.map(r => `${r.value} ${r.label.toLowerCase()}`).join(', ')}.`, 160),
     breadcrumbs: [
       { name: 'Trang chủ', url: '/' },
@@ -232,7 +232,7 @@ ${ctaBand()}`;
     schema: [{
       '@type': 'CreativeWork',
       '@id': `${site.origin}${url}#project`,
-      name: `${p.client} — ${p.title}`,
+      name: `${p.client}: ${p.title}`,
       description: p.summary,
       url: site.origin + url,
       image: site.origin + p.imageFallback,
@@ -248,7 +248,7 @@ export function aboutPage() {
   const body = `
 ${pageHero({
   eyebrow: 'Về Aurix',
-  title: 'Chúng tôi là kỹ sư tăng trưởng, không phải xưởng nội dung',
+  title: 'Về Aurix',
   lead: 'Aurix được lập ra vì một điều đơn giản: phần lớn doanh nghiệp dịch vụ Việt Nam không thiếu ý tưởng marketing. Họ thiếu một hệ thống để những ý tưởng đó tạo ra doanh thu đo được.'
 })}
 
@@ -279,8 +279,8 @@ ${pageHero({
   <div class="wrap">
     <div class="grid g-2" style="gap:clamp(32px,5vw,68px);align-items:start">
       <div>
-        ${sectionHead({ eyebrow: 'Điều chúng tôi tin', title: 'Marketing là kỹ thuật, không phải may rủi' })}
-        <p class="lead" style="font-size:17px">Một chiến dịch có thể may mắn. Một hệ thống thì không cần may mắn — nó tạo ra kết quả lặp lại được, đo được và bàn giao được.</p>
+        ${sectionHead({ eyebrow: 'Điều chúng tôi tin', title: 'Cách chúng tôi làm việc' })}
+        <p class="lead" style="font-size:17px">Một chiến dịch có thể may mắn. Một hệ thống thì không cần may mắn, nó tạo ra kết quả lặp lại được, đo được và bàn giao được.</p>
         <p class="lead" style="font-size:17px;margin-top:18px">Vì vậy Aurix đặt chiến lược, thiết kế, kỹ thuật và dữ liệu trong cùng một phòng. Người viết nội dung ngồi cạnh người dựng hạ tầng đo lường, và cả hai cùng nhìn một bảng doanh thu.</p>
       </div>
       <div class="grid" style="gap:20px">
@@ -298,7 +298,7 @@ ${teamSection()}
 
 <section>
   <div class="wrap">
-    ${sectionHead({ eyebrow: 'Chuyên môn ngành', title: 'Chúng tôi đi sâu, không đi rộng', lead: 'Aurix tập trung vào các ngành dịch vụ có giá trị hợp đồng cao và chu kỳ ra quyết định dài — nơi một hệ thống tốt tạo ra khác biệt lớn nhất.', center: true })}
+    ${sectionHead({ eyebrow: 'Chuyên môn ngành', title: 'Các ngành Aurix phục vụ', lead: 'Aurix tập trung vào các ngành dịch vụ có giá trị hợp đồng cao và chu kỳ ra quyết định dài, nơi một hệ thống tốt tạo ra khác biệt lớn nhất.', center: true })}
     <div class="grid g-3">
       ${map(industries, (ind, i) => `
       <article class="card" data-reveal style="--delay:${i * 70}ms">
@@ -335,7 +335,7 @@ ${ctaBand()}`;
 
   return layout({
     url: '/ve-aurix/',
-    title: 'Về Aurix — Agency xây hệ thống tăng trưởng',
+    title: 'Về Aurix: Agency xây hệ thống tăng trưởng',
     description: 'Aurix là đội ngũ chiến lược, thiết kế, kỹ thuật và dữ liệu xây hệ thống marketing cho doanh nghiệp dịch vụ cao cấp tại Việt Nam. Mỗi quý chỉ nhận sáu dự án.',
     breadcrumbs: [{ name: 'Trang chủ', url: '/' }, { name: 'Về Aurix', url: '/ve-aurix/' }],
     body
@@ -347,7 +347,7 @@ export function contactPage() {
   const body = `
 ${pageHero({
   eyebrow: 'Liên hệ',
-  title: 'Bắt đầu bằng một cuộc trò chuyện thẳng thắn',
+  title: 'Liên hệ Aurix',
   lead: 'Hãy cho chúng tôi biết bạn đang ở đâu. Nếu Aurix không phải lựa chọn phù hợp, chúng tôi sẽ nói thẳng và giới thiệu hướng khác.'
 })}
 
@@ -424,7 +424,7 @@ ${pageHero({
 
         <div class="card">
           <h3 style="font-size:19px;margin-bottom:12px">Chưa sẵn sàng trao đổi?</h3>
-          <p style="font-size:15px">Làm bài chẩn đoán tám câu hỏi. Bạn sẽ nhận ngay bảng điểm hệ thống và ước tính số tiền đang thất thoát mỗi tháng — không cần nói chuyện với ai.</p>
+          <p style="font-size:15px">Làm bài chẩn đoán tám câu hỏi. Bạn sẽ nhận ngay bảng điểm hệ thống và ước tính số tiền đang thất thoát mỗi tháng, không cần nói chuyện với ai.</p>
           <p style="margin-top:20px">${btn({ href: '/chan-doan/', label: 'Làm bài chẩn đoán', variant: 'ghost' })}</p>
         </div>
       </div>
@@ -434,7 +434,7 @@ ${pageHero({
 
   return layout({
     url: '/lien-he/',
-    title: 'Liên hệ Aurix — Đặt lịch tư vấn hệ thống tăng trưởng',
+    title: 'Liên hệ Aurix: Đặt lịch tư vấn hệ thống tăng trưởng',
     description: `Liên hệ Aurix để đặt lịch tư vấn xây hệ thống marketing. Điện thoại ${site.phone}, email ${site.email}, văn phòng tại ${site.address.city}.`,
     breadcrumbs: [{ name: 'Trang chủ', url: '/' }, { name: 'Liên hệ', url: '/lien-he/' }],
     extraJs: ['/js/form.js'],
@@ -461,7 +461,7 @@ ${pageHero({
   <div class="wrap">
     <div class="grid g-3">
       ${map([
-        { t: 'Phương pháp A.U.R.I.X', d: 'Năm tầng của một cỗ máy tăng trưởng, và cách chúng tôi đo từng tầng.', h: '/phuong-phap/' },
+        { t: 'Phương pháp A.U.R.I.X', d: 'Năm tầng công việc và cách chúng tôi đo từng tầng.', h: '/phuong-phap/' },
         { t: 'Dự án tiêu biểu', d: 'Những hệ thống Aurix đã xây và con số chúng tạo ra.', h: '/du-an/' },
         { t: 'Bài chẩn đoán', d: 'Tám câu hỏi để biết hệ thống của bạn đang rò rỉ ở tầng nào.', h: '/chan-doan/' }
       ], (c, i) => `
@@ -507,7 +507,7 @@ ${pageHero({
   return layout({
     url: '/404.html',
     title: 'Không tìm thấy trang | Aurix',
-    description: 'Trang bạn tìm không tồn tại.',
+    description: 'Trang bạn tìm không tồn tại hoặc đã đổi địa chỉ. Quay lại trang chủ Aurix hoặc xem dịch vụ, dự án và bài viết.',
     noindex: true,
     body
   });

@@ -3,11 +3,11 @@ import { overlay } from '../lib/overlay.js';
 // Dùng chung cho frontend (render) và backend (chấm điểm) — một nguồn sự thật.
 
 export const LAYERS = {
-  adapt: { letter: 'A', name: 'Attract — Bản sắc & Giữ chân', service: '/dich-vu/web-ca-nhan-hoa/' },
-  unify: { letter: 'U', name: 'Unify — Dữ liệu & Đo lường', service: '/dich-vu/he-thong-marketing/' },
-  reach: { letter: 'R', name: 'Reach — Kênh tiếp cận & Ngân sách', service: '/dich-vu/phu-song-da-kenh/' },
-  ignite: { letter: 'I', name: 'Ignite — Offer & Trang đích', service: '/dich-vu/landing-page/' },
-  xpand: { letter: 'X', name: 'Xpand — Chốt sale & Tối ưu', service: '/dich-vu/sieu-chuyen-doi/' }
+  adapt: { letter: 'A', name: 'Attract: Bản sắc & Giữ chân', service: '/dich-vu/web-ca-nhan-hoa/' },
+  unify: { letter: 'U', name: 'Unify: Dữ liệu & Đo lường', service: '/dich-vu/he-thong-marketing/' },
+  reach: { letter: 'R', name: 'Reach: Kênh tiếp cận & Ngân sách', service: '/dich-vu/phu-song-da-kenh/' },
+  ignite: { letter: 'I', name: 'Ignite: Offer & Trang đích', service: '/dich-vu/landing-page/' },
+  xpand: { letter: 'X', name: 'Xpand: Chốt sale & Tối ưu', service: '/dich-vu/sieu-chuyen-doi/' }
 };
 
 /**

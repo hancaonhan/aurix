@@ -5,7 +5,7 @@ const RAW_services = [
     layer: 'A',
     kicker: 'Tầng ATTRACT',
     name: 'Web Cá nhân hoá',
-    tagline: 'Website mang đúng bản sắc của bạn — và giữ người ta ở lại.',
+    tagline: 'Website mang đúng bản sắc của bạn, và giữ người ta ở lại.',
     seoTitle: 'Thiết kế Web cá nhân hoá theo bản sắc thương hiệu',
     seoDesc: 'Aurix thiết kế website riêng theo bản sắc từng thương hiệu, không dùng mẫu có sẵn. Khách ở lại lâu hơn, nhớ lâu hơn và tin trước khi bạn kịp bán.',
     icon: 'attract',
@@ -21,7 +21,7 @@ const RAW_services = [
     },
     solution: {
       title: 'Bản sắc riêng, dựng thành một trải nghiệm có chủ đích',
-      desc: 'Aurix không bắt đầu từ một mẫu có sẵn rồi thay màu. Chúng tôi bắt đầu từ chính thứ làm nên thương hiệu bạn — cách bạn phục vụ, kiểu khách bạn muốn, điều bạn làm tốt hơn người khác — rồi dựng toàn bộ hệ thống thị giác và nhịp trải nghiệm quanh đó.',
+      desc: 'Aurix không bắt đầu từ một mẫu có sẵn rồi thay màu. Chúng tôi bắt đầu từ chính thứ làm nên thương hiệu bạn: cách bạn phục vụ, kiểu khách bạn muốn, điều bạn làm tốt hơn người khác, rồi dựng toàn bộ hệ thống thị giác và nhịp trải nghiệm quanh đó.',
       pillars: [
         { title: 'Tìm ra bản sắc thật', desc: 'Phỏng vấn ban điều hành và khách hàng trung thành để tìm điều khiến họ chọn bạn thay vì người khác. Đó mới là thứ đáng đem lên website.' },
         { title: 'Hệ thống thị giác riêng', desc: 'Bảng màu, chữ, ảnh, chuyển động và ngôn ngữ đồ hoạ được dựng riêng. Che logo đi vẫn nhận ra là bạn.' },
@@ -56,7 +56,7 @@ const RAW_services = [
     layer: 'U',
     kicker: 'Tầng UNIFY',
     name: 'Xây hệ thống Marketing',
-    tagline: 'Ngừng mua lượt click. Bắt đầu vận hành một cỗ máy.',
+    tagline: 'Quảng cáo, chăm sóc khách và báo cáo nối liền với nhau.',
     seoTitle: 'Xây hệ thống Marketing tổng thể',
     seoDesc: 'Aurix hợp nhất website, quảng cáo, nội dung, CRM và doanh thu thành một hệ thống đo được. Mỗi đồng ngân sách truy vết tới từng đơn hàng.',
     icon: 'unify',
@@ -107,7 +107,7 @@ const RAW_services = [
     kicker: 'Tầng REACH',
     name: 'Phủ sóng đa kênh',
     tagline: 'Đúng người, đúng lúc, đúng giá. Không mua lượt xem.',
-    seoTitle: 'Phủ sóng đa kênh — Nội dung, quảng cáo và SEO',
+    seoTitle: 'Phủ sóng đa kênh: Nội dung, quảng cáo và SEO',
     seoDesc: 'Aurix đưa thương hiệu của bạn đến đúng nhóm khách sẵn sàng chi trả, qua nội dung, quảng cáo và tìm kiếm, vận hành dưới một thông điệp và một thước đo duy nhất.',
     icon: 'reach',
     image: '/assets/aurix-marketing-funnel.png',
@@ -125,7 +125,7 @@ const RAW_services = [
       desc: 'Aurix chỉ mở kênh sau khi bạn đã có bản sắc để thể hiện và hệ thống để đo. Khi đó mỗi đồng chi ra đều truy vết được, và mỗi kênh đều khuếch đại kênh còn lại thay vì cạnh tranh ngân sách với nhau.',
       pillars: [
         { title: 'Chọn kênh theo khách, không theo trào lưu', desc: 'Chúng tôi tìm nơi nhóm khách giá trị cao của bạn thật sự dành thời gian, rồi dồn lực vào hai tới ba kênh đó thay vì rải mỏng khắp nơi.' },
-        { title: 'Một trục nội dung, nhiều định dạng', desc: 'Mỗi quý có một thông điệp trung tâm. Từ đó nhân ra bài dài, video ngắn, bài quảng cáo và nội dung tìm kiếm — cùng một câu chuyện, kể theo cách phù hợp từng nơi.' },
+        { title: 'Một trục nội dung, nhiều định dạng', desc: 'Mỗi quý có một thông điệp trung tâm. Từ đó nhân ra bài dài, video ngắn, bài quảng cáo và nội dung tìm kiếm, cùng một câu chuyện, kể theo cách phù hợp từng nơi.' },
         { title: 'Mua traffic bằng dữ liệu doanh thu', desc: 'Dữ liệu chuyển đổi thật được đẩy ngược về nền tảng quảng cáo, để hệ thống học cách tìm người giống khách hàng đã trả tiền, chứ không phải người hay bấm.' },
         { title: 'Nhịp sản xuất đều đặn', desc: 'Lịch nội dung theo quý, kiểm duyệt theo tuần, báo cáo hiệu quả theo kênh. Không phụ thuộc vào cảm hứng của ai.' }
       ]
@@ -227,7 +227,7 @@ const RAW_services = [
       pillars: [
         { title: 'Xếp hạng điểm rò rỉ', desc: 'Tính ra mỗi điểm rò rỉ đang lấy đi bao nhiêu tiền một tháng, rồi sửa từ đắt nhất xuống.' },
         { title: 'Thử nghiệm đủ mẫu', desc: 'Chạy tới ngưỡng có ý nghĩa thống kê. Không kết luận sớm, không tự lừa mình bằng dữ liệu nhiễu.' },
-        { title: 'Tối ưu cả tầng con người', desc: 'Kịch bản tư vấn, tốc độ phản hồi, cách xử lý từ chối — thường là tầng sinh lời nhanh nhất.' },
+        { title: 'Tối ưu cả tầng con người', desc: 'Kịch bản tư vấn, tốc độ phản hồi, cách xử lý từ chối, thường là tầng sinh lời nhanh nhất.' },
         { title: 'Nhân bản cái thắng', desc: 'Mỗi phát hiện thắng được đưa sang chi nhánh khác, kênh khác, ngành gần kề.' }
       ]
     },

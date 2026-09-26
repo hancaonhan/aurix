@@ -25,7 +25,7 @@ export function servicePage(s) {
     <div class="hero-grid" style="grid-template-columns:1.05fr 0.95fr">
       <div>
         <p class="eyebrow"><span class="spark" aria-hidden="true"></span>${esc(s.kicker)}</p>
-        <h1 style="font-size:clamp(34px,5.4vw,62px)">${esc(s.name)}</h1>
+        <h1 class="page-title">${esc(s.name)}</h1>
         <p class="lead" style="margin-top:22px;font-size:clamp(18px,2.1vw,23px);color:var(--fg)">${esc(s.tagline)}</p>
         <div class="hero-actions">
           ${btn({ href: cta.primary.href, label: 'Nhận chẩn đoán cho dịch vụ này', size: 'lg' })}
@@ -152,7 +152,7 @@ ${ctaBand({
         areaServed: { '@type': 'Country', name: 'Việt Nam' },
         hasOfferCatalog: {
           '@type': 'OfferCatalog',
-          name: `Hạng mục bàn giao — ${s.name}`,
+          name: `Hạng mục bàn giao: ${s.name}`,
           itemListElement: s.deliverables.map(d => ({
             '@type': 'Offer',
             itemOffered: { '@type': 'Service', name: d }
@@ -180,7 +180,7 @@ export function servicesIndexPage() {
   <div class="hero-aurora" aria-hidden="true"></div>
   <div class="wrap wrap-narrow" style="text-align:center">
     <p class="eyebrow" style="justify-content:center"><span class="spark" aria-hidden="true"></span>Dịch vụ</p>
-    <h1 style="font-size:clamp(34px,5.4vw,62px)">Năm tầng của một <em class="serif">cỗ máy tăng trưởng</em></h1>
+    <h1 class="page-title">Dịch vụ marketing của Aurix</h1>
     <p class="lead" style="margin:24px auto 0">Bạn có thể bắt đầu từ tầng đang rò rỉ nặng nhất. Nhưng đích đến luôn là một hệ thống đủ tầng, nơi mỗi tầng khuếch đại tầng còn lại.</p>
   </div>
 </section>
@@ -238,7 +238,7 @@ ${ctaBand()}`;
 
   return layout({
     url: '/dich-vu/',
-    title: 'Dịch vụ Marketing cao cấp | Aurix',
+    title: 'Dịch vụ marketing cho doanh nghiệp dịch vụ | Aurix',
     description: 'Bốn dịch vụ lõi của Aurix: Web cá nhân hoá, Landing Page chuyển đổi cao, Xây hệ thống Marketing tổng thể và chương trình tối ưu Siêu chuyển đổi.',
     breadcrumbs: [{ name: 'Trang chủ', url: '/' }, { name: 'Dịch vụ', url: '/dich-vu/' }],
     schema: [{

@@ -448,3 +448,13 @@
   color: var(--gold-300);
   font-size: 11px;
 }
+
+/* Di động: bài viết đọc ở cỡ 16px, tiêu đề mục gọn lại */
+@media (max-width: 720px) {
+  .prose { font-size: 16px; line-height: 1.7; }
+  .prose h2 { font-size: 21px; margin-top: 36px; }
+  .prose h3 { font-size: 17px; }
+  .prose p { margin-bottom: 16px; }
+  .prose p + h2 { margin-top: 36px; }
+  .prose-table { font-size: 14px; }
+}

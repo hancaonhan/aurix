@@ -39,7 +39,7 @@ export const chuyenDoi = [
       { type: 'h2', text: 'Một phép tính đơn giản' },
       { type: 'p', text: 'Giả sử mỗi tháng bạn có một trăm khách để lại thông tin, tỉ lệ chốt hiện tại là mười phần trăm, giá trị trung bình mười triệu. Doanh thu một trăm triệu.' },
       { type: 'p', text: 'Rút thời gian phản hồi từ "trong ngày" xuống "dưới năm phút" thường nâng tỉ lệ chốt lên mười lăm tới mười tám phần trăm với ngành dịch vụ. Lấy mốc thấp nhất là mười lăm: doanh thu thành một trăm năm mươi triệu.' },
-      { type: 'formula', text: 'Thêm 50 triệu mỗi tháng — không tốn thêm một đồng quảng cáo nào.' },
+      { type: 'formula', text: 'Thêm 50 triệu mỗi tháng, không tốn thêm một đồng quảng cáo nào.' },
       { type: 'p', text: 'Đây là lý do Aurix luôn xử lý tầng này trước khi bàn tới việc tăng ngân sách. Nó rẻ nhất và nhanh nhất.' },
 
       { type: 'cta', text: 'Nếu bạn chưa đo được thời gian phản hồi trung bình của đội mình, đó chính là câu trả lời.' }
@@ -243,7 +243,7 @@ export const chuyenDoi = [
       { type: 'note', tone: 'tip', text: 'Hãy tự đặt lịch trên chính hệ thống của mình, bằng điện thoại, dùng mạng 4G, vào lúc chín giờ tối. Đa số chủ doanh nghiệp chưa từng làm việc này, và đa số phát hiện ít nhất hai lỗi trong năm phút.' },
 
       { type: 'faq', items: [
-        { q: 'Nên dùng phần mềm đặt lịch có sẵn hay tự làm?', a: 'Dùng phần mềm có sẵn cho tới khi nó cản trở việc bạn muốn làm — chẳng hạn không gắn được mã nguồn hoặc không đẩy được dữ liệu về hệ thống của bạn. Lúc đó mới tính chuyện làm riêng.' },
+        { q: 'Nên dùng phần mềm đặt lịch có sẵn hay tự làm?', a: 'Dùng phần mềm có sẵn cho tới khi nó cản trở việc bạn muốn làm, chẳng hạn không gắn được mã nguồn hoặc không đẩy được dữ liệu về hệ thống của bạn. Lúc đó mới tính chuyện làm riêng.' },
         { q: 'Có nên hiển thị luôn lịch trống trên trang chủ không?', a: 'Có, và đây là một trong những thay đổi cho kết quả nhanh nhất. Nhìn thấy khung giờ cụ thể khiến việc đặt lịch trở nên có thật thay vì là một ý định.' }
       ]},
 

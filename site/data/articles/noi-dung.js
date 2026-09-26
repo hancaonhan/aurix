@@ -136,7 +136,7 @@ export const noiDung = [
 
       { type: 'h2', text: 'Cấu trúc bốn mươi lăm giây' },
       { type: 'steps', items: [
-        { t: 'Ba giây đầu: nói thẳng chủ đề', d: 'Không lời chào, không giới thiệu tên. "Niềng răng bao lâu thì hết đau" — vào thẳng.' },
+        { t: 'Ba giây đầu: nói thẳng chủ đề', d: 'Không lời chào, không giới thiệu tên. "Niềng răng bao lâu thì hết đau", vào thẳng.' },
         { t: 'Mười giây tiếp: câu trả lời ngắn gọn', d: 'Cho đáp án trước, giải thích sau. Người xem không chờ được.' },
         { t: 'Hai mươi giây: lý do và ví dụ', d: 'Một ví dụ cụ thể thay cho mọi lời giải thích chung chung.' },
         { t: 'Mười giây cuối: bước tiếp theo nhẹ nhàng', d: 'Không phải "inbox ngay", mà là một câu hỏi để người xem trả lời, hoặc một chủ đề tiếp theo.' }

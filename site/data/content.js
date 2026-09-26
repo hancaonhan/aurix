@@ -12,7 +12,7 @@ const RAW_industries = [
   {
     key: 'spa',
     label: 'Spa & Thẩm mỹ',
-    heroLine: 'Khách cao cấp không so giá. Họ so niềm tin.',
+    heroLine: 'Marketing cho spa và thẩm mỹ viện',
     heroSub: 'Aurix xây hệ thống giúp spa và viện thẩm mỹ thu hút đúng nhóm khách sẵn sàng chi trả, và giữ họ quay lại theo liệu trình.',
     pain: 'Chạy khuyến mãi thì đông khách rẻ, ngừng khuyến mãi thì vắng.',
     proof: { value: '+250%', label: 'Tăng trưởng doanh thu', client: 'Lavie Spa & Wellness' },
@@ -21,7 +21,7 @@ const RAW_industries = [
   {
     key: 'nha-khoa',
     label: 'Nha khoa & Y tế',
-    heroLine: 'Một ca implant đáng giá bằng hai trăm lượt click.',
+    heroLine: 'Marketing cho nha khoa và phòng khám',
     heroSub: 'Aurix thiết kế phễu tập trung vào ca giá trị cao, với bằng chứng chuyên môn đủ mạnh để bệnh nhân dám đặt lịch.',
     pain: 'Lead nhiều nhưng toàn hỏi giá cạo vôi, không ai hỏi ca lớn.',
     proof: { value: '+71%', label: 'Tỉ lệ đặt lịch thành công', client: 'Dental Clinic' },
@@ -30,7 +30,7 @@ const RAW_industries = [
   {
     key: 'giao-duc',
     label: 'Giáo dục & Đào tạo',
-    heroLine: 'Phụ huynh không mua khoá học. Họ mua sự yên tâm.',
+    heroLine: 'Marketing cho trung tâm giáo dục',
     heroSub: 'Aurix dựng hệ thống nuôi dưỡng dài hơi, biến một buổi học thử thành một cam kết trọn khoá.',
     pain: 'Học thử đông, đăng ký chính thức thì rơi quá nửa.',
     proof: { value: '+164%', label: 'Tỉ lệ chuyển từ học thử', client: 'BrightWay Education' },
@@ -39,7 +39,7 @@ const RAW_industries = [
   {
     key: 'fitness',
     label: 'Fitness & Thể hình',
-    heroLine: 'Bán thẻ năm, không bán buổi tập lẻ.',
+    heroLine: 'Marketing cho phòng tập và studio',
     heroSub: 'Aurix tái cấu trúc offer và luồng tư vấn để nâng giá trị hợp đồng trung bình thay vì chạy đua giảm giá.',
     pain: 'Giá trị hợp đồng trung bình thấp, khách bỏ tập sau hai tháng.',
     proof: { value: 'x2,3', label: 'Giá trị hợp đồng trung bình', client: 'FitCore' },
@@ -48,7 +48,7 @@ const RAW_industries = [
   {
     key: 'du-lich',
     label: 'Du lịch & Nghỉ dưỡng',
-    heroLine: 'Khách đặt tour cao cấp cần thấy mình trong đó.',
+    heroLine: 'Marketing cho du lịch và nghỉ dưỡng',
     heroSub: 'Aurix cá nhân hoá trang theo điểm đến và nhóm khách, để mỗi người thấy đúng hành trình dành cho mình.',
     pain: 'Website nhiều tour nhưng khách không biết chọn cái nào.',
     proof: { value: '+96%', label: 'Tỉ lệ để lại thông tin', client: 'Wanderlust Travel' },
@@ -57,7 +57,7 @@ const RAW_industries = [
   {
     key: 'bat-dong-san',
     label: 'Bất động sản & Nội thất',
-    heroLine: 'Một hợp đồng bằng cả quý ngân sách quảng cáo.',
+    heroLine: 'Marketing cho bất động sản và nội thất',
     heroSub: 'Aurix xây hệ thống lọc và nuôi dưỡng khách giá trị cao, để đội sales chỉ gọi những người thật sự sẵn sàng.',
     pain: 'Sales mất phần lớn thời gian cho khách không đủ khả năng chi trả.',
     proof: { value: '−42%', label: 'Chi phí mỗi khách hàng', client: 'Mộc Vị' },
@@ -232,7 +232,7 @@ export const process = overlay('process', RAW_process, 'step');
 const RAW_differentiators = [
   {
     title: 'Chúng tôi bán hệ thống, không bán giờ công',
-    desc: 'Aurix không tính tiền theo số bài đăng hay số chiến dịch. Chúng tôi chịu trách nhiệm về một cỗ máy hoàn chỉnh và về những con số nó tạo ra.'
+    desc: 'Aurix không tính tiền theo số bài đăng hay số chiến dịch. Chúng tôi chịu trách nhiệm về cả hệ thống và về những con số nó tạo ra.'
   },
   {
     title: 'Mỗi quý chỉ nhận sáu dự án',
@@ -253,7 +253,7 @@ export const differentiators = overlay('differentiators', RAW_differentiators, '
 // Đánh giá khách hàng
 const RAW_testimonials = [
   {
-    quote: 'Điều tôi đánh giá cao nhất không phải là website đẹp, mà là Aurix chỉ ra đúng chỗ chúng tôi đang mất tiền — nằm ở mười lăm phút đầu sau khi khách để lại số, không phải ở quảng cáo.',
+    quote: 'Điều tôi đánh giá cao nhất không phải là website đẹp, mà là Aurix chỉ ra đúng chỗ chúng tôi đang mất tiền, nằm ở mười lăm phút đầu sau khi khách để lại số, không phải ở quảng cáo.',
     name: 'Anh Minh Quân',
     role: 'Nhà sáng lập',
     company: 'FitCore',
@@ -281,7 +281,7 @@ export const testimonials = overlay('testimonials', RAW_testimonials, 'name');
 const RAW_faq = [
   {
     q: 'Aurix khác gì với một agency quảng cáo thông thường?',
-    a: 'Agency quảng cáo chịu trách nhiệm cho phần đầu phễu: đưa người lạ tới website. Aurix chịu trách nhiệm cho cả cỗ máy, từ lần chạm đầu tiên tới đồng doanh thu cuối cùng, bao gồm cả tầng tư vấn và tầng dữ liệu mà quảng cáo không chạm tới.'
+    a: 'Agency quảng cáo chịu trách nhiệm cho phần đầu phễu: đưa người lạ tới website. Aurix chịu trách nhiệm cho cả hệ thống, từ lần chạm đầu tiên tới đồng doanh thu cuối cùng, bao gồm cả tầng tư vấn và tầng dữ liệu mà quảng cáo không chạm tới.'
   },
   {
     q: 'Chi phí hợp tác với Aurix khoảng bao nhiêu?',

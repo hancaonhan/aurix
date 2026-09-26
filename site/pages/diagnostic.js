@@ -29,7 +29,7 @@ export function diagnosticPage() {
   <div class="hero-aurora" aria-hidden="true"></div>
   <div class="wrap wrap-narrow" style="text-align:center">
     <p class="eyebrow" style="justify-content:center"><span class="spark" aria-hidden="true"></span>Công cụ chẩn đoán</p>
-    <h1 style="font-size:clamp(32px,5vw,58px)">Hệ thống của bạn đang <span class="gold-text">rò rỉ ở tầng nào</span>?</h1>
+    <h1 class="page-title">Hệ thống của bạn đang <span class="gold-text">rò rỉ ở tầng nào</span>?</h1>
     <p class="lead" style="margin:22px auto 0">Mười một câu hỏi. Kết quả tức thì: bảng điểm năm tầng A.U.R.I.X, ước tính số tiền đang thất thoát mỗi tháng, và thứ tự việc cần làm. Không cần để lại thông tin để xem kết quả.</p>
   </div>
 </section>
@@ -149,7 +149,7 @@ export function diagnosticPage() {
     })}
     <div class="grid g-3">
       ${map([
-        { t: 'Chấm điểm theo tầng', d: 'Câu trả lời được quy về điểm cho từng tầng Adapt, Unify, Reach, Ignite, Xpand — chứ không gộp thành một con số mơ hồ.' },
+        { t: 'Chấm điểm theo tầng', d: 'Câu trả lời được quy về điểm cho từng tầng Adapt, Unify, Reach, Ignite, Xpand, chứ không gộp thành một con số mơ hồ.' },
         { t: 'Phạt tầng yếu nhất', d: 'Một hệ thống mạnh bằng mắt xích yếu nhất của nó, nên điểm tổng bị kéo xuống theo tầng kém nhất chứ không lấy trung bình đơn thuần.' },
         { t: 'Quy ra tiền', d: 'Khoảng cách giữa bạn và chuẩn ngành được nhân với doanh thu để ước tính mức thất thoát mỗi tháng. Đó là con số đáng để hành động.' }
       ], (c, i) => `

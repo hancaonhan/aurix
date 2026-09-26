@@ -12,7 +12,7 @@ export function pricingPage() {
   <div class="hero-aurora" aria-hidden="true"></div>
   <div class="wrap wrap-narrow" style="text-align:center">
     <p class="eyebrow" style="justify-content:center"><span class="spark" aria-hidden="true"></span>Hợp tác</p>
-    <h1 style="font-size:clamp(34px,5.4vw,58px)">Ba cách bắt đầu, tuỳ hệ thống của bạn đang ở đâu</h1>
+    <h1 class="page-title">Ba cách bắt đầu, tuỳ hệ thống của bạn đang ở đâu</h1>
     <p class="lead" style="margin:24px auto 0">Mỗi hướng hợp tác có phạm vi và thời gian triển khai riêng. Mức đầu tư phụ thuộc vào phạm vi, nên chúng tôi chốt con số cùng bạn sau buổi chẩn đoán.</p>
   </div>
 </section>
@@ -155,7 +155,7 @@ export function privacyPage() {
   <div class="hero-aurora" aria-hidden="true"></div>
   <div class="wrap wrap-narrow">
     <p class="eyebrow"><span class="spark" aria-hidden="true"></span>Pháp lý</p>
-    <h1 style="font-size:clamp(30px,4.4vw,48px)">Chính sách bảo vệ dữ liệu cá nhân</h1>
+    <h1 class="page-title">Chính sách bảo vệ dữ liệu cá nhân</h1>
     <p class="lead" style="margin-top:20px">Chính sách này mô tả cách Aurix thu thập, sử dụng và bảo vệ thông tin cá nhân bạn cung cấp qua website, theo Nghị định 13/2023/NĐ-CP.</p>
     <p class="article-meta"><time datetime="${attr(privacy.updated)}">Cập nhật ${privacy.updated.split('-').reverse().map(Number).join('/')}</time></p>
   </div>

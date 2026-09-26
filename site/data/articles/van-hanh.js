@@ -64,7 +64,7 @@ export const vanHanh = [
     level: 'Thực hành',
     related: ['sieu-chuyen-doi', 'he-thong-marketing'],
     body: [
-      { type: 'p', text: 'Một dấu hiệu dễ nhận ra: hỏi ba tư vấn viên cùng một câu — "sau khi khách hỏi giá thì bước tiếp theo là gì" — và nhận ba câu trả lời khác nhau. Khi đó tỉ lệ chốt của doanh nghiệp không phải một con số mà là ba con số bị trộn lẫn.' },
+      { type: 'p', text: 'Một dấu hiệu dễ nhận ra: hỏi ba tư vấn viên cùng một câu, "sau khi khách hỏi giá thì bước tiếp theo là gì", và nhận ba câu trả lời khác nhau. Khi đó tỉ lệ chốt của doanh nghiệp không phải một con số mà là ba con số bị trộn lẫn.' },
 
       { type: 'h2', text: 'Bốn bước, mỗi bước một mục tiêu duy nhất' },
       { type: 'table', head: ['Bước', 'Mục tiêu duy nhất', 'Xong khi nào'], rows: [

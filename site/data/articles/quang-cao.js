@@ -28,7 +28,7 @@ export const quangCao = [
         ['Khách tiềm năng cần', '30 ÷ 0,20', '150'],
         ['Ngân sách', '150 × 300.000 đ', '45.000.000 đ'],
         ['Chi phí mỗi ca', '45 tr ÷ 30', '1.500.000 đ'],
-        ['Kiểm tra so với giá trị vòng đời 19,8 tr', '19,8 ÷ 1,5', '13 lần — an toàn']
+        ['Kiểm tra so với giá trị vòng đời 19,8 tr', '19,8 ÷ 1,5', '13 lần, an toàn']
       ]},
       { type: 'p', text: 'Tỉ lệ mười ba lần ở dòng cuối nói rằng phòng khám này đang chi quá ít. Họ có thể chấp nhận chi phí mỗi ca cao gấp bốn lần mà vẫn lành mạnh, nghĩa là còn nhiều dư địa để mở rộng.' },
 

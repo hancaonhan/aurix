@@ -14,14 +14,14 @@ function hero() {
   <div class="hero-aurora" aria-hidden="true"></div>
   <div class="wrap hero-grid">
     <div>
-      <p class="ctx-badge" id="ctxBadge" data-default="Hệ thống tăng trưởng cho doanh nghiệp dịch vụ cao cấp">
+      <p class="ctx-badge" id="ctxBadge" data-default="Agency marketing cho doanh nghiệp dịch vụ">
         <span class="pulse" aria-hidden="true"></span>
-        <span id="ctxLabel">Hệ thống tăng trưởng cho doanh nghiệp dịch vụ cao cấp</span>
+        <span id="ctxLabel">Agency marketing cho doanh nghiệp dịch vụ</span>
       </p>
 
-      <h1 id="heroLine" data-default="Chúng tôi không chạy quảng cáo. Chúng tôi xây &lt;em&gt;cỗ máy tăng trưởng&lt;/em&gt;.">Chúng tôi không chạy quảng cáo. Chúng tôi xây <em>cỗ máy tăng trưởng</em>.</h1>
+      <h1 id="heroLine" data-default="Marketing cho doanh nghiệp dịch vụ, &lt;em&gt;đo được tới doanh thu&lt;/em&gt;.">Marketing cho doanh nghiệp dịch vụ, <em>đo được tới doanh thu</em>.</h1>
 
-      <p class="lead" id="heroSub" data-default="Aurix hợp nhất bản sắc thương hiệu, hạ tầng dữ liệu, kênh tiếp cận, trang chuyển đổi và quy trình bán hàng thành một hệ thống duy nhất — nơi mỗi đồng ngân sách đều truy vết được tới doanh thu.">Aurix hợp nhất bản sắc thương hiệu, hạ tầng dữ liệu, kênh tiếp cận, trang chuyển đổi và quy trình bán hàng thành một hệ thống duy nhất — nơi mỗi đồng ngân sách đều truy vết được tới doanh thu.</p>
+      <p class="lead" id="heroSub" data-default="Aurix làm thương hiệu, website, quảng cáo và quy trình chăm sóc khách cho spa, nha khoa, trung tâm đào tạo và các ngành dịch vụ khác. Mỗi khoản chi đều có báo cáo đối chiếu với doanh thu thực tế.">Aurix làm thương hiệu, website, quảng cáo và quy trình chăm sóc khách cho spa, nha khoa, trung tâm đào tạo và các ngành dịch vụ khác. Mỗi khoản chi đều có báo cáo đối chiếu với doanh thu thực tế.</p>
 
       <div class="hero-actions">
         ${btn({ href: cta.primary.href, label: 'Chẩn đoán hệ thống miễn phí', size: 'lg' })}
@@ -80,8 +80,8 @@ function problem() {
   <div class="wrap">
     ${sectionHead({
       eyebrow: 'Vấn đề thật',
-      title: 'Bạn không thiếu khách. Hệ thống của bạn đang <span class="gold-text">rò rỉ</span>.',
-      lead: 'Phần lớn doanh nghiệp dịch vụ không thua vì ngân sách quảng cáo. Họ thua ở những mắt xích không ai đo, nằm giữa lúc khách bấm vào và lúc khách trả tiền.'
+      title: 'Khách hàng đang rơi rớt ở đâu trên đường đi của họ',
+      lead: 'Với phần lớn doanh nghiệp dịch vụ, vấn đề không nằm ở ngân sách quảng cáo mà ở các bước giữa lúc khách bấm vào và lúc khách thanh toán. Đó là những chỗ ít ai đo.'
     })}
     <div class="grid g-3">
       ${map(leaks, (l, i) => `
@@ -102,7 +102,7 @@ function frameworkSection() {
   <div class="wrap">
     ${sectionHead({
       eyebrow: 'Phương pháp độc quyền',
-      title: '<span class="serif gold-text">A.U.R.I.X</span> — năm tầng của một cỗ máy tăng trưởng',
+      title: 'Phương pháp <span class="serif gold-text">A.U.R.I.X</span>: năm tầng, làm theo thứ tự',
       lead: framework.promise
     })}
     <div class="layers" data-reveal>
@@ -137,8 +137,8 @@ function servicesSection() {
   <div class="wrap">
     ${sectionHead({
       eyebrow: 'Dịch vụ',
-      title: 'Năm tầng. Một cỗ máy.',
-      lead: 'Mỗi tầng là một dịch vụ độc lập, và cũng là một mắt xích. Bạn bắt đầu từ tầng đang yếu nhất, nhưng đích đến luôn là cả năm tầng chạy cùng nhau.'
+      title: 'Dịch vụ của Aurix',
+      lead: 'Mỗi dịch vụ có thể thuê riêng. Thường chúng tôi đề xuất bắt đầu từ phần đang yếu nhất, rồi mở rộng dần khi có số liệu.'
     })}
     <div class="grid g-3">
       ${map(services, (s, i) => `
@@ -181,7 +181,7 @@ function projectsSection() {
   <div class="wrap">
     ${sectionHead({
       eyebrow: 'Dự án tiêu biểu',
-      title: 'Kết quả, không phải bộ sưu tập ảnh đẹp',
+      title: 'Một số dự án đã triển khai',
       lead: 'Mỗi dự án dưới đây là một hệ thống hoàn chỉnh, kèm con số đo được sau khi vận hành.'
     })}
     <div class="grid g-3" id="projGrid">
@@ -219,7 +219,7 @@ function processSection() {
   <div class="wrap">
     ${sectionHead({
       eyebrow: 'Cách chúng tôi làm việc',
-      title: 'Bốn bước, không có bước nào là "để xem sao"',
+      title: 'Quy trình làm việc bốn bước',
       lead: 'Mỗi bước có đầu ra cụ thể mà bạn cầm được trên tay, kể cả khi bạn quyết định dừng lại sau bước đầu tiên.'
     })}
     <div class="steps" data-reveal>
@@ -249,7 +249,7 @@ function differenceSection() {
       <div>
         ${sectionHead({
           eyebrow: 'Vì sao chọn Aurix',
-          title: 'Chúng tôi từ chối nhiều hơn nhận',
+          title: 'Aurix phù hợp với ai',
           lead: 'Aurix không phải lựa chọn rẻ nhất, và cũng không cố gắng trở thành như vậy. Chúng tôi phù hợp với những doanh nghiệp muốn xây một tài sản, không phải thuê một dịch vụ theo tháng.'
         })}
         <div class="grid" style="gap:20px">
@@ -272,7 +272,7 @@ function differenceSection() {
           cls: 'team-img'
         })}
         <style>.team-img{border-radius:20px;border:1px solid var(--line);box-shadow:var(--shadow)}</style>
-        <p class="muted" style="font-size:13.5px;margin-top:16px;text-align:center">Đội ngũ Aurix — chiến lược, thiết kế, kỹ thuật và dữ liệu trong cùng một phòng.</p>
+        <p class="muted" style="font-size:13.5px;margin-top:16px;text-align:center">Đội ngũ Aurix gồm chiến lược, thiết kế, kỹ thuật và dữ liệu trong cùng một phòng.</p>
       </div>
     </div>
   </div>
@@ -286,7 +286,7 @@ function testimonialsSection() {
   <div class="wrap">
     ${sectionHead({
       eyebrow: 'Khách hàng nói',
-      title: 'Điều họ nhắc tới không phải là website đẹp',
+      title: 'Khách hàng nói gì về Aurix',
       center: true
     })}
     <div class="grid g-3">
@@ -321,7 +321,7 @@ function knowledgeSection() {
   <div class="wrap">
     ${sectionHead({
       eyebrow: `Kiến thức · ${articles.length} bài`,
-      title: 'Chúng tôi viết ra cách mình làm việc',
+      title: 'Bài viết mới',
       lead: 'Mỗi bài trả lời một câu hỏi khách hỏi thật, kèm công thức và con số. Bạn áp dụng được ngay, kể cả khi chưa làm việc với Aurix.',
       center: true
     })}
@@ -345,8 +345,8 @@ function faqSection() {
 
 /* ---------- Kêu gọi hành động ---------- */
 export function ctaBand({
-  title = 'Bắt đầu bằng một buổi chẩn đoán, không phải một bản báo giá',
-  lead = 'Trong bốn mươi lăm phút, Aurix sẽ chỉ ra chính xác hệ thống của bạn đang rò rỉ ở đâu và điều đó đang tốn bao nhiêu tiền mỗi tháng. Miễn phí, không ràng buộc.'
+  title = 'Đặt lịch buổi chẩn đoán miễn phí',
+  lead = 'Buổi làm việc khoảng 45 phút. Aurix xem số liệu hiện tại của bạn, chỉ ra những chỗ đang mất khách và ước tính chi phí của từng chỗ. Không tính phí, không ràng buộc hợp đồng.'
 } = {}) {
   return `
 <section>
@@ -397,8 +397,8 @@ export default function homePage() {
 
   return layout({
     url: '/',
-    title: 'Aurix | Xây hệ thống Marketing cho thương hiệu cao cấp',
-    description: 'Aurix xây cỗ máy tăng trưởng cho doanh nghiệp dịch vụ cao cấp: web cá nhân hoá, landing page chuyển đổi cao, hệ thống marketing đo được và tối ưu siêu chuyển đổi.',
+    title: 'Aurix – Agency marketing cho doanh nghiệp dịch vụ tại Việt Nam',
+    description: 'Aurix làm marketing cho spa, nha khoa, giáo dục, fitness: thiết kế website, landing page, quảng cáo và hệ thống marketing đo được và tối ưu siêu chuyển đổi.',
     preloadImage: '/assets/models/11.png',
     schema,
     body: [
