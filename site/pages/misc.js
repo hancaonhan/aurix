@@ -3,17 +3,20 @@ import { site, cta } from '../data/site.js';
 import { framework } from '../data/framework.js';
 import { services } from '../data/services.js';
 import { projects, process, differentiators, testimonials, industries, stats } from '../data/content.js';
-import { esc, attr, map, sectionHead, btn, ARROW, CHECK, picture, shorten } from '../lib/ui.js';
+import { esc, attr, map, sectionHead, btn, ARROW, CHECK, picture, shorten, firstSentence } from '../lib/ui.js';
+import { crumbs } from './service.js';
 import { ctaBand, projectCard } from './home.js';
 import { teamSection } from './company.js';
 
-const pageHero = ({ eyebrow, title, lead }) => `
-<section class="hero" style="padding-block:clamp(120px,15vh,166px) clamp(40px,5vw,62px)">
-  <div class="hero-aurora" aria-hidden="true"></div>
-  <div class="wrap wrap-narrow" style="text-align:center">
-    <p class="eyebrow" style="justify-content:center"><span class="spark" aria-hidden="true"></span>${esc(eyebrow)}</p>
-    <h1 class="page-title">${title}</h1>
-    ${lead ? `<p class="lead" style="margin:24px auto 0">${lead}</p>` : ''}
+const pageHero = ({ eyebrow, title, lead, crumb }) => `
+<section class="hero page-hero">
+  <div class="wrap">
+    ${crumbs([{ name: 'Trang chủ', url: '/' }, { name: crumb || eyebrow }])}
+    <div class="page-intro">
+      <p class="eyebrow">${esc(eyebrow)}</p>
+      <h1 class="page-title">${title}</h1>
+      ${lead ? `<p class="lead">${lead}</p>` : ''}
+    </div>
   </div>
 </section>`;
 
@@ -21,70 +24,67 @@ const pageHero = ({ eyebrow, title, lead }) => `
 export function methodPage() {
   const body = `
 ${pageHero({
-  eyebrow: 'Phương pháp độc quyền',
-  title: 'Phương pháp <span class="serif gold-text">A.U.R.I.X</span>',
+  eyebrow: 'Phương pháp',
+  title: 'Phương pháp A.U.R.I.X',
   lead: framework.promise
 })}
 
 <section style="padding-top:0">
   <div class="wrap">
     <h2 class="sr-only">Năm tầng của khung A.U.R.I.X</h2>
-    <div class="layers" data-reveal>
-      ${map(framework.layers, l => `
-      <article class="layer" id="tang-${attr(l.key)}">
-        <div>
-          <div class="layer-letter" aria-hidden="true">${l.letter}</div>
-          <div class="layer-vi">${esc(l.title)} · ${esc(l.vi)}</div>
-        </div>
-        <div>
+    <ol class="method-list">
+      ${map(framework.layers, (l, i) => `
+      <li id="tang-${attr(l.key)}" data-reveal style="--delay:${i * 60}ms">
+        <span class="m-letter" aria-hidden="true">${l.letter}</span>
+        <div class="m-body">
+          <p class="m-name">${esc(l.title)} · ${esc(l.vi)}</p>
           <h3>${esc(l.headline)}</h3>
-          <p>${esc(l.desc)}</p>
-          <p style="margin-top:12px"><a class="link-arrow" href="${attr(l.service)}" style="font-size:14px">Dịch vụ liên quan ${ARROW}</a></p>
+          <p>${esc(firstSentence(l.desc))}</p>
+          <a class="link-arrow" href="${attr(l.service)}">Dịch vụ liên quan ${ARROW}</a>
         </div>
-        <div class="layer-metric">
-          <div class="d">${esc(l.metricDelta)}</div>
-          <div class="m">${esc(l.metric)}</div>
-        </div>
-      </article>`)}
-    </div>
-    <p class="serif" data-reveal style="margin-top:32px;font-size:clamp(18px,2.2vw,25px);color:var(--gold-300);text-align:center;font-style:italic">“${esc(framework.principle)}”</p>
+        <p class="m-metric"><b>${esc(l.metricDelta)}</b><span>${esc(l.metric)}</span></p>
+      </li>`)}
+    </ol>
+  </div>
+</section>
+
+<section class="quote-band">
+  <div class="wrap wrap-narrow">
+    <p data-reveal>“${esc(framework.principle)}”</p>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    ${sectionHead({
-      eyebrow: 'Nguyên tắc',
-      title: 'Bốn nguyên tắc chúng tôi không đánh đổi',
-      lead: 'Đây là những điều Aurix giữ nguyên kể cả khi khách hàng muốn làm nhanh hơn.'
-    })}
-    <div class="grid g-2">
+    ${sectionHead({ eyebrow: 'Nguyên tắc', title: 'Bốn điều Aurix không đánh đổi' })}
+    <div class="grid g-4">
       ${map([
-        { t: 'Đo trước khi sửa', d: 'Không một thay đổi nào được thực hiện trước khi có số nền. Nếu không đo được trạng thái trước, không thể chứng minh trạng thái sau tốt hơn.' },
-        { t: 'Sửa chỗ đắt nhất trước', d: 'Mọi điểm rò rỉ đều được quy ra số tiền mất mỗi tháng, rồi xếp hạng. Chúng tôi không sửa cái dễ, chúng tôi sửa cái đắt.' },
-        { t: 'Một nguồn sự thật', d: 'Khi marketing, bán hàng và kế toán nhìn ba con số khác nhau, mọi cuộc họp đều là tranh luận. Hệ thống phải hội tụ về một bảng số duy nhất.' },
-        { t: 'Bàn giao để tự chạy', d: 'Mỗi quy trình đều được viết thành tài liệu và đào tạo. Aurix xây hệ thống cho bạn sở hữu, không phải cho bạn phụ thuộc.' }
+        { t: 'Đo trước khi sửa', d: 'Không thay đổi gì khi chưa có số nền để so.' },
+        { t: 'Sửa chỗ đắt nhất trước', d: 'Mỗi điểm mất khách được quy ra tiền rồi xếp hạng.' },
+        { t: 'Một bảng số chung', d: 'Marketing, bán hàng và kế toán cùng nhìn một nguồn.' },
+        { t: 'Bàn giao để tự chạy', d: 'Quy trình được viết thành tài liệu và đào tạo lại.' }
       ], (p, i) => `
-      <article class="card" data-reveal style="--delay:${i * 80}ms">
-        <div class="serif gold-text" style="font-size:15px;letter-spacing:.14em;margin-bottom:12px">0${i + 1}</div>
-        <h3 style="font-size:20px">${esc(p.t)}</h3>
+      <article class="card pillar" data-reveal style="--delay:${i * 80}ms">
+        <span class="flow-n">0${i + 1}</span>
+        <h3>${esc(p.t)}</h3>
         <p>${esc(p.d)}</p>
       </article>`)}
     </div>
   </div>
 </section>
 
-<section>
+<section class="bg-alt">
   <div class="wrap">
-    ${sectionHead({ eyebrow: 'Quy trình triển khai', title: 'Từ chẩn đoán tới nhịp tối ưu liên tục' })}
-    <div class="steps" data-reveal>
-      ${map(process, p => `
-      <article class="step">
-        <div class="n" aria-hidden="true">${esc(p.step)}</div>
-        <div><h3>${esc(p.name)}</h3><p>${esc(p.desc)}</p></div>
-        <div class="meta"><b>${esc(p.duration)}</b>${esc(p.output)}</div>
-      </article>`)}
-    </div>
+    ${sectionHead({ eyebrow: 'Quy trình', title: 'Bốn bước triển khai' })}
+    <ol class="flow">
+      ${map(process, (p, i) => `
+      <li data-reveal style="--delay:${i * 80}ms">
+        <span class="flow-n">${esc(p.step)}</span>
+        <h3>${esc(p.name)}</h3>
+        <p class="flow-time">${esc(p.duration)}</p>
+        <p>${esc(p.output)}</p>
+      </li>`)}
+    </ol>
   </div>
 </section>
 
@@ -112,7 +112,7 @@ ${pageHero({
   <div class="wrap">
     <div class="industry-bar" style="padding:0;margin-bottom:36px">
       <div class="inner">
-        <span class="label"><span class="spark" aria-hidden="true"></span>Lọc theo ngành:</span>
+        <span class="label">Lọc theo ngành:</span>
         <button class="chip" type="button" data-filter="" aria-pressed="true">Tất cả</button>
         ${map(industries, i => `<button class="chip" type="button" data-filter="${attr(i.key)}" aria-pressed="false">${esc(i.label)}</button>`)}
       </div>
@@ -152,26 +152,26 @@ export function projectPage(p) {
   const related = projects.filter(o => o.slug !== p.slug).slice(0, 3);
 
   const body = `
-<section class="hero" style="padding-block:clamp(120px,15vh,166px) clamp(36px,5vw,56px)">
-  <div class="hero-aurora" aria-hidden="true"></div>
+<section class="hero page-hero">
   <div class="wrap">
-    <nav aria-label="Đường dẫn" style="margin-bottom:26px;font-size:13.5px;color:var(--fg-mute)">
-      <a href="/" style="color:inherit">Trang chủ</a><span aria-hidden="true"> / </span>
-      <a href="/du-an/" style="color:inherit">Dự án</a><span aria-hidden="true"> / </span>
-      <span style="color:var(--gold-300)">${esc(p.client)}</span>
-    </nav>
-    <div class="wrap-narrow" style="padding:0;margin:0">
-      <p class="eyebrow"><span class="spark" aria-hidden="true"></span>${esc(p.industry)}</p>
+    ${crumbs([{ name: 'Trang chủ', url: '/' }, { name: 'Dự án', url: '/du-an/' }, { name: p.client }])}
+    <div class="page-intro">
+      <p class="eyebrow">${esc(p.client)} · ${esc(p.industry)}</p>
       <h1 class="page-title">${esc(p.title)}</h1>
-      <p class="lead" style="margin-top:22px">${esc(p.summary)}</p>
+      <p class="lead">${esc(p.summary)}</p>
     </div>
-    <div class="stat-row" style="margin-top:44px;grid-template-columns:repeat(${p.results.length},1fr)" data-reveal>
+  </div>
+</section>
+
+<section class="band-stats" style="padding-top:0">
+  <div class="wrap">
+    <div class="stat-row" style="grid-template-columns:repeat(${p.results.length},1fr)" data-reveal>
       ${map(p.results, r => `<div class="stat"><div class="v">${esc(r.value)}</div><div class="l">${esc(r.label)}</div></div>`)}
     </div>
   </div>
 </section>
 
-<section style="padding-top:clamp(30px,4vw,50px)">
+<section style="padding-top:0">
   <div class="wrap" data-reveal>
     ${picture({
       src: p.image, fallback: p.imageFallback,
@@ -180,40 +180,24 @@ export function projectPage(p) {
       // Ở đây ảnh chiếm trọn bề ngang khung, khác hẳn lúc nằm trong lưới dự án
       sizes: '(max-width: 1304px) calc(100vw - 2 * clamp(20px, 5vw, 64px)), 1240px'
     })}
-    <style>.proj-shot{border-radius:22px;border:1px solid var(--line);box-shadow:var(--shadow);width:100%}</style>
+  </div>
+</section>
+
+<section class="bg-alt">
+  <div class="wrap split">
+    ${sectionHead({ eyebrow: 'Phạm vi', title: 'Aurix đã làm gì' })}
+    <ul class="check-list">
+      ${map(p.scope, x => `<li>${CHECK}<span>${esc(x)}</span></li>`)}
+    </ul>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <div class="grid g-2" style="gap:clamp(32px,5vw,68px);align-items:start">
-      <div>
-        ${sectionHead({ eyebrow: 'Phạm vi công việc', title: 'Aurix đã làm gì' })}
-        <ul style="list-style:none;padding:0;margin:0;display:grid;gap:14px">
-          ${map(p.scope, (s, i) => `
-          <li data-reveal style="--delay:${i * 60}ms;display:grid;grid-template-columns:20px 1fr;gap:13px;align-items:start">
-            <span style="padding-top:5px">${CHECK}</span>
-            <span style="font-size:16px;color:var(--fg-soft)">${esc(s)}</span>
-          </li>`)}
-        </ul>
-      </div>
-      <div class="card" data-reveal style="--delay:120ms">
-        <p class="eyebrow" style="margin-bottom:16px"><span class="spark" aria-hidden="true"></span>Kết quả sau triển khai</p>
-        <div class="grid" style="gap:20px">
-          ${map(p.results, r => `
-          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-bottom:14px;border-bottom:1px solid var(--line-soft)">
-            <span style="font-size:15px;color:var(--fg-soft)">${esc(r.label)}</span>
-            <span class="serif gold-text" style="font-size:26px;line-height:1;flex:none">${esc(r.value)}</span>
-          </div>`)}
-        </div>
-      </div>
+    <div class="head-row">
+      ${sectionHead({ eyebrow: 'Dự án khác', title: 'Cùng cách làm, ngành khác' })}
+      <a class="link-arrow" href="/du-an/">Tất cả dự án ${ARROW}</a>
     </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    ${sectionHead({ eyebrow: 'Dự án khác', title: 'Cùng một phương pháp, khác ngành', center: true })}
     <div class="grid g-3">${map(related, (r, i) => projectCard(r, i))}</div>
   </div>
 </section>
@@ -249,85 +233,71 @@ export function aboutPage() {
 ${pageHero({
   eyebrow: 'Về Aurix',
   title: 'Về Aurix',
-  lead: 'Aurix được lập ra vì một điều đơn giản: phần lớn doanh nghiệp dịch vụ Việt Nam không thiếu ý tưởng marketing. Họ thiếu một hệ thống để những ý tưởng đó tạo ra doanh thu đo được.'
+  lead: 'Đội ngũ chiến lược, thiết kế, kỹ thuật và dữ liệu làm việc cùng một phòng, cho doanh nghiệp dịch vụ tại Việt Nam.'
 })}
 
 <section style="padding-top:0">
   <div class="wrap" data-reveal>
     ${picture({
       src: '/assets/aurix-team.webp', fallback: '/assets/aurix-team.png',
-      alt: 'Toàn bộ đội ngũ Aurix tại văn phòng TP. Hồ Chí Minh',
-      width: 1536, height: 1024, cls: 'about-shot', loading: 'eager'
+      alt: 'Toàn bộ đội ngũ Aurix tại văn phòng',
+      width: 1536, height: 1024, cls: 'proj-shot', loading: 'eager'
     })}
-    <style>.about-shot{border-radius:22px;border:1px solid var(--line);box-shadow:var(--shadow);width:100%}</style>
   </div>
 </section>
 
-<section>
+<section class="band-stats" style="padding-top:0">
   <div class="wrap">
     <div class="stat-row" data-reveal>
-      ${map(stats, s => `
+      ${map(stats, x => `
       <div class="stat">
-        <div class="v" data-count="${s.value}" data-suffix="${attr(s.suffix)}"${s.decimals ? ` data-decimals="${s.decimals}"` : ''}>0${esc(s.suffix)}</div>
-        <div class="l">${esc(s.label)}</div>
+        <div class="v" data-count="${x.value}" data-suffix="${attr(x.suffix)}"${x.decimals ? ` data-decimals="${x.decimals}"` : ''}>0${esc(x.suffix)}</div>
+        <div class="l">${esc(x.label)}</div>
       </div>`)}
     </div>
   </div>
 </section>
 
-<section>
-  <div class="wrap">
-    <div class="grid g-2" style="gap:clamp(32px,5vw,68px);align-items:start">
-      <div>
-        ${sectionHead({ eyebrow: 'Điều chúng tôi tin', title: 'Cách chúng tôi làm việc' })}
-        <p class="lead" style="font-size:17px">Một chiến dịch có thể may mắn. Một hệ thống thì không cần may mắn, nó tạo ra kết quả lặp lại được, đo được và bàn giao được.</p>
-        <p class="lead" style="font-size:17px;margin-top:18px">Vì vậy Aurix đặt chiến lược, thiết kế, kỹ thuật và dữ liệu trong cùng một phòng. Người viết nội dung ngồi cạnh người dựng hạ tầng đo lường, và cả hai cùng nhìn một bảng doanh thu.</p>
-      </div>
-      <div class="grid" style="gap:20px">
-        ${map(differentiators, (d, i) => `
-        <div class="card" data-reveal style="--delay:${i * 70}ms;padding:24px 26px">
-          <h3 style="font-size:17px;margin-bottom:7px">${esc(d.title)}</h3>
-          <p style="font-size:15px;margin:0">${esc(d.desc)}</p>
-        </div>`)}
-      </div>
+<section class="bg-alt">
+  <div class="wrap split">
+    <div>
+      ${sectionHead({ eyebrow: 'Cách làm việc', title: 'Làm ít dự án, làm tới nơi' })}
+      <p class="lead" style="margin-top:16px">Một chiến dịch có thể may mắn. Một hệ thống thì cho kết quả lặp lại được, đo được và bàn giao được.</p>
     </div>
+    <ul class="check-list">
+      ${map(differentiators, d => `<li>${CHECK}<span>${esc(d.title)}</span></li>`)}
+    </ul>
   </div>
 </section>
 
 ${teamSection()}
 
-<section>
+<section class="bg-alt">
   <div class="wrap">
-    ${sectionHead({ eyebrow: 'Chuyên môn ngành', title: 'Các ngành Aurix phục vụ', lead: 'Aurix tập trung vào các ngành dịch vụ có giá trị hợp đồng cao và chu kỳ ra quyết định dài, nơi một hệ thống tốt tạo ra khác biệt lớn nhất.', center: true })}
+    ${sectionHead({ eyebrow: 'Ngành', title: 'Các ngành Aurix phục vụ' })}
     <div class="grid g-3">
       ${map(industries, (ind, i) => `
-      <article class="card" data-reveal style="--delay:${i * 70}ms">
-        <h3 style="font-size:19px;margin-bottom:10px">${esc(ind.label)}</h3>
-        <p style="font-size:15px">${esc(ind.pain)}</p>
-        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--line-soft);display:flex;align-items:baseline;gap:12px">
-          <span class="serif gold-text" style="font-size:24px;line-height:1">${esc(ind.proof.value)}</span>
-          <span class="muted" style="font-size:12.5px">${esc(ind.proof.label)}</span>
-        </div>
-      </article>`)}
+      <a class="card ind-card" href="/nganh/${ind.slug}/" data-reveal style="--delay:${i * 70}ms">
+        <h3>${esc(ind.label)}</h3>
+        <p class="proof-num"><b>${esc(ind.proof.value)}</b><span>${esc(ind.proof.label)}</span></p>
+      </a>`)}
     </div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    ${sectionHead({ eyebrow: 'Khách hàng nói', title: 'Lời chứng thực từ ban điều hành', center: true })}
+    ${sectionHead({ eyebrow: 'Khách hàng nói', title: 'Lời chứng thực' })}
     <div class="grid g-3">
       ${map(testimonials, (t, i) => `
-      <figure class="card" style="margin:0" data-reveal>
-        <blockquote class="serif" style="font-style:italic;font-size:17px;line-height:1.62;margin:0 0 18px">“${esc(t.quote)}”</blockquote>
-        <figcaption style="display:flex;align-items:center;gap:14px">
+      <figure class="card quote-card" data-reveal style="--delay:${i * 80}ms">
+        <blockquote>“${esc(t.quote)}”</blockquote>
+        <figcaption>
           ${picture({ src: t.image, alt: `${t.name}, ${t.role} tại ${t.company}`, width: 54, height: 54, cls: 'avt' })}
-          <span><cite style="font-style:normal;font-weight:600;color:var(--gold-300);font-size:14px;display:block">${esc(t.name)}</cite>
-          <span class="muted" style="font-size:13px">${esc(t.role)} · ${esc(t.company)}</span></span>
+          <span><cite>${esc(t.name)}</cite><span class="role">${esc(t.role)}, ${esc(t.company)}</span></span>
         </figcaption>
       </figure>`)}
     </div>
-    <style>.avt{width:54px;height:54px;border-radius:50%;object-fit:cover;object-position:top center;border:1px solid var(--line);flex:none}</style>
   </div>
 </section>
 
@@ -338,6 +308,8 @@ ${ctaBand()}`;
     title: 'Về Aurix: Agency xây hệ thống tăng trưởng',
     description: 'Aurix là đội ngũ chiến lược, thiết kế, kỹ thuật và dữ liệu xây hệ thống marketing cho doanh nghiệp dịch vụ cao cấp tại Việt Nam. Mỗi quý chỉ nhận sáu dự án.',
     breadcrumbs: [{ name: 'Trang chủ', url: '/' }, { name: 'Về Aurix', url: '/ve-aurix/' }],
+    // Thẻ đội ngũ dùng chung kiểu với trang Mức đầu tư
+    extraCss: ['/css/company.css'],
     body
   });
 }
@@ -468,7 +440,7 @@ ${pageHero({
       <a class="card svc-card" href="${attr(c.h)}" data-reveal style="--delay:${i * 80}ms;min-height:auto">
         <h3 style="font-size:20px">${esc(c.t)}</h3>
         <p>${esc(c.d)}</p>
-        <div class="sv-foot"><span class="link-arrow">Xem ngay ${ARROW}</span></div>
+        <span class="sv-more">Xem ngay ${ARROW}</span>
       </a>`)}
     </div>
   </div>

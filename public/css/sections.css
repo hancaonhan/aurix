@@ -1114,3 +1114,53 @@
   .pillar h3 { font-size: 16.5px; margin-bottom: 4px; }
   .pillar p { font-size: 14.5px; }
 }
+
+/* ---------- Trang Phương pháp: năm tầng dạng danh sách ---------- */
+.method-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.method-list li {
+  display: grid; grid-template-columns: 72px 1fr 190px; gap: clamp(18px, 3vw, 36px); align-items: center;
+  padding: clamp(20px, 2.6vw, 28px); background: #fff; border-radius: var(--radius);
+  border: 1px solid var(--line-soft); box-shadow: var(--shadow-sm);
+}
+.m-letter { display: grid; place-items: center; width: 72px; height: 72px; border-radius: 18px; background: var(--brand); color: #fff; font-size: 34px; font-weight: 800; }
+.m-name { margin: 0 0 4px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold-300); }
+.m-body h3 { font-size: clamp(19px, 2vw, 23px); color: var(--brand); margin: 0 0 6px; }
+.m-body p:not(.m-name) { margin: 0 0 10px; color: var(--fg-soft); font-size: 15.5px; }
+.m-body .link-arrow { font-size: 14px; }
+.m-metric { margin: 0; text-align: right; display: flex; flex-direction: column; gap: 4px; }
+.m-metric b { font-size: 34px; font-weight: 800; color: var(--gold-300); line-height: 1; letter-spacing: -0.03em; }
+.m-metric span { font-size: 13px; color: var(--fg-mute); }
+
+/* Câu nguyên tắc đặt thành một dải riêng */
+.quote-band { background: var(--brand); padding-block: clamp(44px, 6vw, 72px); }
+.quote-band p { margin: 0; text-align: center; color: #fff; font-size: clamp(20px, 2.4vw, 28px); font-weight: 700; line-height: 1.4; letter-spacing: -0.01em; }
+
+/* Ảnh lớn trọn khung */
+.proj-shot { width: 100%; border-radius: 20px; box-shadow: var(--shadow); }
+
+/* Lời chứng thực dạng thẻ */
+.quote-card { margin: 0; display: flex; flex-direction: column; gap: 18px; }
+.quote-card blockquote { margin: 0; font-size: 16px; line-height: 1.6; color: var(--fg); }
+.quote-card figcaption { margin-top: auto; display: flex; align-items: center; gap: 12px; }
+.quote-card cite { display: block; font-style: normal; font-weight: 700; color: var(--brand); font-size: 14.5px; }
+.quote-card .role { font-size: 13px; color: var(--fg-mute); }
+
+/* Mức đầu tư */
+.pkg-popular { border: 2px solid var(--brand); background: #fff; }
+.pkg-flag { background: var(--gold-200); color: #fff; }
+
+/* Đội ngũ */
+.team-avatar { background: var(--brand-soft); border-color: transparent; }
+.team-avatar .spark { background: var(--brand); }
+
+@media (max-width: 860px) {
+  .method-list li { grid-template-columns: 52px 1fr; }
+  .m-letter { width: 52px; height: 52px; font-size: 24px; border-radius: 14px; }
+  .m-metric { grid-column: 2; text-align: left; flex-direction: row; align-items: baseline; gap: 10px; }
+  .m-metric b { font-size: 24px; }
+}
+@media (max-width: 720px) {
+  .method-list li { padding: 16px; gap: 10px 14px; align-items: start; }
+  .quote-band p { font-size: 19px; }
+  .band-stats .stat-row[style*="repeat("] { grid-template-columns: repeat(2, 1fr) !important; }
+}

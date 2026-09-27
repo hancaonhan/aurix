@@ -4,16 +4,19 @@ import { packages, priceFactors, team, privacy } from '../data/company.js';
 import { process as steps } from '../data/content.js';
 import { esc, attr, map, sectionHead, btn, ARROW, CHECK } from '../lib/ui.js';
 import { ctaBand } from './home.js';
+import { crumbs } from './service.js';
 
 /* ========== Mức đầu tư ========== */
 export function pricingPage() {
   const body = `
-<section class="hero" style="padding-block:clamp(120px,15vh,166px) clamp(36px,5vw,54px)">
-  <div class="hero-aurora" aria-hidden="true"></div>
-  <div class="wrap wrap-narrow" style="text-align:center">
-    <p class="eyebrow" style="justify-content:center"><span class="spark" aria-hidden="true"></span>Hợp tác</p>
-    <h1 class="page-title">Ba cách bắt đầu, tuỳ hệ thống của bạn đang ở đâu</h1>
-    <p class="lead" style="margin:24px auto 0">Mỗi hướng hợp tác có phạm vi và thời gian triển khai riêng. Mức đầu tư phụ thuộc vào phạm vi, nên chúng tôi chốt con số cùng bạn sau buổi chẩn đoán.</p>
+<section class="hero page-hero">
+  <div class="wrap">
+    ${crumbs([{ name: 'Trang chủ', url: '/' }, { name: 'Mức đầu tư' }])}
+    <div class="page-intro">
+      <p class="eyebrow">Hợp tác</p>
+      <h1 class="page-title">Ba cách bắt đầu hợp tác</h1>
+      <p class="lead">Chọn theo tình trạng hiện tại của bạn. Con số cụ thể được chốt sau buổi chẩn đoán.</p>
+    </div>
   </div>
 </section>
 
@@ -130,9 +133,8 @@ export function teamSection() {
   <div class="wrap">
     ${sectionHead({
       eyebrow: 'Đội ngũ',
-      title: 'Ai sẽ ngồi trong phòng họp với bạn',
-      lead: 'Aurix không có mô hình bán hàng một người rồi bàn giao cho người khác làm. Người bạn gặp ở buổi chẩn đoán là người theo dự án tới cuối.',
-      center: true
+      title: 'Người làm dự án của bạn',
+      lead: 'Người bạn gặp ở buổi chẩn đoán là người theo dự án tới cuối.'
     })}
     <div class="grid g-4">
       ${map(team, (m, i) => `
@@ -140,7 +142,6 @@ export function teamSection() {
         <div class="team-avatar" aria-hidden="true"><span class="spark"></span></div>
         <h3 style="font-size:17px;margin-bottom:5px">${esc(m.name)}</h3>
         <p class="team-role">${esc(m.role)}</p>
-        <p style="font-size:14.5px;margin:14px 0 0">${esc(m.bio)}</p>
         <p class="team-focus">${esc(m.focus)}</p>
       </article>`)}
     </div>
@@ -151,10 +152,9 @@ export function teamSection() {
 /* ========== Chính sách bảo mật ========== */
 export function privacyPage() {
   const body = `
-<section class="hero" style="padding-block:clamp(118px,14vh,150px) clamp(28px,4vw,40px)">
-  <div class="hero-aurora" aria-hidden="true"></div>
+<section class="hero page-hero">
   <div class="wrap wrap-narrow">
-    <p class="eyebrow"><span class="spark" aria-hidden="true"></span>Pháp lý</p>
+    <p class="eyebrow">Pháp lý</p>
     <h1 class="page-title">Chính sách bảo vệ dữ liệu cá nhân</h1>
     <p class="lead" style="margin-top:20px">Chính sách này mô tả cách Aurix thu thập, sử dụng và bảo vệ thông tin cá nhân bạn cung cấp qua website, theo Nghị định 13/2023/NĐ-CP.</p>
     <p class="article-meta"><time datetime="${attr(privacy.updated)}">Cập nhật ${privacy.updated.split('-').reverse().map(Number).join('/')}</time></p>
