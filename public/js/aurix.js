@@ -3,6 +3,8 @@
    Không phụ thuộc thư viện ngoài. Mọi hiệu ứng đều tôn trọng prefers-reduced-motion.
    ========================================================================== */
 
+import { initTracking } from './track.js';
+
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -271,6 +273,7 @@ function boot() {
   initMobileBar();
   initPersonalization();
   initSiteSettings();
+  initTracking();
 }
 
 if (document.readyState === 'loading') {

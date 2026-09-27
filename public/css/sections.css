@@ -1164,3 +1164,54 @@
   .quote-band p { font-size: 19px; }
   .band-stats .stat-row[style*="repeat("] { grid-template-columns: repeat(2, 1fr) !important; }
 }
+
+/* ---------- Máy tính thất thoát ---------- */
+.calc-box {
+  display: grid; grid-template-columns: 1.05fr 1fr; overflow: hidden;
+  border-radius: 22px; background: #fff; border: 1px solid var(--line-soft); box-shadow: var(--shadow);
+}
+.calc-inputs { padding: clamp(26px, 4vw, 48px); }
+.calc-inputs h2 { font-size: clamp(26px, 3vw, 38px); margin-bottom: 8px; }
+.calc-hint { color: var(--fg-soft); font-size: 15px; margin-bottom: 28px; }
+
+.calc-field + .calc-field { margin-top: 22px; }
+.calc-label { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 10px; }
+.calc-label label { font-weight: 600; font-size: 15px; color: var(--fg); }
+.calc-label output { font-weight: 800; font-size: 18px; color: var(--brand); white-space: nowrap; }
+
+/* Thanh kéo dùng accent-color: gọn, và giữ nguyên hành vi trợ năng của trình duyệt. */
+.calc-field input[type=range] { width: 100%; accent-color: var(--gold-200); height: 28px; cursor: pointer; }
+
+.calc-result {
+  padding: clamp(26px, 4vw, 48px); background: var(--brand); color: #fff;
+  display: flex; flex-direction: column;
+}
+.calc-now { margin: 0 0 22px; font-size: 14.5px; color: rgba(255, 255, 255, 0.72); }
+.calc-now b { color: #fff; }
+.calc-gain-label { margin: 0; font-size: 15px; font-weight: 600; color: rgba(255, 255, 255, 0.85); }
+.calc-gain { margin: 6px 0 4px; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.calc-gain b { font-size: clamp(40px, 5vw, 58px); font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; color: var(--gold-400); }
+.calc-gain span { font-size: 15px; color: rgba(255, 255, 255, 0.72); }
+.calc-year { margin: 0 0 26px; font-size: 14.5px; color: rgba(255, 255, 255, 0.72); }
+.calc-year b { color: #fff; }
+
+.calc-form { margin-top: auto; padding-top: 22px; border-top: 1px solid rgba(255, 255, 255, 0.16); display: grid; gap: 10px; }
+.calc-form-title { margin: 0 0 4px; font-weight: 700; font-size: 16px; }
+.calc-form .field { margin: 0; }
+.calc-form .input { background: #fff; border-color: transparent; color: var(--fg); }
+.calc-form .field-error { color: #FFC9A3; }
+.calc-form .btn-primary { background: var(--gold-200); color: #fff; box-shadow: none; width: 100%; }
+.calc-form .btn-primary:hover { background: #DE6510; }
+.calc-form .form-status.ok { background: rgba(255, 255, 255, 0.12); border-color: transparent; color: #fff; }
+.calc-form .form-status.err { background: rgba(255, 201, 163, 0.14); border-color: transparent; color: #FFC9A3; }
+.calc-note { margin: 0; font-size: 12.5px; color: rgba(255, 255, 255, 0.6); }
+
+@media (max-width: 900px) {
+  .calc-box { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .calc-inputs, .calc-result { padding: 22px 18px; }
+  .calc-inputs h2 { font-size: 23px; }
+  .calc-hint { margin-bottom: 18px; }
+  .calc-gain b { font-size: 36px; }
+}

@@ -202,6 +202,24 @@ export const MIGRATIONS = [
       CREATE UNIQUE INDEX IF NOT EXISTS idx_content_item ON content(collection, item_id);
       CREATE INDEX IF NOT EXISTS idx_content_collection ON content(collection);
     `
+  },
+
+  {
+    id: 6,
+    name: 'phễu chuyển đổi — bộ đếm theo ngày, không lưu dữ liệu từng người',
+    sql: `
+      -- Mỗi dòng là một bộ đếm: ngày × trang × loại sự kiện. Không có IP, không
+      -- cookie, không mã người dùng — chỉ đủ để biết khách rơi ở bước nào.
+      -- Nhờ vậy website không cần banner đồng ý cookie cho phần đo này.
+      CREATE TABLE IF NOT EXISTS funnel_daily (
+        day   DATE    NOT NULL,
+        path  TEXT    NOT NULL,
+        kind  TEXT    NOT NULL,
+        n     INTEGER NOT NULL DEFAULT 0,
+        PRIMARY KEY (day, path, kind)
+      );
+      CREATE INDEX IF NOT EXISTS idx_funnel_kind_day ON funnel_daily(kind, day DESC);
+    `
   }
 ];
 

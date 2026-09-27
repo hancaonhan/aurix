@@ -10,6 +10,8 @@ import { scoreDiagnostic } from '../lib/scoring.js';
 import { saveLead, saveDiagnostic, logEvent } from '../lib/db.js';
 import { queueLeadNotification, queueDiagnosticReport, drainOutbox } from '../lib/mailer.js';
 import { publicSettings, getSetting } from '../services/settings.js';
+import { notifyLead } from '../lib/notify.js';
+import { track } from '../services/funnel.js';
 import { SCHEMA_VERSION } from '../db/index.js';
 import { err } from '../core/errors.js';
 import config from '../core/config.js';
@@ -66,6 +68,7 @@ export function register(router) {
     }
 
     recentDiagnostics.set(ctx.ipHash, { at: Date.now(), result });
+    await track('dx_done', '/chan-doan/');
     return ctx.json(200, { ok: true, result });
   }, { rateLimit: 'diagnostic', csrf: false });
 
@@ -91,6 +94,12 @@ export function register(router) {
 
     ctx.log.info('Khách tiềm năng mới', { id, source: v.value.source });
     await logEvent('lead_created', { id, source: v.value.source });
+    // Đếm ở máy chủ chứ không tin trình duyệt: đây là con số cuối phễu, phải đúng.
+    await track('lead', v.value.page || '/');
+
+    // Báo điện thoại sales ngay. Không chờ: Telegram chậm thì khách vẫn nhận
+    // phản hồi tức thì, và notifyLead không bao giờ ném lỗi.
+    notifyLead(v.value, id);
 
     // Thư chỉ được xếp vào hàng đợi ở đây; một tiến trình nền lo việc gửi.
     try {

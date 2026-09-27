@@ -1,5 +1,6 @@
 /* Công cụ Chẩn đoán Hệ thống Tăng trưởng — điều khiển luồng câu hỏi và hiển thị kết quả */
 import { wireForm, setStatus } from './form.js';
+import { track as trackEvent } from './track.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -46,6 +47,7 @@ function init() {
         for (const o of $$('.dx-opt', step)) o.setAttribute('aria-pressed', 'false');
         opt.setAttribute('aria-pressed', 'true');
         answers[qid] = opt.dataset.value;
+        trackEvent('dx_start', { once: true });
         next.removeAttribute('disabled');
         // Tự sang câu kế tiếp sau một nhịp ngắn, trừ câu cuối
         if (i < total - 1) setTimeout(() => show(i + 1), reduced ? 0 : 320);

@@ -26,10 +26,12 @@ import * as consoleLeads from './modules/console-leads.js';
 import * as consoleUsers from './modules/console-users.js';
 import * as consoleSystem from './modules/console-system.js';
 import * as consoleContent from './modules/console-content.js';
+import * as funnel from './modules/funnel.js';
 
 /** Thứ tự đăng ký cũng là thứ tự khớp tuyến khi có trùng lặp. */
 const MODULES = [
   publicApi,
+  funnel,
   personalize,
   auth,
   consoleUi,

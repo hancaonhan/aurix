@@ -25,6 +25,7 @@ import { generatePassword } from './security/password.js';
 import { purgeExpiredSessions, destroyUserSessions } from './security/session.js';
 import { mailStats } from './lib/db.js';
 import { drainOutbox, mailEnabled } from './lib/mailer.js';
+import { telegramEnabled } from './lib/notify.js';
 
 /**
  * Thứ tự các bảng khi sao lưu và khôi phục — **phải theo chiều khoá ngoại**:
@@ -36,7 +37,7 @@ import { drainOutbox, mailEnabled } from './lib/mailer.js';
  */
 const DUMP_TABLES = [
   'users', 'settings', 'content', 'leads', 'lead_notes',
-  'diagnostics', 'events', 'outbox', 'audit_log', 'sessions'
+  'diagnostics', 'events', 'funnel_daily', 'outbox', 'audit_log', 'sessions'
 ];
 
 /** Thử nối CSDL để `doctor` báo được trạng thái thật thay vì sập. */
@@ -156,6 +157,8 @@ ${C.gold}${C.bold}AURIX${C.reset} — công cụ vận hành
       ['Cookie Secure', config.security.secureCookies ? 'bật' : 'tắt', config.security.secureCookies || config.isDev],
       ['Lớp proxy tin cậy', String(config.trustProxy), true],
       ['SMTP', mailEnabled ? 'đã cấu hình' : 'chưa cấu hình', mailEnabled || config.isDev],
+      // Không bắt buộc: thiếu thì vẫn còn email, chỉ chậm hơn
+      ['Báo Telegram', telegramEnabled ? 'đã cấu hình' : 'tắt (chỉ còn email)', true],
       ['Tài khoản nội bộ', String(userCount), userCount > 0]
     ];
 
@@ -199,7 +202,7 @@ ${C.gold}${C.bold}AURIX${C.reset} — công cụ vận hành
     `);
     /* Đếm mọi bảng trong một câu lệnh. Tên bảng lấy từ danh sách cố định bên
        dưới, không từ dữ liệu người dùng, nên nội suy vào SQL ở đây là an toàn. */
-    const tables = ['leads', 'diagnostics', 'users', 'sessions', 'audit_log', 'outbox', 'content', 'settings', 'lead_notes', 'events'];
+    const tables = ['leads', 'diagnostics', 'users', 'sessions', 'audit_log', 'outbox', 'content', 'settings', 'lead_notes', 'events', 'funnel_daily'];
     const counts = await one(
       'SELECT ' + tables.map(t => `(SELECT COUNT(*) FROM ${t}) AS ${t}`).join(', ')
     );

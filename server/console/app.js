@@ -126,6 +126,7 @@ function loginView(errorMessage = '') {
    ========================================================================== */
 const NAV = [
   { key: 'tong-quan',  label: 'Tổng quan',        permission: 'stats.read' },
+  { key: 'pheu',       label: 'Phễu chuyển đổi',  permission: 'stats.read' },
   { key: 'khach',      label: 'Khách tiềm năng',  permission: 'leads.read' },
   { key: 'noi-dung',   label: 'Nội dung website', permission: 'content.read' },
   { key: 'chan-doan',  label: 'Kết quả chẩn đoán', permission: 'diagnostics.read' },
@@ -261,6 +262,77 @@ function breakdown(rows, key) {
       <span class="num" style="width:30px;text-align:right">${r.c}</span>
     </div>`).join('');
 }
+
+/* ---------- Phễu chuyển đổi ----------
+   Bộ đếm theo ngày, không theo từng người (xem server/services/funnel.js).
+   Tỉ lệ ở cột cuối = khách gửi thông tin / lượt xem của chính trang đó. */
+const funnelFilters = { days: 30 };
+const pct = (a, b) => b ? (a / b * 100).toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + '%' : '—';
+
+VIEWS['pheu'] = async el => {
+  try {
+    const r = await api('/api/console/funnel?days=' + funnelFilters.days);
+    const views = r.steps.find(x => x.key === 'view')?.n || 0;
+    const peak = Math.max(1, ...r.steps.map(x => x.n));
+    const peakDay = Math.max(1, ...r.daily.map(d => d.views));
+
+    el.innerHTML = `
+      <div class="head">
+        <div><h1>Phễu chuyển đổi</h1>
+          <p class="lede">${r.days} ngày gần nhất. Chỉ đếm số lượt, không lưu thông tin từng người.</p></div>
+        <div class="shrink" style="min-width:160px">
+          <label for="fdays">Khoảng thời gian</label>
+          <select id="fdays">
+            ${[7, 30, 90].map(d => `<option value="${d}" ${funnelFilters.days === d ? 'selected' : ''}>${d} ngày</option>`).join('')}
+          </select>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Các bước</h2>
+        ${r.steps.map(x => `
+          <div style="display:flex;align-items:center;gap:11px;margin-bottom:8px">
+            <span style="width:210px">${esc(x.label)}</span>
+            <span class="bar" style="flex:1"><i style="width:${Math.round(x.n / peak * 100)}%"></i></span>
+            <span class="num" style="width:60px;text-align:right">${money(x.n)}</span>
+            <span class="muted" style="width:60px;text-align:right">${x.key === 'view' ? '' : pct(x.n, views)}</span>
+          </div>`).join('')}
+        <p class="muted" style="margin-top:12px">Cột cuối: tỉ lệ so với lượt xem trang.</p>
+      </div>
+
+      <div class="panel">
+        <h2>Theo trang</h2>
+        ${r.pages.length ? `
+        <div class="tw"><table>
+          <thead><tr><th>Trang</th><th>Lượt xem</th><th>Bấm nút</th><th>Bắt đầu form</th><th>Gửi thông tin</th><th>Tỉ lệ chuyển đổi</th></tr></thead>
+          <tbody>${r.pages.map(p => `<tr>
+            <td><a href="${esc(p.path)}" target="_blank" rel="noopener">${esc(p.path)}</a></td>
+            <td class="num">${money(p.views)}</td>
+            <td class="num">${money(p.cta)}</td>
+            <td class="num">${money(p.form_start)}</td>
+            <td class="num">${money(p.leads)}</td>
+            <td class="num">${pct(p.leads, p.views)}</td>
+          </tr>`).join('')}</tbody>
+        </table></div>` : '<p class="muted">Chưa có dữ liệu. Số liệu bắt đầu tích luỹ từ lần triển khai có tính năng này.</p>'}
+      </div>
+
+      <div class="panel">
+        <h2>Theo ngày</h2>
+        ${r.daily.length ? r.daily.map(d => `
+          <div style="display:flex;align-items:center;gap:11px;margin-bottom:7px">
+            <span class="muted" style="width:92px">${esc(d.d)}</span>
+            <span class="bar" style="flex:1"><i style="width:${Math.round(d.views / peakDay * 100)}%"></i></span>
+            <span class="num" style="width:60px;text-align:right">${money(d.views)}</span>
+            <span class="num" style="width:70px;text-align:right">${d.leads} khách</span>
+          </div>`).join('') : '<p class="muted">Chưa có dữ liệu.</p>'}
+      </div>`;
+
+    el.querySelector('#fdays').addEventListener('change', e => {
+      funnelFilters.days = Number(e.target.value);
+      VIEWS['pheu'](el);
+    });
+  } catch (e) { fail(el, e); }
+};
 
 /* ---------- Khách tiềm năng ---------- */
 const leadFilters = { status: '', q: '', offset: 0, limit: 50 };

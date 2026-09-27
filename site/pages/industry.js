@@ -6,6 +6,7 @@ import { services } from '../data/services.js';
 import { esc, attr, map, sectionHead, btn, ARROW, firstSentence } from '../lib/ui.js';
 import { crumbs } from './service.js';
 import { ctaBand, projectCard } from './home.js';
+import { calcSection } from './calc.js';
 
 /* ---------- Trang một ngành ---------- */
 export function industryPage(ind) {
@@ -49,7 +50,9 @@ export function industryPage(ind) {
   </div>
 </section>
 
-<section id="cach-lam" class="bg-alt">
+${calcSection({ industry: ind.key, industryLabel: ind.label, bg: 'bg-alt' })}
+
+<section id="cach-lam">
   <div class="wrap">
     ${sectionHead({ eyebrow: 'Aurix làm gì', title: `Năm việc cho ngành ${esc(ind.label.toLowerCase())}` })}
     <ul class="fit-list">
@@ -67,7 +70,7 @@ export function industryPage(ind) {
 </section>
 
 ${cases.length ? `
-<section id="du-an">
+<section id="du-an" class="bg-alt">
   <div class="wrap">
     <div class="head-row">
       ${sectionHead({ eyebrow: 'Dự án', title: 'Dự án cùng ngành' })}
@@ -77,7 +80,7 @@ ${cases.length ? `
   </div>
 </section>` : ''}
 
-<section class="${cases.length ? 'bg-alt' : ''}">
+<section>
   <div class="wrap">
     ${sectionHead({ eyebrow: 'Ngành khác', title: 'Aurix cũng làm cho' })}
     <div class="grid g-3">
@@ -96,6 +99,7 @@ ${ctaBand({
 
   return layout({
     url,
+    extraJs: ['/js/calc.js'],
     title: `${ind.seoTitle} | Aurix`,
     description: ind.seoDesc,
     breadcrumbs: [

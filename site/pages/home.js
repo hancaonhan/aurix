@@ -4,6 +4,7 @@ import { services } from '../data/services.js';
 import { industries, projects, process, differentiators, testimonials, faq, stats } from '../data/content.js';
 import { esc, attr, map, sectionHead, btn, ARROW, CHECK, faqList, picture } from '../lib/ui.js';
 import { articles } from '../data/articles.js';
+import { calcSection } from './calc.js';
 
 /*
  * Trang chủ. Nguyên tắc bố cục: mỗi mục chỉ có MỘT ý chính và một chỗ để mắt
@@ -101,7 +102,7 @@ function problem() {
 /* ---------- Dịch vụ: năm thẻ + một thẻ mời chẩn đoán ---------- */
 function servicesSection() {
   return `
-<section id="dich-vu" class="bg-alt">
+<section id="dich-vu">
   <div class="wrap">
     <div class="head-row">
       ${sectionHead({ eyebrow: 'Dịch vụ', title: 'Năm việc Aurix làm cho bạn' })}
@@ -310,11 +311,13 @@ export default function homePage() {
     title: 'Aurix – Agency marketing cho doanh nghiệp dịch vụ tại Việt Nam',
     description: 'Aurix làm marketing cho spa, nha khoa, giáo dục, fitness: thiết kế website, landing page, quảng cáo và hệ thống marketing đo được tới doanh thu.',
     preloadImage: '/assets/models/11.png',
+    extraJs: ['/js/calc.js'],
     schema,
     body: [
       hero(),
       statsSection(),
       problem(),
+      calcSection({ bg: 'bg-alt' }),
       servicesSection(),
       projectsSection(),
       processSection(),

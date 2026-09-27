@@ -146,6 +146,16 @@ export const config = {
     salesInbox: str('AURIX_SALES_INBOX', 'admin@aurixvietnam.vn')
   },
 
+  /* --- Báo khách mới tức thì ---
+   * Email hay bị đọc chậm. Telegram hiện thông báo trên điện thoại sales ngay
+   * lúc khách bấm gửi. Bỏ trống một trong hai biến là tắt tính năng.
+   * Lấy token từ @BotFather; lấy chat id bằng cách nhắn cho bot rồi mở
+   * https://api.telegram.org/bot<TOKEN>/getUpdates (nhóm thì id bắt đầu bằng -). */
+  notify: {
+    telegramToken: str('AURIX_TELEGRAM_TOKEN'),
+    telegramChat: str('AURIX_TELEGRAM_CHAT')
+  },
+
   /* --- Nhật ký --- */
   log: {
     level: str('AURIX_LOG_LEVEL', isProd ? 'info' : 'debug'),
