@@ -163,3 +163,9 @@ export function shorten(str, max) {
   const sp = cut.lastIndexOf(' ');
   return (sp > max * 0.6 ? cut.slice(0, sp) : cut).replace(/[.,;:—–-]$/, '') + '…';
 }
+
+/** Câu đầu tiên của một đoạn — để thẻ tóm tắt chỉ giữ ý chính. */
+export function firstSentence(s = '') {
+  const m = String(s).match(/^.+?[.!?](?=\s|$)/);
+  return m ? m[0] : String(s);
+}

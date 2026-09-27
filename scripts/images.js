@@ -39,6 +39,7 @@ const ROLES = {
 /** Ảnh nguồn và vai trò tương ứng. */
 const SOURCES = [
   { src: '/assets/logo-trang-aurix.png', role: 'logo' },
+  { src: '/assets/logo-toi-aurix.png', role: 'logo' },
   { src: '/assets/models/11.png', role: 'hero' },
   { src: '/assets/aurix-team.png', role: 'wide' },
   { src: '/assets/aurix-difference.png', role: 'wide' },

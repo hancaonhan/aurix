@@ -460,5 +460,25 @@
       "/assets/opt/aurix-giap-phap-marketing-dich-vu-1138.webp"
     ],
     "fallback": "/assets/opt/aurix-giap-phap-marketing-dich-vu-1138.webp"
+  },
+  "/assets/logo-toi-aurix.png": {
+    "fingerprint": "63526-1790471354773-logo-150.300",
+    "role": "logo",
+    "width": 704,
+    "height": 191,
+    "ratio": 3.6859,
+    "widths": [
+      150,
+      300
+    ],
+    "avif": [
+      "/assets/opt/logo-toi-aurix-150.avif",
+      "/assets/opt/logo-toi-aurix-300.avif"
+    ],
+    "webp": [
+      "/assets/opt/logo-toi-aurix-150.webp",
+      "/assets/opt/logo-toi-aurix-300.webp"
+    ],
+    "fallback": "/assets/opt/logo-toi-aurix-300.webp"
   }
 }

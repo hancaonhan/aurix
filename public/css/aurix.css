@@ -3,57 +3,63 @@
    Navy sâu · Gold khắc · Amber tia lửa
    ========================================================================== */
 
-/* ---------- 1. Tokens ---------- */
+/* ---------- 1. Tokens ----------
+   Tông sáng. Màu lấy từ logo gốc: xanh cổ vịt đậm làm màu chính, cam ở chấm
+   chữ i làm điểm nhấn. Tên biến --ink-* / --gold-* giữ nguyên để các tệp CSS
+   khác không phải đổi, nhưng nghĩa đã chuyển:
+     --ink-800/700/600  nền trang và nền phụ (sáng)
+     --ink-900          chữ tối đặt trên nền màu
+     --gold-*           màu nhấn (cam)                                        */
 :root {
-  /* Nền — dải navy sâu dần */
-  --ink-900: #070C15;
-  --ink-800: #0B1220;
-  --ink-700: #0F1829;
-  --ink-600: #141F35;
-  --ink-500: #1B2A45;
-  --ink-400: #26385A;
+  --brand: #0E3B3D;
+  --brand-2: #155A5C;
+  --brand-soft: #E7F0EF;
 
-  /* Gold — dấu ấn thương hiệu */
-  --gold-400: #F0D9A0;
-  --gold-300: #E8C468;
-  --gold-200: #D4AF37;
-  --gold-100: #B8861F;
-  --gold-grad: linear-gradient(135deg, #F0D9A0 0%, #D4AF37 45%, #B8861F 100%);
+  --ink-900: #0B2A2C;
+  --ink-800: #FFFFFF;
+  --ink-700: #F5F7F6;
+  --ink-600: #ECF1F0;
+  --ink-500: #DDE6E5;
+  --ink-400: #C9D5D4;
 
-  /* Amber — tia lửa, chỉ dùng làm điểm nhấn nhỏ */
-  --amber: #FF9F2E;
-  --amber-soft: rgba(255, 159, 46, 0.16);
+  --gold-400: #FFB779;
+  --gold-300: #C4560A;   /* cam đậm: dùng cho chữ, đủ tương phản trên nền trắng */
+  --gold-200: #F27A1A;   /* cam logo: dùng cho khối, chấm, đường kẻ */
+  --gold-100: #B24C06;
+  --gold-grad: linear-gradient(135deg, #F59A3E 0%, #F27A1A 55%, #DE6510 100%);
+  --text-grad: linear-gradient(135deg, #0E3B3D 0%, #1B6B6C 100%);
 
-  /* Chữ */
-  --fg: #F4F6FA;
-  --fg-soft: #AEB9CC;
-  --fg-mute: #7E8CA3;
+  --amber: #F27A1A;
+  --amber-soft: rgba(242, 122, 26, 0.12);
 
-  /* Đường & bề mặt */
-  --line: rgba(212, 175, 55, 0.18);
-  --line-soft: rgba(244, 246, 250, 0.09);
-  --surface: rgba(255, 255, 255, 0.028);
-  --surface-2: rgba(255, 255, 255, 0.05);
+  --fg: #10252A;
+  --fg-soft: #46585D;
+  --fg-mute: #66777C;
 
-  /* Chữ nghệ thuật */
+  --line: rgba(14, 59, 61, 0.16);
+  --line-soft: rgba(14, 59, 61, 0.09);
+  --surface: #FFFFFF;
+  --surface-2: #F7FAF9;
+
   --font-display: 'Be Vietnam Pro', 'Segoe UI', system-ui, sans-serif;
   --font-body: 'Be Vietnam Pro', 'Segoe UI', system-ui, sans-serif;
-  --font-serif: 'Playfair Display', Georgia, serif;
+  /* Trước đây là Playfair. Trên nền sáng, số và chữ nhấn in đậm không chân
+     trông gọn và dễ đọc hơn, nên dùng chung một họ chữ. */
+  --font-serif: 'Be Vietnam Pro', 'Segoe UI', system-ui, sans-serif;
 
-  /* Nhịp */
-  --sp: clamp(64px, 9vw, 132px);
+  --sp: clamp(64px, 8vw, 112px);
   --gutter: clamp(20px, 5vw, 64px);
-  --maxw: 1240px;
-  --radius: 18px;
-  --radius-sm: 12px;
+  --maxw: 1200px;
+  --radius: 16px;
+  --radius-sm: 10px;
 
-  /* Chuyển động */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --dur: 0.6s;
 
-  --shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.7);
-  --shadow-gold: 0 20px 60px -18px rgba(212, 175, 55, 0.35);
+  --shadow: 0 24px 60px -28px rgba(14, 59, 61, 0.28);
+  --shadow-sm: 0 6px 24px -12px rgba(14, 59, 61, 0.18);
+  --shadow-gold: 0 14px 32px -16px rgba(14, 59, 61, 0.55);
 }
 
 /* ---------- 2. Nền tảng ---------- */
@@ -61,7 +67,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 96px;
+  scroll-padding-top: 90px;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -71,39 +77,11 @@ body {
   color: var(--fg);
   font-family: var(--font-body);
   font-size: 17px;
-  line-height: 1.72;
+  line-height: 1.7;
   font-weight: 400;
-  letter-spacing: -0.003em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-}
-
-/* Lớp nền cố định: vignette + lưới vàng mảnh */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-  background:
-    radial-gradient(120% 80% at 50% -10%, #16243D 0%, transparent 60%),
-    radial-gradient(90% 60% at 88% 8%, rgba(212, 175, 55, 0.10) 0%, transparent 55%),
-    var(--ink-800);
-}
-
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(212, 175, 55, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(212, 175, 55, 0.035) 1px, transparent 1px);
-  background-size: 72px 72px;
-  -webkit-mask-image: radial-gradient(120% 70% at 50% 0%, #000 0%, transparent 72%);
-  mask-image: radial-gradient(120% 70% at 50% 0%, #000 0%, transparent 72%);
 }
 
 img, svg, video { max-width: 100%; display: block; height: auto; }
@@ -133,8 +111,9 @@ h1, h2, h3, h4, h5 {
   text-wrap: balance;
 }
 
-h1 { font-size: clamp(38px, 6.4vw, 76px); font-weight: 800; letter-spacing: -0.04em; }
-h2 { font-size: clamp(30px, 4.2vw, 50px); }
+h1 { font-size: clamp(36px, 5.2vw, 64px); font-weight: 800; letter-spacing: -0.035em; color: var(--brand); }
+h2 { color: var(--brand); }
+h2 { font-size: clamp(28px, 3.4vw, 44px); }
 h3 { font-size: clamp(21px, 2.3vw, 28px); }
 h4 { font-size: clamp(18px, 1.7vw, 21px); }
 
@@ -154,12 +133,8 @@ p:last-child { margin-bottom: 0; }
 .soft { color: var(--fg-soft); }
 .serif { font-family: var(--font-serif); font-weight: 500; }
 
-.gold-text {
-  background: var(--gold-grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
+/* Chữ nhấn: cam đậm, tô đặc (chữ gradient trên nền sáng bị nhạt ở một đầu) */
+.gold-text { color: var(--gold-300); }
 
 .sr-only {
   position: absolute; width: 1px; height: 1px;
@@ -254,10 +229,11 @@ section { position: relative; padding-block: var(--sp); }
 .btn:active { transform: translateY(0); }
 
 .btn-primary {
-  background: var(--gold-grad);
-  color: var(--ink-900);
+  background: var(--brand);
+  color: #fff;
   box-shadow: var(--shadow-gold);
 }
+.btn-primary:hover { background: var(--brand-2); }
 
 /* Vệt sáng quét qua nút */
 .btn-primary::after {
@@ -265,19 +241,18 @@ section { position: relative; padding-block: var(--sp); }
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, 0.65) 50%, transparent 80%);
+  background: linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, 0.22) 50%, transparent 80%);
   transform: translateX(-120%);
   transition: transform 0.8s var(--ease);
 }
 .btn-primary:hover::after { transform: translateX(120%); }
 
 .btn-ghost {
-  background: var(--surface);
+  background: #fff;
   border-color: var(--line);
-  color: var(--fg);
-  backdrop-filter: blur(12px);
+  color: var(--brand);
 }
-.btn-ghost:hover { border-color: var(--gold-200); background: var(--surface-2); }
+.btn-ghost:hover { border-color: var(--brand); background: var(--surface-2); }
 
 .btn-lg { padding: 19px 38px; font-size: 16px; }
 .btn-sm { padding: 11px 20px; font-size: 14px; }
@@ -304,6 +279,7 @@ section { position: relative; padding-block: var(--sp); }
   border-radius: var(--radius);
   border: 1px solid var(--line-soft);
   background: var(--surface);
+  box-shadow: var(--shadow-sm);
   overflow: hidden;
   isolation: isolate;
   transition: border-color 0.5s var(--ease), transform 0.5s var(--ease), background 0.5s var(--ease);
@@ -311,7 +287,7 @@ section { position: relative; padding-block: var(--sp); }
 
 .card:hover {
   border-color: var(--line);
-  background: var(--surface-2);
+  box-shadow: var(--shadow);
   transform: translateY(-4px);
 }
 
@@ -324,7 +300,7 @@ section { position: relative; padding-block: var(--sp); }
   border-radius: inherit;
   opacity: 0;
   transition: opacity 0.5s var(--ease);
-  background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), rgba(212, 175, 55, 0.14), transparent 65%);
+  background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), rgba(242, 122, 26, 0.06), transparent 65%);
 }
 .card:hover::before { opacity: 1; }
 

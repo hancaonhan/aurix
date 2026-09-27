@@ -14,7 +14,7 @@
 .pkg-popular {
   border-color: var(--line);
   background:
-    radial-gradient(120% 80% at 50% 0%, rgba(212, 175, 55, 0.085) 0%, transparent 62%),
+    radial-gradient(120% 80% at 50% 0%, rgba(242, 122, 26, 0.085) 0%, transparent 62%),
     var(--surface-2);
 }
 
@@ -94,7 +94,7 @@
   height: 46px;
   border-radius: 13px;
   border: 1px solid var(--line);
-  background: rgba(212, 175, 55, 0.06);
+  background: rgba(242, 122, 26, 0.06);
   margin-bottom: 20px;
 }
 .team-avatar .spark { width: 17px; height: 17px; }

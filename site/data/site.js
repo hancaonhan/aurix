@@ -8,7 +8,7 @@ const RAW_site = {
   origin: process.env.AURIX_ORIGIN || 'https://aurixvietnam.vn',
   locale: 'vi_VN',
   lang: 'vi',
-  themeColor: '#0B1220',
+  themeColor: '#FFFFFF',
   // Thông tin liên hệ — thay bằng dữ liệu thật trước khi go-live
   phone: '0943 434 489',
   phoneHref: 'tel:+84943434489',
@@ -35,6 +35,8 @@ const RAW_site = {
   // Ảnh thương hiệu
   logo: '/assets/logo-trang-aurix.webp',
   logoFallback: '/assets/logo-trang-aurix.png',
+  // Bản chữ xanh đậm cho nền sáng (đầu trang); bản trắng dùng ở chân trang nền tối
+  logoDark: '/assets/logo-toi-aurix.png',
   ogImage: '/assets/opt/og-aurix.jpg',
   founded: '2021'
 };

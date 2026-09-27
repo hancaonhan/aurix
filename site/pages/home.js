@@ -1,17 +1,20 @@
 import { layout } from '../layouts/base.js';
 import { site, cta } from '../data/site.js';
-import { framework } from '../data/framework.js';
 import { services } from '../data/services.js';
 import { industries, projects, process, differentiators, testimonials, faq, stats } from '../data/content.js';
 import { esc, attr, map, sectionHead, btn, ARROW, CHECK, faqList, picture } from '../lib/ui.js';
 import { articles } from '../data/articles.js';
-import { articleCard } from './article.js';
+
+/*
+ * Trang chủ. Nguyên tắc bố cục: mỗi mục chỉ có MỘT ý chính và một chỗ để mắt
+ * dừng lại (con số, ảnh, hoặc nút). Chữ dài để dành cho trang con; ở đây mỗi
+ * mục tối đa một câu dẫn.
+ */
 
 /* ---------- Hero ---------- */
 function hero() {
   return `
 <section class="hero" id="hero">
-  <div class="hero-aurora" aria-hidden="true"></div>
   <div class="wrap hero-grid">
     <div>
       <p class="ctx-badge" id="ctxBadge" data-default="Agency marketing cho doanh nghiệp dịch vụ">
@@ -19,20 +22,16 @@ function hero() {
         <span id="ctxLabel">Agency marketing cho doanh nghiệp dịch vụ</span>
       </p>
 
-      <h1 id="heroLine" data-default="Marketing cho doanh nghiệp dịch vụ, &lt;em&gt;đo được tới doanh thu&lt;/em&gt;.">Marketing cho doanh nghiệp dịch vụ, <em>đo được tới doanh thu</em>.</h1>
+      <h1 id="heroLine" data-default="Marketing ra khách hàng, &lt;mark&gt;đo bằng doanh thu&lt;/mark&gt;.">Marketing ra khách hàng, <mark>đo bằng doanh thu</mark>.</h1>
 
-      <p class="lead" id="heroSub" data-default="Aurix làm thương hiệu, website, quảng cáo và quy trình chăm sóc khách cho spa, nha khoa, trung tâm đào tạo và các ngành dịch vụ khác. Mỗi khoản chi đều có báo cáo đối chiếu với doanh thu thực tế.">Aurix làm thương hiệu, website, quảng cáo và quy trình chăm sóc khách cho spa, nha khoa, trung tâm đào tạo và các ngành dịch vụ khác. Mỗi khoản chi đều có báo cáo đối chiếu với doanh thu thực tế.</p>
+      <p class="lead" id="heroSub" data-default="Website, quảng cáo và quy trình chăm sóc khách cho spa, nha khoa, giáo dục và fitness.">Website, quảng cáo và quy trình chăm sóc khách cho spa, nha khoa, giáo dục và fitness.</p>
 
       <div class="hero-actions">
-        ${btn({ href: cta.primary.href, label: 'Chẩn đoán hệ thống miễn phí', size: 'lg' })}
+        ${btn({ href: cta.primary.href, label: 'Chẩn đoán miễn phí', size: 'lg' })}
         ${btn({ href: '/du-an/', label: 'Xem dự án', variant: 'ghost', size: 'lg', arrow: false })}
       </div>
 
-      <p class="hero-trust">
-        <span><b>120+</b> dự án đã triển khai</span>
-        <span><b>6</b> ngành dịch vụ cao cấp</span>
-        <span><b>94%</b> khách hàng tiếp tục năm thứ hai</span>
-      </p>
+      <!-- Con số tổng quan nằm ở dải ngay dưới hero, không lặp lại ở đây -->
     </div>
 
     <div class="hero-figure" data-reveal style="--delay:120ms">
@@ -46,10 +45,6 @@ function hero() {
         <div class="v" id="floatVal1">+250%</div>
         <div class="l" id="floatLbl1">Tăng trưởng doanh thu</div>
       </div>
-      <div class="float-stat fs-2">
-        <div class="v">98%</div>
-        <div class="l">Dữ liệu khớp doanh thu</div>
-      </div>
     </div>
   </div>
 </section>
@@ -57,10 +52,7 @@ function hero() {
 <section class="industry-bar" aria-labelledby="ibLabel">
   <div class="wrap">
     <div class="inner">
-      <span class="label" id="ibLabel">
-        <span class="spark" aria-hidden="true"></span>
-        Xem Aurix làm gì cho ngành của bạn:
-      </span>
+      <span class="label" id="ibLabel">Ngành của bạn:</span>
       <button class="chip" type="button" data-industry="" aria-pressed="true">Tất cả</button>
       ${map(industries, i => `<button class="chip" type="button" data-industry="${attr(i.key)}" aria-pressed="false">${esc(i.label)}</button>`)}
     </div>
@@ -68,99 +60,10 @@ function hero() {
 </section>`;
 }
 
-/* ---------- Vì sao hệ thống rò rỉ ---------- */
-function problem() {
-  const leaks = [
-    { n: '68%', t: 'khách rời trang trong 15 giây đầu', d: 'Vì nội dung không nói đúng điều họ đang tìm. Một website nói chung chung cho mọi người là một website không nói với ai cả.' },
-    { n: '41%', t: 'khách tiềm năng không bao giờ được gọi lại', d: 'Dữ liệu nằm rải rác giữa quảng cáo, form, tin nhắn và sổ tay. Không ai biết chắc ai đã được liên hệ.' },
-    { n: '73%', t: 'ngân sách đổ vào kênh không ai đo được', d: 'Khi không nối được chi phí với doanh thu thật, mọi quyết định ngân sách đều là phỏng đoán đắt tiền.' }
-  ];
-  return `
-<section id="van-de">
-  <div class="wrap">
-    ${sectionHead({
-      eyebrow: 'Vấn đề thật',
-      title: 'Khách hàng đang rơi rớt ở đâu trên đường đi của họ',
-      lead: 'Với phần lớn doanh nghiệp dịch vụ, vấn đề không nằm ở ngân sách quảng cáo mà ở các bước giữa lúc khách bấm vào và lúc khách thanh toán. Đó là những chỗ ít ai đo.'
-    })}
-    <div class="grid g-3">
-      ${map(leaks, (l, i) => `
-      <article class="card" data-reveal style="--delay:${i * 90}ms">
-        <div class="serif gold-text" style="font-size:46px;line-height:1;margin-bottom:16px">${esc(l.n)}</div>
-        <h3 style="font-size:19px">${esc(l.t)}</h3>
-        <p>${esc(l.d)}</p>
-      </article>`)}
-    </div>
-  </div>
-</section>`;
-}
-
-/* ---------- Khung A.U.R.I.X ---------- */
-function frameworkSection() {
-  return `
-<section id="phuong-phap">
-  <div class="wrap">
-    ${sectionHead({
-      eyebrow: 'Phương pháp độc quyền',
-      title: 'Phương pháp <span class="serif gold-text">A.U.R.I.X</span>: năm tầng, làm theo thứ tự',
-      lead: framework.promise
-    })}
-    <div class="layers" data-reveal>
-      ${map(framework.layers, l => `
-      <article class="layer">
-        <div>
-          <div class="layer-letter" aria-hidden="true">${l.letter}</div>
-          <div class="layer-vi">${esc(l.title)} · ${esc(l.vi)}</div>
-        </div>
-        <div>
-          <h3>${esc(l.headline)}</h3>
-          <p>${esc(l.desc)}</p>
-        </div>
-        <div class="layer-metric">
-          <div class="d">${esc(l.metricDelta)}</div>
-          <div class="m">${esc(l.metric)}</div>
-        </div>
-      </article>`)}
-    </div>
-    <p class="serif" data-reveal style="margin-top:32px;font-size:clamp(18px,2.2vw,25px);color:var(--gold-300);text-align:center;font-style:italic">“${esc(framework.principle)}”</p>
-    <p style="margin-top:26px" data-reveal>
-      <a class="link-arrow" href="/phuong-phap/">Tìm hiểu đầy đủ phương pháp A.U.R.I.X ${ARROW}</a>
-    </p>
-  </div>
-</section>`;
-}
-
-/* ---------- Dịch vụ ---------- */
-function servicesSection() {
-  return `
-<section id="dich-vu">
-  <div class="wrap">
-    ${sectionHead({
-      eyebrow: 'Dịch vụ',
-      title: 'Dịch vụ của Aurix',
-      lead: 'Mỗi dịch vụ có thể thuê riêng. Thường chúng tôi đề xuất bắt đầu từ phần đang yếu nhất, rồi mở rộng dần khi có số liệu.'
-    })}
-    <div class="grid g-3">
-      ${map(services, (s, i) => `
-      <article class="card svc-card" data-reveal style="--delay:${i * 80}ms">
-        <div class="sv-letter" aria-hidden="true">${s.layer}</div>
-        <p class="sv-kicker">${esc(s.kicker)}</p>
-        <h3>${esc(s.name)}</h3>
-        <p>${esc(s.tagline)}</p>
-        <p style="font-size:15px;color:var(--fg-mute);margin-top:14px">${esc(s.solution.desc.split('.')[0])}.</p>
-        <div class="sv-foot">
-          <a class="link-arrow" href="/dich-vu/${s.slug}/">Xem chi tiết ${ARROW}</a>
-        </div>
-      </article>`)}
-    </div>
-  </div>
-</section>`;
-}
-
-/* ---------- Con số ---------- */
+/* ---------- Con số: bằng chứng đặt ngay dưới hero ---------- */
 function statsSection() {
   return `
-<section style="padding-block:0">
+<section class="band-stats">
   <div class="wrap">
     <div class="stat-row" data-reveal>
       ${map(stats, s => `
@@ -173,28 +76,74 @@ function statsSection() {
 </section>`;
 }
 
-/* ---------- Dự án tiêu biểu ---------- */
+/* ---------- Vấn đề: ba con số, không đoạn văn ---------- */
+function problem() {
+  const leaks = [
+    { n: '68%', t: 'khách rời trang trong 15 giây đầu' },
+    { n: '41%', t: 'khách tiềm năng không được gọi lại' },
+    { n: '73%', t: 'ngân sách không đo được hiệu quả' }
+  ];
+  return `
+<section id="van-de">
+  <div class="wrap split">
+    ${sectionHead({
+      eyebrow: 'Vấn đề',
+      title: 'Khách không mất ở quảng cáo. Khách mất ở <span class="gold-text">những bước sau đó</span>.',
+    })}
+    <ul class="leak-list">
+      ${map(leaks, (l, i) => `
+      <li data-reveal style="--delay:${i * 80}ms"><b>${esc(l.n)}</b><span>${esc(l.t)}</span></li>`)}
+    </ul>
+  </div>
+</section>`;
+}
+
+/* ---------- Dịch vụ: năm thẻ + một thẻ mời chẩn đoán ---------- */
+function servicesSection() {
+  return `
+<section id="dich-vu" class="bg-alt">
+  <div class="wrap">
+    <div class="head-row">
+      ${sectionHead({ eyebrow: 'Dịch vụ', title: 'Năm việc Aurix làm cho bạn' })}
+      <a class="link-arrow" href="/phuong-phap/">Phương pháp A.U.R.I.X ${ARROW}</a>
+    </div>
+    <div class="grid g-3">
+      ${map(services, (s, i) => `
+      <a class="card svc-card" href="/dich-vu/${s.slug}/" data-reveal style="--delay:${i * 60}ms">
+        <span class="sv-letter" aria-hidden="true">${s.layer}</span>
+        <h3>${esc(s.name)}</h3>
+        <p>${esc(s.tagline)}</p>
+        <span class="sv-more">Xem chi tiết ${ARROW}</span>
+      </a>`)}
+      <a class="card svc-card svc-cta" href="${attr(cta.primary.href)}" data-reveal style="--delay:300ms">
+        <h3>Chưa biết bắt đầu từ đâu?</h3>
+        <p>Làm bài chẩn đoán 8 câu, biết ngay phần nào đang yếu nhất.</p>
+        <span class="sv-more">Làm bài chẩn đoán ${ARROW}</span>
+      </a>
+    </div>
+  </div>
+</section>`;
+}
+
+/* ---------- Dự án ---------- */
 function projectsSection() {
   const featured = projects.slice(0, 3);
   return `
 <section id="du-an">
   <div class="wrap">
-    ${sectionHead({
-      eyebrow: 'Dự án tiêu biểu',
-      title: 'Một số dự án đã triển khai',
-      lead: 'Mỗi dự án dưới đây là một hệ thống hoàn chỉnh, kèm con số đo được sau khi vận hành.'
-    })}
+    <div class="head-row">
+      ${sectionHead({ eyebrow: 'Dự án', title: 'Kết quả sau khi vận hành' })}
+      <a class="link-arrow" href="/du-an/">Tất cả dự án ${ARROW}</a>
+    </div>
     <div class="grid g-3" id="projGrid">
       ${map(featured, (p, i) => projectCard(p, i))}
     </div>
-    <p style="margin-top:36px" data-reveal>
-      <a class="link-arrow" href="/du-an/">Xem toàn bộ dự án ${ARROW}</a>
-    </p>
   </div>
 </section>`;
 }
 
 export function projectCard(p, i = 0) {
+  const [main, ...rest] = p.results;
   return `
   <a class="proj" href="/du-an/${p.slug}/" data-reveal style="--delay:${i * 80}ms" data-industry-key="${attr(p.industryKey)}">
     <div class="proj-media">
@@ -204,162 +153,123 @@ export function projectCard(p, i = 0) {
     <div class="proj-body">
       <p class="proj-client">${esc(p.client)}</p>
       <h3>${esc(p.title)}</h3>
-      <p style="font-size:15px;color:var(--fg-soft)">${esc(p.summary)}</p>
+      ${main ? `<p class="proj-main"><b>${esc(main.value)}</b><span>${esc(main.label)}</span></p>` : ''}
       <div class="proj-results">
-        ${map(p.results.slice(0, 3), r => `<div><div class="v">${esc(r.value)}</div><div class="l">${esc(r.label)}</div></div>`)}
+        ${map(rest.slice(0, 2), r => `<div><div class="v">${esc(r.value)}</div><div class="l">${esc(r.label)}</div></div>`)}
       </div>
     </div>
   </a>`;
 }
 
-/* ---------- Quy trình ---------- */
+/* ---------- Quy trình: bốn cột, mỗi cột một dòng ---------- */
 function processSection() {
   return `
-<section id="quy-trinh">
+<section id="quy-trinh" class="bg-alt">
   <div class="wrap">
-    ${sectionHead({
-      eyebrow: 'Cách chúng tôi làm việc',
-      title: 'Quy trình làm việc bốn bước',
-      lead: 'Mỗi bước có đầu ra cụ thể mà bạn cầm được trên tay, kể cả khi bạn quyết định dừng lại sau bước đầu tiên.'
-    })}
-    <div class="steps" data-reveal>
-      ${map(process, p => `
-      <article class="step">
-        <div class="n" aria-hidden="true">${esc(p.step)}</div>
-        <div>
-          <h3>${esc(p.name)}</h3>
-          <p>${esc(p.desc)}</p>
-        </div>
-        <div class="meta">
-          <b>${esc(p.duration)}</b>
-          ${esc(p.output)}
-        </div>
-      </article>`)}
-    </div>
+    ${sectionHead({ eyebrow: 'Quy trình', title: 'Bốn bước, có đầu ra rõ ràng', center: true })}
+    <ol class="flow">
+      ${map(process, (p, i) => `
+      <li data-reveal style="--delay:${i * 80}ms">
+        <span class="flow-n">${esc(p.step)}</span>
+        <h3>${esc(p.name)}</h3>
+        <p class="flow-time">${esc(p.duration)}</p>
+        <p>${esc(p.output)}</p>
+      </li>`)}
+    </ol>
   </div>
 </section>`;
 }
 
-/* ---------- Khác biệt ---------- */
+/* ---------- Vì sao chọn Aurix: ảnh + bốn dòng ---------- */
 function differenceSection() {
   return `
 <section id="khac-biet">
-  <div class="wrap">
-    <div class="grid g-2" style="align-items:center;gap:clamp(32px,5vw,72px)">
-      <div>
-        ${sectionHead({
-          eyebrow: 'Vì sao chọn Aurix',
-          title: 'Aurix phù hợp với ai',
-          lead: 'Aurix không phải lựa chọn rẻ nhất, và cũng không cố gắng trở thành như vậy. Chúng tôi phù hợp với những doanh nghiệp muốn xây một tài sản, không phải thuê một dịch vụ theo tháng.'
-        })}
-        <div class="grid" style="gap:20px">
-          ${map(differentiators, (d, i) => `
-          <div data-reveal style="--delay:${i * 70}ms;display:grid;grid-template-columns:20px 1fr;gap:14px">
-            <span style="padding-top:5px">${CHECK}</span>
-            <div>
-              <h3 style="font-size:17px;margin-bottom:5px">${esc(d.title)}</h3>
-              <p style="font-size:15px;color:var(--fg-soft);margin:0">${esc(d.desc)}</p>
-            </div>
-          </div>`)}
-        </div>
-      </div>
-      <div data-reveal style="--delay:140ms">
-        ${picture({
-          src: '/assets/aurix-team.webp',
-          fallback: '/assets/aurix-team.png',
-          alt: 'Đội ngũ Aurix tại văn phòng',
-          width: 1536, height: 1024,
-          cls: 'team-img'
-        })}
-        <style>.team-img{border-radius:20px;border:1px solid var(--line);box-shadow:var(--shadow)}</style>
-        <p class="muted" style="font-size:13.5px;margin-top:16px;text-align:center">Đội ngũ Aurix gồm chiến lược, thiết kế, kỹ thuật và dữ liệu trong cùng một phòng.</p>
-      </div>
+  <div class="wrap split split-media">
+    <div data-reveal>
+      ${picture({
+        src: '/assets/aurix-team.webp',
+        fallback: '/assets/aurix-team.png',
+        alt: 'Đội ngũ Aurix tại văn phòng',
+        width: 1536, height: 1024,
+        cls: 'team-img'
+      })}
+    </div>
+    <div>
+      ${sectionHead({ eyebrow: 'Vì sao chọn Aurix', title: 'Làm ít dự án, làm tới nơi' })}
+      <ul class="check-list">
+        ${map(differentiators, d => `<li>${CHECK}<span>${esc(d.title)}</span></li>`)}
+      </ul>
+      <p style="margin-top:28px">${btn({ href: '/ve-aurix/', label: 'Về Aurix', variant: 'ghost' })}</p>
     </div>
   </div>
 </section>`;
 }
 
-/* ---------- Khách hàng nói ---------- */
-function testimonialsSection() {
+/* ---------- Một lời chứng thực, đặt lớn ---------- */
+function testimonialSection() {
+  const t = testimonials[0];
+  if (!t) return '';
   return `
-<section id="khach-hang">
-  <div class="wrap">
-    ${sectionHead({
-      eyebrow: 'Khách hàng nói',
-      title: 'Khách hàng nói gì về Aurix',
-      center: true
-    })}
-    <div class="grid g-3">
-      ${map(testimonials, (t, i) => `
-      <figure class="card" style="margin:0" data-reveal style="--delay:${i * 90}ms">
-        <div class="quote" style="grid-template-columns:1fr">
-          <blockquote>“${esc(t.quote)}”</blockquote>
-          <figcaption style="display:flex;align-items:center;gap:14px">
-            ${picture({ src: t.image, alt: `${t.name}, ${t.role} tại ${t.company}`, width: 64, height: 64, cls: 'avt' })}
-            <span>
-              <cite>${esc(t.name)}</cite>
-              <span class="role">${esc(t.role)} · ${esc(t.company)}</span>
-            </span>
-          </figcaption>
-        </div>
-      </figure>`)}
-    </div>
-    <style>.avt{width:54px;height:54px;border-radius:50%;object-fit:cover;object-position:top center;border:1px solid var(--line);flex:none}</style>
+<section id="khach-hang" class="bg-alt">
+  <div class="wrap wrap-narrow">
+    <figure class="big-quote" data-reveal>
+      <blockquote>“${esc(t.quote)}”</blockquote>
+      <figcaption>
+        ${picture({ src: t.image, alt: `${t.name}, ${t.role} tại ${t.company}`, width: 64, height: 64, cls: 'avt' })}
+        <span><cite>${esc(t.name)}</cite><span class="role">${esc(t.role)}, ${esc(t.company)}</span></span>
+      </figcaption>
+    </figure>
   </div>
 </section>`;
 }
 
-/* ---------- Câu hỏi thường gặp ---------- */
-/* ---------- Kiến thức ----------
-   Ba bài mới nhất. Với khách đang cân nhắc, thư viện bài viết là bằng chứng
-   chuyên môn rẻ nhất và kiểm chứng được ngay; nó cũng là đường dẫn nội bộ đưa
-   người đọc vào phần nội dung sâu của site. */
+/* ---------- Kiến thức: ba tiêu đề, không trích đoạn ---------- */
 function knowledgeSection() {
   const latest = articles.slice(0, 3);
   return `
 <section>
   <div class="wrap">
-    ${sectionHead({
-      eyebrow: `Kiến thức · ${articles.length} bài`,
-      title: 'Bài viết mới',
-      lead: 'Mỗi bài trả lời một câu hỏi khách hỏi thật, kèm công thức và con số. Bạn áp dụng được ngay, kể cả khi chưa làm việc với Aurix.',
-      center: true
-    })}
-    <div class="grid g-3">${map(latest, (a, i) => articleCard(a, i))}</div>
-    <p style="text-align:center;margin-top:36px" data-reveal>
-      ${btn({ href: '/kien-thuc/', label: `Xem cả ${articles.length} bài`, variant: 'ghost' })}
-    </p>
+    <div class="head-row">
+      ${sectionHead({ eyebrow: 'Kiến thức', title: 'Bài viết mới' })}
+      <a class="link-arrow" href="/kien-thuc/">Cả ${articles.length} bài ${ARROW}</a>
+    </div>
+    <div class="grid g-3">
+      ${map(latest, (a, i) => `
+      <a class="card art-mini" href="/kien-thuc/${a.slug}/" data-reveal style="--delay:${i * 70}ms">
+        <span class="art-mini-topic">${esc(a.topic)}</span>
+        <h3>${esc(a.title)}</h3>
+        <span class="art-mini-foot">${a.readMinutes} phút đọc</span>
+      </a>`)}
+    </div>
   </div>
 </section>`;
 }
 
 function faqSection() {
   return `
-<section id="cau-hoi">
+<section id="cau-hoi" class="bg-alt">
   <div class="wrap wrap-narrow">
-    ${sectionHead({ eyebrow: 'Câu hỏi thường gặp', title: 'Những điều khách hàng hỏi trước khi ký', center: true })}
+    ${sectionHead({ eyebrow: 'Hỏi đáp', title: 'Câu hỏi thường gặp', center: true })}
     ${faqList(faq, 'home-faq')}
   </div>
 </section>`;
 }
 
-/* ---------- Kêu gọi hành động ---------- */
+/* ---------- Kêu gọi hành động (dùng chung cho mọi trang) ---------- */
 export function ctaBand({
-  title = 'Đặt lịch buổi chẩn đoán miễn phí',
-  lead = 'Buổi làm việc khoảng 45 phút. Aurix xem số liệu hiện tại của bạn, chỉ ra những chỗ đang mất khách và ước tính chi phí của từng chỗ. Không tính phí, không ràng buộc hợp đồng.'
+  title = 'Đặt lịch chẩn đoán miễn phí',
+  lead = '45 phút làm việc trên số liệu thật của bạn. Không tính phí, không ràng buộc.'
 } = {}) {
   return `
 <section>
   <div class="wrap">
     <div class="cta-band" data-reveal>
-      <p class="eyebrow" style="justify-content:center"><span class="spark" aria-hidden="true"></span>Bước tiếp theo</p>
       <h2>${title}</h2>
       <p class="lead">${lead}</p>
       <div class="hero-actions">
         ${btn({ href: cta.primary.href, label: cta.primary.label, size: 'lg' })}
         ${btn({ href: cta.secondary.href, label: cta.secondary.label, variant: 'ghost', size: 'lg', arrow: false })}
       </div>
-      <p class="muted" style="font-size:13px;margin-top:26px">Mỗi quý Aurix chỉ nhận sáu dự án mới.</p>
     </div>
   </div>
 </section>`;
@@ -398,19 +308,18 @@ export default function homePage() {
   return layout({
     url: '/',
     title: 'Aurix – Agency marketing cho doanh nghiệp dịch vụ tại Việt Nam',
-    description: 'Aurix làm marketing cho spa, nha khoa, giáo dục, fitness: thiết kế website, landing page, quảng cáo và hệ thống marketing đo được và tối ưu siêu chuyển đổi.',
+    description: 'Aurix làm marketing cho spa, nha khoa, giáo dục, fitness: thiết kế website, landing page, quảng cáo và hệ thống marketing đo được tới doanh thu.',
     preloadImage: '/assets/models/11.png',
     schema,
     body: [
       hero(),
-      problem(),
-      frameworkSection(),
-      servicesSection(),
       statsSection(),
+      problem(),
+      servicesSection(),
       projectsSection(),
       processSection(),
       differenceSection(),
-      testimonialsSection(),
+      testimonialSection(),
       knowledgeSection(),
       faqSection(),
       ctaBand()
