@@ -1215,3 +1215,18 @@
   .calc-hint { margin-bottom: 18px; }
   .calc-gain b { font-size: 36px; }
 }
+
+/* ---------- Form liên hệ hai bước ---------- */
+.contact-card { padding: clamp(24px, 3.4vw, 40px); }
+.contact-card form { display: grid; gap: 16px; }
+.contact-title { font-size: clamp(21px, 2.2vw, 26px); color: var(--brand); margin: 0; }
+.step-tag { margin: 0; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold-300); }
+.step-ok { margin: 0; padding: 10px 14px; border-radius: var(--radius-sm); background: var(--brand-soft); color: var(--brand); font-weight: 700; }
+.step-actions { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+.quick-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 22px; }
+.quick-row .btn { flex: 1 1 140px; }
+
+/* Số suất còn lại — chỉ hiện khi bật trong cấu hình site */
+.capacity { margin: 0; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--gold-300); }
+.capacity::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--gold-200); box-shadow: 0 0 0 4px var(--amber-soft); flex: none; }
+.cta-band .capacity { margin-top: 20px; color: var(--gold-400); }

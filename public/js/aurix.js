@@ -256,9 +256,19 @@ async function initSiteSettings() {
     el.textContent = site.banner.text;
     el.setAttribute('role', 'note');
     el.style.cssText = 'display:block;padding:9px 20px;text-align:center;font-size:13.5px;' +
-      'background:linear-gradient(135deg,#F0D9A0,#D4AF37,#B8861F);color:#1A1204;' +
+      'background:#F27A1A;color:#fff;' +
       'font-weight:600;text-decoration:none;position:relative;z-index:60';
     document.body.prepend(el);
+  }
+
+  // Số suất nhận dự án còn lại — chỉ khi đội ngũ bật trong cấu hình site
+  if (site.capacity) {
+    const d = new Date();
+    const q = `quý ${Math.floor(d.getMonth() / 3) + 1}/${d.getFullYear()}`;
+    const text = site.capacity.left > 0
+      ? `Còn ${site.capacity.left} suất nhận dự án mới trong ${q}.`
+      : `${q[0].toUpperCase() + q.slice(1)} đã đủ dự án. Đặt lịch bây giờ để giữ chỗ quý sau.`;
+    for (const el of $$('[data-capacity]')) { el.textContent = text; el.hidden = false; }
   }
 }
 

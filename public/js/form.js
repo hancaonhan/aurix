@@ -117,12 +117,34 @@ export function wireForm({ formId, statusId, submitId, endpoint, extra, onSucces
   });
 }
 
-// Tự gắn cho biểu mẫu liên hệ nếu có trên trang
+/* Form liên hệ hai bước.
+   Bước 1 chỉ hỏi tên và số, gửi ngay để khách bỏ ngang vẫn không mất số.
+   Máy chủ trả về id kèm mã ngắn hạn; bước 2 dùng mã đó để bổ sung thông tin
+   vào đúng bản ghi vừa tạo. */
+let savedLead = null;
+
 wireForm({
   formId: 'contactForm',
   statusId: 'cf-status',
   submitId: 'cf-submit',
   endpoint: '/api/lead',
   extra: () => ({ source: 'contact' }),
-  onSuccess: () => { setTimeout(() => { location.href = '/cam-on/'; }, 900); }
+  onSuccess: res => {
+    const more = document.getElementById('contactMore');
+    // Máy chủ cũ không trả mã: không làm được bước 2 thì đi thẳng tới trang cảm ơn
+    if (!more || !res.id || !res.token) { location.href = '/cam-on/'; return; }
+    savedLead = { id: res.id, token: res.token };
+    document.getElementById('contactForm').hidden = true;
+    more.hidden = false;
+    more.querySelector('select, input')?.focus();
+  }
+});
+
+wireForm({
+  formId: 'contactMore',
+  statusId: 'cf-more-status',
+  submitId: 'cf-more-submit',
+  endpoint: '/api/lead/details',
+  extra: () => savedLead || {},
+  onSuccess: () => { setTimeout(() => { location.href = '/cam-on/'; }, 700); }
 });

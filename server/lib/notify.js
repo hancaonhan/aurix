@@ -47,11 +47,29 @@ export function leadMessage(lead, id) {
   return lines.filter(l => l !== null).join('\n');
 }
 
+/** Tin thứ hai khi khách điền thêm ở bước 2 của form liên hệ. */
+export function detailsMessage(d, id) {
+  const industry = d.industry ? (liveIndustryByKey()[d.industry]?.label || d.industry) : null;
+  const service = d.service ? (services.find(s => s.slug === d.service)?.name || d.service) : null;
+  const lines = [
+    `📝 <b>Khách #${id} bổ sung thông tin</b>`,
+    d.email ? `✉️ ${esc(d.email)}` : null,
+    d.company ? `🏢 ${esc(d.company)}` : null,
+    industry ? `Ngành: ${esc(industry)}` : null,
+    service ? `Quan tâm: ${esc(service)}` : null,
+    d.message ? `\n${esc(String(d.message).slice(0, 600))}` : null
+  ];
+  return lines.filter(l => l !== null).join('\n');
+}
+
 /**
- * Gửi thông báo. Không bao giờ ném lỗi ra ngoài.
+ * Gửi thông báo khách mới. Không bao giờ ném lỗi ra ngoài.
  * @returns {Promise<boolean>} true nếu Telegram nhận tin.
  */
-export async function notifyLead(lead, id) {
+export const notifyLead = (lead, id) => send(leadMessage(lead, id), id);
+export const notifyLeadDetails = (details, id) => send(detailsMessage(details, id), id);
+
+async function send(text, id) {
   if (!telegramEnabled) return false;
   try {
     const res = await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
@@ -59,7 +77,7 @@ export async function notifyLead(lead, id) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         chat_id: telegramChat,
-        text: leadMessage(lead, id),
+        text,
         parse_mode: 'HTML',
         disable_web_page_preview: true
       }),

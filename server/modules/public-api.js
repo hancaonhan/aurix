@@ -5,12 +5,14 @@
  * tra và làm sạch từng trường, không bao giờ để một dịch vụ chậm (SMTP) làm
  * hỏng phản hồi trả cho khách.
  */
-import { validateLead, validateAnswers } from '../lib/validate.js';
+import { validateLead, validateAnswers, validateLeadDetails } from '../lib/validate.js';
+import { leadToken, verifyLeadToken } from '../security/lead-token.js';
+import { addDetails } from '../services/leads.js';
 import { scoreDiagnostic } from '../lib/scoring.js';
 import { saveLead, saveDiagnostic, logEvent } from '../lib/db.js';
 import { queueLeadNotification, queueDiagnosticReport, drainOutbox } from '../lib/mailer.js';
 import { publicSettings, getSetting } from '../services/settings.js';
-import { notifyLead } from '../lib/notify.js';
+import { notifyLead, notifyLeadDetails } from '../lib/notify.js';
 import { track } from '../services/funnel.js';
 import { SCHEMA_VERSION } from '../db/index.js';
 import { err } from '../core/errors.js';
@@ -116,10 +118,30 @@ export function register(router) {
     return ctx.json(201, {
       ok: true,
       id,
+      // Cho phép bước 2 của form bổ sung thông tin vào đúng khách này
+      token: leadToken(id),
       message: v.value.source === 'diagnostic'
         ? 'Đã nhận. Báo cáo đầy đủ đang được gửi tới email của bạn.'
         : 'Đã nhận. Aurix sẽ liên hệ với bạn trong vòng một ngày làm việc.'
     });
+  }, { rateLimit: 'lead', csrf: false });
+
+  /* ---------- Bước 2 của form liên hệ: khách điền thêm ---------- */
+  router.post('/api/lead/details', async ctx => {
+    const body = await ctx.body();
+    if (!verifyLeadToken(body.id, body.token)) {
+      throw err.validation('Phiên gửi đã hết hạn. Thông tin chính của bạn đã được lưu, Aurix sẽ liên hệ.');
+    }
+    const v = validateLeadDetails(body);
+    if (!v.ok) throw err.validation(v.errors[0]);
+
+    const d = v.value;
+    if (!Object.values(d).some(Boolean)) return ctx.json(200, { ok: true });
+
+    if (!(await addDetails(body.id, d))) throw err.notFound('Không tìm thấy thông tin đã gửi.');
+    await logEvent('lead_details', { id: Number(body.id) });
+    notifyLeadDetails(d, Number(body.id));
+    return ctx.json(200, { ok: true, message: 'Đã nhận thêm thông tin. Cảm ơn bạn.' });
   }, { rateLimit: 'lead', csrf: false });
 
   /* ---------- Thông tin phiên bản, cho theo dõi triển khai ---------- */

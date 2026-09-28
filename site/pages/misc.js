@@ -320,42 +320,40 @@ export function contactPage() {
 ${pageHero({
   eyebrow: 'Liên hệ',
   title: 'Liên hệ Aurix',
-  lead: 'Hãy cho chúng tôi biết bạn đang ở đâu. Nếu Aurix không phải lựa chọn phù hợp, chúng tôi sẽ nói thẳng và giới thiệu hướng khác.'
+  lead: 'Nếu Aurix không phải lựa chọn phù hợp, chúng tôi sẽ nói thẳng và giới thiệu hướng khác.'
 })}
 
 <section style="padding-top:0">
   <div class="wrap">
     <div class="grid g-2" style="gap:clamp(32px,5vw,64px);align-items:start">
-      <div class="card" style="padding:clamp(28px,3.6vw,42px)">
-        <h2 style="font-size:26px;margin-bottom:10px">Gửi yêu cầu tư vấn</h2>
-        <p class="muted" style="font-size:15px;margin-bottom:28px">Aurix phản hồi trong vòng một ngày làm việc.</p>
-
+      <div class="card contact-card">
+        <!-- Hai bước: bước 1 lưu tên và số ngay, khách bỏ ngang ở bước 2 vẫn không mất số -->
         <form class="form-grid" id="contactForm" novalidate>
+          <p class="step-tag">Bước 1/2</p>
+          <h2 class="contact-title">Để lại số, Aurix gọi lại cho bạn</h2>
+          <p class="capacity" data-capacity hidden></p>
           <input type="text" class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <div class="grid g-2" style="gap:18px">
-            <div class="field">
-              <label for="cf-name">Họ và tên <span class="req">*</span></label>
-              <input class="input" id="cf-name" name="name" type="text" required autocomplete="name" placeholder="Nguyễn Văn A">
-              <span class="field-error">Vui lòng nhập họ tên.</span>
-            </div>
-            <div class="field">
-              <label for="cf-phone">Số điện thoại <span class="req">*</span></label>
-              <input class="input" id="cf-phone" name="phone" type="tel" required autocomplete="tel" inputmode="tel" placeholder="0901 234 567">
-              <span class="field-error">Số điện thoại chưa hợp lệ.</span>
-            </div>
+          <div class="field">
+            <label for="cf-name">Họ và tên <span class="req">*</span></label>
+            <input class="input" id="cf-name" name="name" type="text" required autocomplete="name" placeholder="Nguyễn Văn A">
+            <span class="field-error">Vui lòng nhập họ tên.</span>
           </div>
-          <div class="grid g-2" style="gap:18px">
-            <div class="field">
-              <label for="cf-email">Email <span class="opt">không bắt buộc</span></label>
-              <input class="input" id="cf-email" name="email" type="email" autocomplete="email" placeholder="ban@congty.vn">
-              <span class="field-error">Email chưa hợp lệ.</span>
-            </div>
-            <div class="field">
-              <label for="cf-company">Doanh nghiệp</label>
-              <input class="input" id="cf-company" name="company" type="text" autocomplete="organization" placeholder="Tên công ty">
-            </div>
+          <div class="field">
+            <label for="cf-phone">Số điện thoại / Zalo <span class="req">*</span></label>
+            <input class="input" id="cf-phone" name="phone" type="tel" required autocomplete="tel" inputmode="tel" placeholder="0901 234 567">
+            <span class="field-error">Số điện thoại chưa hợp lệ.</span>
           </div>
-          <div class="grid g-2" style="gap:18px">
+          <div class="form-status" id="cf-status" role="status" aria-live="polite"></div>
+          ${btn({ label: 'Gửi', size: 'lg', attrs: 'type="submit" id="cf-submit"' })}
+          <p class="form-note">Aurix gọi lại trong giờ làm việc. Không chia sẻ thông tin của bạn cho bên thứ ba.</p>
+        </form>
+
+        <form class="form-grid" id="contactMore" novalidate hidden>
+          <p class="step-ok">✓ Đã nhận số của bạn.</p>
+          <p class="step-tag">Bước 2/2 · không bắt buộc</p>
+          <h2 class="contact-title">Cho Aurix biết thêm một chút</h2>
+          <p class="muted" style="margin:0">Để buổi gọi đi thẳng vào việc của bạn.</p>
+          <div class="grid g-2" style="gap:14px">
             <div class="field">
               <label for="cf-industry">Ngành</label>
               <select class="select" id="cf-industry" name="industry">
@@ -373,19 +371,36 @@ ${pageHero({
               </select>
             </div>
           </div>
+          <div class="grid g-2" style="gap:14px">
+            <div class="field">
+              <label for="cf-company">Doanh nghiệp</label>
+              <input class="input" id="cf-company" name="company" type="text" autocomplete="organization" placeholder="Tên công ty">
+            </div>
+            <div class="field">
+              <label for="cf-email">Email</label>
+              <input class="input" id="cf-email" name="email" type="email" autocomplete="email" placeholder="ban@congty.vn">
+              <span class="field-error">Email chưa hợp lệ.</span>
+            </div>
+          </div>
           <div class="field">
             <label for="cf-message">Điều bạn đang gặp phải</label>
-            <textarea class="textarea" id="cf-message" name="message" placeholder="Ví dụ: lead nhiều nhưng tỉ lệ chốt thấp, không đo được kênh nào hiệu quả..."></textarea>
+            <textarea class="textarea" id="cf-message" name="message" placeholder="Ví dụ: khách hỏi nhiều nhưng chốt ít, không biết kênh nào hiệu quả..."></textarea>
           </div>
-          <div class="form-status" id="cf-status" role="status" aria-live="polite"></div>
-          ${btn({ label: 'Gửi yêu cầu', size: 'lg', attrs: 'type="submit" id="cf-submit"' })}
-          <p class="form-note">Bằng việc gửi biểu mẫu, bạn đồng ý để Aurix liên hệ tư vấn. Chúng tôi không chia sẻ thông tin của bạn cho bên thứ ba.</p>
+          <div class="form-status" id="cf-more-status" role="status" aria-live="polite"></div>
+          <div class="step-actions">
+            ${btn({ label: 'Gửi thêm', size: 'lg', attrs: 'type="submit" id="cf-more-submit"' })}
+            <a class="link-arrow" href="/cam-on/">Bỏ qua</a>
+          </div>
         </form>
       </div>
 
       <div>
         <div class="card" style="margin-bottom:20px">
-          <p class="eyebrow" style="margin-bottom:18px"><span class="spark" aria-hidden="true"></span>Liên hệ nhanh</p>
+          <p class="eyebrow" style="margin-bottom:18px">Liên hệ nhanh</p>
+          <div class="quick-row">
+            <a class="btn btn-primary" href="${attr(site.zalo)}" target="_blank" rel="noopener">Nhắn Zalo</a>
+            <a class="btn btn-ghost" href="${attr(site.phoneHref)}">Gọi ${esc(site.phone)}</a>
+          </div>
           <div class="grid" style="gap:18px">
             <div><div class="muted" style="font-size:12.5px;margin-bottom:4px">Điện thoại</div><a href="${attr(site.phoneHref)}" style="font-size:18px;color:var(--gold-300);font-weight:600">${esc(site.phone)}</a></div>
             <div><div class="muted" style="font-size:12.5px;margin-bottom:4px">Email</div><a href="mailto:${attr(site.email)}" style="font-size:17px;color:var(--fg)">${esc(site.email)}</a></div>

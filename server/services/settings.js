@@ -40,6 +40,14 @@ export const SCHEMA = {
   'banner.href': {
     label: 'Liên kết băng-rôn', type: 'url', group: 'Thông báo', default: '/lien-he/'
   },
+  'capacity.enabled': {
+    label: 'Hiện số suất nhận dự án còn lại', type: 'bool', group: 'Thông báo', default: false,
+    help: 'Chỉ bật khi con số bên dưới đúng thực tế. Khan hiếm bịa ra, khách phát hiện một lần là mất niềm tin.'
+  },
+  'capacity.left': {
+    label: 'Số suất còn lại quý này', type: 'number', group: 'Thông báo', default: 2,
+    help: 'Đặt 0 thì website ghi "quý này đã đủ dự án" và mời đặt lịch cho quý sau.'
+  },
   'personalize.enabled': {
     label: 'Bật lớp cá nhân hoá theo ngành', type: 'bool', group: 'Tính năng', default: true,
     help: 'Tắt sẽ khiến mọi khách nhìn thấy bản trang chủ mặc định.'
@@ -153,6 +161,9 @@ export function publicSettings() {
     contact: { phone: v['contact.phone'], zalo: v['contact.zalo'], email: v['contact.email'] },
     banner: v['banner.enabled'] && v['banner.text']
       ? { text: v['banner.text'], href: v['banner.href'] }
+      : null,
+    capacity: v['capacity.enabled']
+      ? { left: Math.max(0, Math.floor(Number(v['capacity.left']) || 0)) }
       : null,
     features: { personalize: v['personalize.enabled'] }
   };

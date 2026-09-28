@@ -271,6 +271,8 @@ export function ctaBand({
         ${btn({ href: cta.primary.href, label: cta.primary.label, size: 'lg' })}
         ${btn({ href: cta.secondary.href, label: cta.secondary.label, variant: 'ghost', size: 'lg', arrow: false })}
       </div>
+      <!-- Chỉ hiện khi đội ngũ bật "Hiện số suất nhận dự án còn lại" trong cấu hình site -->
+      <p class="capacity" data-capacity hidden></p>
     </div>
   </div>
 </section>`;

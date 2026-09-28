@@ -125,6 +125,27 @@ export async function deleteLead(id) {
   if (!n) throw err.notFound('Không tìm thấy khách tiềm năng này.');
 }
 
+/**
+ * Bước 2 của form liên hệ: khách tự bổ sung thông tin. Chỉ điền vào ô còn
+ * trống, không ghi đè thứ sales có thể đã sửa; lời nhắn thì nối thêm.
+ * Trả về false nếu khách không tồn tại.
+ */
+export async function addDetails(id, d) {
+  const n = await run(`
+    UPDATE leads SET
+      email    = COALESCE(email, $2),
+      company  = COALESCE(company, $3),
+      industry = COALESCE(industry, $4),
+      service  = COALESCE(service, $5),
+      message  = CASE WHEN $6::text IS NULL THEN message
+                      WHEN message IS NULL THEN $6::text
+                      ELSE message || E'\\n\\n' || $6::text END,
+      updated_at = now()
+    WHERE id = $1
+  `, [Number(id), d.email, d.company, d.industry, d.service, d.message]);
+  return n > 0;
+}
+
 /* ---------- Ghi chú ---------- */
 export async function addNote(leadId, { body, author }) {
   const text = String(body || '').trim().slice(0, 4000);
