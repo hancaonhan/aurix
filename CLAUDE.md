@@ -28,6 +28,7 @@ Viết tài liệu, comment, thông điệp lỗi và giao diện **bằng tiế
 | Tham số sửa lúc chạy | `server/services/settings.js` → `SCHEMA` |
 | Nghiệp vụ | `server/services/` |
 | Giao diện bảng điều khiển | `server/console/theme.js` (màu) · `server/console/app.js` (màn hình) |
+| Màu, logo, favicon | `BRAND.md` — logo trắng và biểu tượng sinh bằng `npm run brand` |
 | Nội dung website | `site/data/` rồi `npm run build` — hoặc sửa ngay trên bảng điều khiển |
 | Bộ sưu tập nội dung sửa được | `overlay()` trong `site/data/` + `COLLECTIONS` trong `server/services/content.js` |
 

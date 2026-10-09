@@ -21,9 +21,10 @@
     "user:create": "node server/cli.js user:create",
     "user:list": "node server/cli.js user:list",
     "audit:tail": "node server/cli.js audit:tail",
-    "assets": "node scripts/fonts.js && node scripts/images.js",
+    "assets": "node scripts/fonts.js && node scripts/brand.js && node scripts/images.js",
     "images": "node scripts/images.js",
-    "fonts": "node scripts/fonts.js"
+    "fonts": "node scripts/fonts.js",
+    "brand": "node scripts/brand.js"
   },
   "devDependencies": {
     "sharp": "^0.35.4"

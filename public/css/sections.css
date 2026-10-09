@@ -901,10 +901,10 @@
 .svc-card p { margin: 0; color: var(--fg-soft); }
 .svc-card .sv-more { margin-top: auto; padding-top: 14px; display: inline-flex; gap: 8px; align-items: center; font-weight: 600; font-size: 14.5px; color: var(--brand); }
 .svc-card:hover .sv-more { color: var(--gold-300); }
-.svc-cta { background: var(--brand); border-color: var(--brand); }
+.svc-cta { background: var(--brand-grad); border-color: transparent; }
 .svc-cta h3, .svc-cta .sv-more { color: #fff; }
 .svc-cta p { color: rgba(255, 255, 255, 0.78); }
-.svc-cta:hover { background: var(--brand-2); }
+.svc-cta:hover { background: var(--brand-grad); filter: brightness(1.08); }
 .svc-cta:hover .sv-more { color: var(--gold-400); }
 
 /* ---------- Thẻ dự án ---------- */
@@ -944,7 +944,7 @@
 #cau-hoi .faq-item { background: #fff; border: 1px solid var(--line-soft); border-radius: var(--radius-sm); margin-bottom: 10px; padding-inline: 18px; }
 
 /* ---------- Khối kêu gọi: nền xanh đậm, điểm dừng cuối trang ---------- */
-.cta-band { background: var(--brand); border: 0; color: #fff; }
+.cta-band { background: var(--brand-grad); border: 0; color: #fff; }
 .cta-band h2 { color: #fff; max-width: 22ch; }
 .cta-band .lead { color: rgba(255, 255, 255, 0.8); margin-top: 14px; }
 .cta-band .btn-primary { background: var(--gold-200); color: #fff; box-shadow: none; }
@@ -953,7 +953,7 @@
 .cta-band .btn-ghost:hover { border-color: #fff; background: rgba(255, 255, 255, 0.08); }
 
 /* ---------- Chân trang nền tối ---------- */
-.site-footer { background: #0B2A2C; color: #fff; border-top: 0; }
+.site-footer { background: linear-gradient(160deg, #034446 0%, var(--brand-deep) 60%, #001B1B 100%); color: #fff; border-top: 0; }
 .site-footer .soft { color: rgba(255, 255, 255, 0.72); }
 .site-footer .muted, .footer-bottom { color: rgba(255, 255, 255, 0.55); }
 .footer-grid .foot-h { color: var(--gold-400); }
@@ -1077,7 +1077,7 @@
   padding: 16px 20px; border-radius: var(--radius); background: #fff;
   border: 1px solid var(--line-soft);
 }
-.fit-list .sv-letter { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: var(--brand); color: #fff; font-weight: 800; font-size: 19px; }
+.fit-list .sv-letter { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: var(--brand-grad); color: #fff; font-weight: 800; font-size: 19px; }
 .fit-list p { margin: 0; font-weight: 600; color: var(--fg); }
 .fit-list .link-arrow { font-size: 14px; white-space: nowrap; }
 
@@ -1122,7 +1122,7 @@
   padding: clamp(20px, 2.6vw, 28px); background: #fff; border-radius: var(--radius);
   border: 1px solid var(--line-soft); box-shadow: var(--shadow-sm);
 }
-.m-letter { display: grid; place-items: center; width: 72px; height: 72px; border-radius: 18px; background: var(--brand); color: #fff; font-size: 34px; font-weight: 800; }
+.m-letter { display: grid; place-items: center; width: 72px; height: 72px; border-radius: 18px; background: var(--brand-grad); color: #fff; font-size: 34px; font-weight: 800; }
 .m-name { margin: 0 0 4px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold-300); }
 .m-body h3 { font-size: clamp(19px, 2vw, 23px); color: var(--brand); margin: 0 0 6px; }
 .m-body p:not(.m-name) { margin: 0 0 10px; color: var(--fg-soft); font-size: 15.5px; }
@@ -1132,7 +1132,7 @@
 .m-metric span { font-size: 13px; color: var(--fg-mute); }
 
 /* Câu nguyên tắc đặt thành một dải riêng */
-.quote-band { background: var(--brand); padding-block: clamp(44px, 6vw, 72px); }
+.quote-band { background: var(--brand-grad); padding-block: clamp(44px, 6vw, 72px); }
 .quote-band p { margin: 0; text-align: center; color: #fff; font-size: clamp(20px, 2.4vw, 28px); font-weight: 700; line-height: 1.4; letter-spacing: -0.01em; }
 
 /* Ảnh lớn trọn khung */
@@ -1183,7 +1183,7 @@
 .calc-field input[type=range] { width: 100%; accent-color: var(--gold-200); height: 28px; cursor: pointer; }
 
 .calc-result {
-  padding: clamp(26px, 4vw, 48px); background: var(--brand); color: #fff;
+  padding: clamp(26px, 4vw, 48px); background: var(--brand-grad); color: #fff;
   display: flex; flex-direction: column;
 }
 .calc-now { margin: 0 0 22px; font-size: 14.5px; color: rgba(255, 255, 255, 0.72); }
@@ -1230,3 +1230,9 @@
 .capacity { margin: 0; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--gold-300); }
 .capacity::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--gold-200); box-shadow: 0 0 0 4px var(--amber-soft); flex: none; }
 .cta-band .capacity { margin-top: 20px; color: var(--gold-400); }
+
+/* ---------- Bộ nhận diện: khẩu hiệu có chấm cam, như trên ảnh nhận diện gốc ---------- */
+.brand-line { margin: 0; font-size: 14px; font-weight: 500; letter-spacing: 0.01em; }
+.brand-line .dot { color: var(--gold-200); margin-inline: 6px; }
+.site-footer .brand-line { color: rgba(255, 255, 255, 0.85); margin-top: 14px; }
+.cta-band .brand-line { color: rgba(255, 255, 255, 0.7); margin-top: 10px; }

@@ -6,7 +6,7 @@ import { esc, attr, map, ARROW, preloadFor, picture } from '../lib/ui.js';
 export const BUILD = process.env.AURIX_BUILD || Date.now().toString(36);
 
 const CRITICAL = `
-:root{--ink-800:#FFFFFF;--gold-300:#C4560A;--fg:#10252A}
+:root{--ink-800:#FFFFFF;--gold-300:#C4560A;--fg:#10252A;--brand:#0E3B3D}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:#FFFFFF;color:#10252A;font-family:'Be Vietnam Pro','Segoe UI',system-ui,sans-serif;font-size:17px;line-height:1.72}@media(max-width:720px){body{font-size:15.5px;line-height:1.65}h1{font-size:28px}.nav{height:64px}.brand img{height:30px}.hero{padding-block:92px 36px}}
 .site-header{position:fixed;inset:0 0 auto;z-index:100}
@@ -16,6 +16,10 @@ body{margin:0;background:#FFFFFF;color:#10252A;font-family:'Be Vietnam Pro','Seg
 h1{font-size:clamp(34px,4.7vw,62px);line-height:1.14;letter-spacing:-.04em;margin:0;font-weight:800}
 img{max-width:100%;display:block;height:auto}
 `.replace(/\s*\n\s*/g, '');
+
+/** Khẩu hiệu thương hiệu với chấm cam ngăn giữa, như trên ảnh nhận diện gốc. */
+export const brandLineHtml = () =>
+  `<p class="brand-line">${site.brandLine.split('•').map(t => esc(t.trim())).join('<span class="dot" aria-hidden="true">•</span>')}</p>`;
 
 function navHtml(current) {
   return map(nav, item => {
@@ -67,10 +71,11 @@ function footerHtml() {
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <a class="brand" href="/" aria-label="Aurix — Trang chủ" style="margin-bottom:20px">
+        <a class="brand" href="/" aria-label="Aurix — Trang chủ">
           ${picture({ src: site.logoFallback, alt: 'Aurix', width: 150, height: 41 })}
         </a>
-        <p class="soft" style="font-size:15px;max-width:34ch">Aurix xây dựng hệ thống tăng trưởng cho doanh nghiệp dịch vụ cao cấp tại Việt Nam.</p>
+        ${brandLineHtml()}
+        <p class="soft" style="font-size:15px;max-width:34ch;margin-top:18px">Aurix xây dựng hệ thống tăng trưởng cho doanh nghiệp dịch vụ cao cấp tại Việt Nam.</p>
         <p class="muted" style="font-size:13.5px;margin-top:18px">
           ${esc(site.address.street)}<br>${esc(site.address.city)}
         </p>
@@ -103,7 +108,7 @@ function footerHtml() {
     </div>
     <div class="footer-bottom">
       <span>© ${y} ${esc(site.legalName)}. Bảo lưu mọi quyền.</span>
-      <span><a href="/chinh-sach-bao-mat/" style="color:inherit">Chính sách bảo mật</a> · ${esc(site.brandLine)}</span>
+      <span><a href="/chinh-sach-bao-mat/" style="color:inherit">Chính sách bảo mật</a></span>
     </div>
   </div>
 </footer>
@@ -258,8 +263,8 @@ ${noindex ? '<meta name="robots" content="noindex, nofollow">' : '<meta name="ro
 <meta name="twitter:description" content="${attr(description)}">
 <meta name="twitter:image" content="${attr(site.origin + ogImage)}">
 
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/assets/Logo.png">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 
 ${preloadImage ? preloadFor(preloadImage) : ''}

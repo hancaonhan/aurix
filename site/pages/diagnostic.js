@@ -60,9 +60,9 @@ export function diagnosticPage() {
               <svg viewBox="0 0 190 190" aria-hidden="true">
                 <defs>
                   <linearGradient id="dxGrad" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stop-color="#F0D9A0"/>
-                    <stop offset="50%" stop-color="#D4AF37"/>
-                    <stop offset="100%" stop-color="#B8861F"/>
+                    <stop offset="0%" stop-color="#0A8A8C"/>
+                    <stop offset="50%" stop-color="#046E72"/>
+                    <stop offset="100%" stop-color="#0E3B3D"/>
                   </linearGradient>
                 </defs>
                 <circle class="bg" cx="95" cy="95" r="85"/>

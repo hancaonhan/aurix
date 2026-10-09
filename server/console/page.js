@@ -18,9 +18,9 @@ export function consolePage() {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="referrer" content="same-origin">
-<meta name="theme-color" content="#0B1220">
+<meta name="theme-color" content="#012B2B">
 <title>${brand.name} — ${brand.console}</title>
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="48x48">
 <style>${css}</style>
 </head>
 <body>

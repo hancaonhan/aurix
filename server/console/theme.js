@@ -1,9 +1,9 @@
 /**
  * Bộ token giao diện cho bảng điều khiển.
  *
- * Giá trị ở đây được chép đúng từ `public/css/aurix.css` — bảng điều khiển phải
- * trông như cùng một sản phẩm với website, không phải một trang quản trị mượn
- * tạm. Tách thành tệp riêng để khi thương hiệu đổi màu, chỉ phải sửa một nơi.
+ * Cùng bộ nhận diện với website (BRAND.md) nhưng dùng nền tối: xanh cổ vịt của
+ * ảnh nhận diện gốc làm nền, cam làm điểm nhấn. Tách thành tệp riêng để khi
+ * thương hiệu đổi màu, chỉ phải sửa một nơi.
  */
 export const brand = {
   name: 'Aurix',
@@ -13,29 +13,30 @@ export const brand = {
 };
 
 export const tokens = `
-  /* Nền — dải navy sâu dần */
-  --ink-900:#070C15; --ink-800:#0B1220; --ink-700:#0F1829;
-  --ink-600:#141F35; --ink-500:#1B2A45; --ink-400:#26385A;
+  /* Nền — dải xanh cổ vịt của ảnh nhận diện gốc, đậm dần (xem BRAND.md).
+     Bảng điều khiển giữ nền tối để đọc bảng số lâu không mỏi mắt. */
+  --ink-900:#001B1B; --ink-800:#012B2B; --ink-700:#023536;
+  --ink-600:#034446; --ink-500:#045152; --ink-400:#046E72;
 
-  /* Gold — dấu ấn thương hiệu */
-  --gold-400:#F0D9A0; --gold-300:#E8C468; --gold-200:#D4AF37; --gold-100:#B8861F;
-  --gold-grad:linear-gradient(135deg,#F0D9A0 0%,#D4AF37 45%,#B8861F 100%);
+  /* Cam — chấm chữ i trong logo. Tên biến --gold-* giữ lại để không phải sửa
+     mọi quy tắc CSS bên dưới. */
+  --gold-400:#FFB779; --gold-300:#F59A3E; --gold-200:#F27A1A; --gold-100:#DE6510;
+  --gold-grad:linear-gradient(135deg,#F59A3E 0%,#F27A1A 55%,#DE6510 100%);
 
-  /* Amber — tia lửa, chỉ dùng làm điểm nhấn nhỏ */
-  --amber:#FF9F2E; --amber-soft:rgba(255,159,46,.16);
+  --amber:#F27A1A; --amber-soft:rgba(242,122,26,.16);
 
   /* Chữ */
-  --fg:#F4F6FA; --fg-soft:#AEB9CC; --fg-mute:#7E8CA3;
+  --fg:#F2F7F7; --fg-soft:#B4CBCB; --fg-mute:#82A1A1;
 
   /* Đường & bề mặt */
-  --line:rgba(212,175,55,.18); --line-soft:rgba(244,246,250,.09);
+  --line:rgba(242,122,26,.22); --line-soft:rgba(242,247,247,.09);
   --surface:rgba(255,255,255,.028); --surface-2:rgba(255,255,255,.05);
 
   /* Trạng thái */
   --good:#6EE7A8; --info:#7DD3FC; --violet:#A78BFA; --danger:#FF8080; --warn:#FFB35E;
 
   --font-display:'Be Vietnam Pro','Segoe UI',system-ui,sans-serif;
-  --font-serif:'Playfair Display',Georgia,serif;
+  --font-serif:'Be Vietnam Pro','Segoe UI',system-ui,sans-serif;
   --radius:18px; --radius-sm:12px;
   --ease:cubic-bezier(.22,1,.36,1);
   --shadow:0 30px 80px -20px rgba(0,0,0,.7);
@@ -59,8 +60,9 @@ button{font-family:inherit}
 .side{background:var(--ink-900);border-right:1px solid var(--line-soft);
   padding:24px 18px;display:flex;flex-direction:column;gap:6px;position:sticky;top:0;height:100vh;overflow-y:auto}
 .brand{display:flex;flex-direction:column;gap:2px;margin-bottom:26px;padding:0 8px}
-.brand .mark{font-family:var(--font-serif);font-size:27px;font-weight:500;letter-spacing:.01em;
-  background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+/* Logo trắng chấm cam — bản dành cho nền tối, do scripts/brand.js sinh ra */
+.brand .mark{display:block;line-height:0}
+.brand .mark img{height:28px;width:auto}
 .brand .sub{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-mute)}
 .nav{display:flex;flex-direction:column;gap:2px}
 .nav button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;
@@ -111,7 +113,7 @@ td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
   border:1px solid var(--line);background:var(--surface);color:var(--fg);
   font-size:13px;font-weight:500;cursor:pointer;transition:all .18s var(--ease)}
 .btn:hover{background:var(--surface-2);border-color:var(--gold-200)}
-.btn.primary{background:var(--gold-grad);border-color:transparent;color:#1A1204;font-weight:700}
+.btn.primary{background:var(--gold-grad);border-color:transparent;color:#fff;font-weight:700}
 .btn.primary:hover{filter:brightness(1.07)}
 .btn.danger{color:var(--danger);border-color:rgba(255,128,128,.3)}
 .btn:disabled{opacity:.45;cursor:not-allowed}
@@ -157,11 +159,11 @@ input[type=checkbox]{width:17px;height:17px;accent-color:var(--gold-200)}
 
 /* ---------- Đăng nhập ---------- */
 .login{min-height:100vh;display:grid;place-items:center;padding:24px;
-  background:radial-gradient(1200px 600px at 50% -10%,rgba(212,175,55,.08),transparent 60%),var(--ink-900)}
+  background:radial-gradient(1200px 600px at 50% -10%,rgba(4,110,114,.35),transparent 60%),var(--ink-900)}
 .login form{width:100%;max-width:392px;border:1px solid var(--line);border-radius:var(--radius);
   background:var(--ink-700);padding:34px;box-shadow:var(--shadow)}
-.login .mark{font-family:var(--font-serif);font-size:38px;font-weight:500;text-align:center;
-  background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:4px}
+.login .mark{line-height:0;text-align:center;margin-bottom:12px}
+.login .mark img{height:40px;width:auto;display:inline-block}
 .login .tag{text-align:center;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;
   color:var(--fg-mute);margin-bottom:28px}
 .login .btn{width:100%;justify-content:center;margin-top:8px}

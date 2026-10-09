@@ -82,7 +82,7 @@ function loginView(errorMessage = '') {
   app.innerHTML = `
     <div class="login">
       <form id="loginForm" autocomplete="on">
-        <div class="mark">Aurix</div>
+        <div class="mark"><img src="/assets/logo-trang-aurix.png" alt="Aurix" width="704" height="191"></div>
         <p class="tag">Bảng điều khiển</p>
         ${errorMessage ? `<div class="err">${esc(errorMessage)}</div>` : ''}
         <div class="field">
@@ -144,7 +144,7 @@ function shell(inner) {
   <div class="shell">
     <aside class="side">
       <div class="brand">
-        <span class="mark">Aurix</span>
+        <span class="mark"><img src="/assets/logo-trang-aurix.png" alt="Aurix" width="704" height="191"></span>
         <span class="sub">Bảng điều khiển</span>
       </div>
       <nav class="nav" aria-label="Điều hướng chính">

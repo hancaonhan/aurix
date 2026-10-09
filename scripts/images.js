@@ -153,12 +153,14 @@ async function processOne(entry, manifest, stats) {
  * định dạng duy nhất chắc chắn hiển thị ở mọi chỗ.
  */
 async function buildOgImage() {
-  const source = resolveSource('/assets/aurix-team.png');
+  // Ảnh nhận diện gốc: logo trắng, khẩu hiệu, nền xanh cổ vịt. Logo nằm giữa
+  // ảnh vuông nên cắt giữa thành khung 1200x630 vẫn giữ trọn logo và khẩu hiệu.
+  const source = resolveSource('/assets/Logo.png');
   if (!source) return;
 
   const dest = join(OUT, 'og-aurix.jpg');
   const info = await sharp(source, { failOn: 'none' })
-    .resize({ width: 1200, height: 630, fit: 'cover', position: 'attention' })
+    .resize({ width: 1200, height: 630, fit: 'cover', position: 'centre' })
     .jpeg({ quality: 82, mozjpeg: true, progressive: true })
     .toFile(dest);
 

@@ -164,8 +164,8 @@
 .dx-layer .lv { text-align: right; font-size: 13px; color: var(--fg-mute); font-variant-numeric: tabular-nums; }
 
 .dx-layer[data-state='weak'] .lbar i { background: linear-gradient(90deg, #FF6B6B, #FF9E5E); }
-.dx-layer[data-state='mid'] .lbar i { background: linear-gradient(90deg, #FF9F2E, #E8C468); }
-.dx-layer[data-state='good'] .lbar i { background: var(--gold-grad); }
+.dx-layer[data-state='mid'] .lbar i { background: linear-gradient(90deg, #F59A3E, #F27A1A); }
+.dx-layer[data-state='good'] .lbar i { background: linear-gradient(90deg, #046E72, #0A8A8C); }
 
 /* Ước tính thất thoát */
 .dx-leak {

@@ -118,24 +118,13 @@ const manifest = () => JSON.stringify({
   theme_color: site.themeColor,
   lang: 'vi',
   icons: [
-    { src: '/assets/Logo.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
-    { src: '/favicon.svg', sizes: 'any', type: 'image/svg+xml' }
+    { src: '/assets/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
+    { src: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
   ]
 }, null, 2);
 
-// Favicon: tia lửa chữ A của Aurix trên nền navy
-const favicon = () => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#F0D9A0"/>
-      <stop offset="50%" stop-color="#D4AF37"/>
-      <stop offset="100%" stop-color="#B8861F"/>
-    </linearGradient>
-  </defs>
-  <rect width="64" height="64" rx="14" fill="#0B1220"/>
-  <path d="M36.2 8 12 40.5h14.3L23.8 56 48 23.4H33.4L36.2 8Z" fill="url(#g)"/>
-</svg>
-`;
+/* Favicon và biểu tượng ứng dụng là ảnh PNG do scripts/brand.js dựng từ logo
+   gốc (chữ A + chấm cam trên nền chuyển sắc). Không sinh ở đây nữa. */
 
 /* ---------- Chạy ---------- */
 async function build() {
@@ -162,11 +151,10 @@ async function build() {
   await writeFile(join(OUT, 'sitemap.xml'), sitemap(pages), 'utf8');
   await writeFile(join(OUT, 'robots.txt'), robots(), 'utf8');
   await writeFile(join(OUT, 'site.webmanifest'), manifest(), 'utf8');
-  await writeFile(join(OUT, 'favicon.svg'), favicon(), 'utf8');
 
   const ms = (performance.now() - t0).toFixed(0);
   console.log(`\n  ${pages.length} trang · ${(bytes / 1024).toFixed(0)} KB HTML · ${ms}ms`);
-  console.log(`  sitemap.xml, robots.txt, site.webmanifest, favicon.svg đã tạo.\n`);
+  console.log(`  sitemap.xml, robots.txt, site.webmanifest đã tạo.\n`);
 }
 
 build().catch(err => {

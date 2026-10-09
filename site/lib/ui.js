@@ -86,7 +86,7 @@ export function btn({ href, label, variant = 'primary', size = '', arrow = true,
 
 export const ARROW = `<svg class="arrow" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10m0 0-4-4m4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
-export const CHECK = `<svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.4l3.2 3.2L13 4.8" stroke="#D4AF37" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+export const CHECK = `<svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.4l3.2 3.2L13 4.8" stroke="#F27A1A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
 /** Khối câu hỏi thường gặp — có thể mở rộng, không cần JS để đọc nội dung */
 export function faqList(items, idPrefix = 'faq') {

@@ -42,22 +42,22 @@ function shell(title, inner) {
   return `<!doctype html>
 <html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
 <title>${esc(title)}</title></head>
-<body style="margin:0;padding:0;background:#0B1220;">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0B1220;padding:28px 12px;">
+<body style="margin:0;padding:0;background:#F5F7F6;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F5F7F6;padding:28px 12px;">
 <tr><td align="center">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#0F1829;border:1px solid rgba(212,175,55,.22);border-radius:16px;overflow:hidden;font-family:'Segoe UI',Arial,sans-serif;">
-    <tr><td style="padding:24px 28px;border-bottom:1px solid rgba(255,255,255,.08);">
-      <span style="font-size:20px;font-weight:700;letter-spacing:.14em;color:#E8C468;">AURIX</span>
-      <span style="display:block;font-size:10px;letter-spacing:.18em;color:#7E8CA3;margin-top:5px;text-transform:uppercase;">${esc(site.brandLine)}</span>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#FFFFFF;border:1px solid #DDE6E5;border-radius:16px;overflow:hidden;font-family:'Segoe UI',Arial,sans-serif;">
+    <tr><td bgcolor="#045152" style="padding:24px 28px;background:#045152;background:linear-gradient(135deg,#046E72,#012B2B);">
+      <span style="font-size:22px;font-weight:800;letter-spacing:.08em;color:#FFFFFF;">AURIX</span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#F27A1A;margin-left:4px;vertical-align:top;"></span>
+      <span style="display:block;font-size:11px;letter-spacing:.06em;color:#B4D4D4;margin-top:6px;">${esc(site.brandLine)}</span>
     </td></tr>
-    <tr><td style="padding:30px 28px;color:#F4F6FA;font-size:15px;line-height:1.7;">
+    <tr><td style="padding:30px 28px;color:#10252A;font-size:15px;line-height:1.7;">
       ${inner}
     </td></tr>
-    <tr><td style="padding:20px 28px;border-top:1px solid rgba(255,255,255,.08);color:#7E8CA3;font-size:12px;line-height:1.6;">
+    <tr><td style="padding:20px 28px;border-top:1px solid #ECF1F0;color:#66777C;font-size:12px;line-height:1.6;">
       ${esc(site.legalName)}<br>
       ${esc(site.address.street)}, ${esc(site.address.city)}<br>
-      <a href="${site.phoneHref}" style="color:#E8C468;text-decoration:none;">${esc(site.phone)}</a> ·
-      <a href="mailto:${esc(site.email)}" style="color:#E8C468;text-decoration:none;">${esc(site.email)}</a>
+      <a href="${site.phoneHref}" style="color:#C4560A;text-decoration:none;">${esc(site.phone)}</a> ·
+      <a href="mailto:${esc(site.email)}" style="color:#C4560A;text-decoration:none;">${esc(site.email)}</a>
     </td></tr>
   </table>
 </td></tr></table>
@@ -65,10 +65,10 @@ function shell(title, inner) {
 }
 
 const btn = (href, label) =>
-  `<a href="${esc(href)}" style="display:inline-block;background:#D4AF37;color:#0B1220;font-weight:700;font-size:15px;text-decoration:none;padding:14px 28px;border-radius:999px;">${esc(label)}</a>`;
+  `<a href="${esc(href)}" style="display:inline-block;background:#F27A1A;color:#FFFFFF;font-weight:700;font-size:15px;text-decoration:none;padding:14px 28px;border-radius:999px;">${esc(label)}</a>`;
 
 const row = (k, v) => v
-  ? `<tr><td style="padding:7px 0;color:#7E8CA3;font-size:13px;width:150px;vertical-align:top;">${esc(k)}</td><td style="padding:7px 0;color:#F4F6FA;font-size:14px;">${v}</td></tr>`
+  ? `<tr><td style="padding:7px 0;color:#66777C;font-size:13px;width:150px;vertical-align:top;">${esc(k)}</td><td style="padding:7px 0;color:#10252A;font-size:14px;">${v}</td></tr>`
   : '';
 
 /* ==========================================================================
@@ -76,15 +76,15 @@ const row = (k, v) => v
    ========================================================================== */
 export async function queueLeadNotification(lead, id, { inbox } = {}) {
   const dx = lead.score != null
-    ? `<tr><td style="padding:7px 0;color:#7E8CA3;font-size:13px;">Điểm chẩn đoán</td><td style="padding:7px 0;"><b style="color:#E8C468;font-size:18px;">${lead.score}/100</b></td></tr>`
+    ? `<tr><td style="padding:7px 0;color:#66777C;font-size:13px;">Điểm chẩn đoán</td><td style="padding:7px 0;"><b style="color:#C4560A;font-size:18px;">${lead.score}/100</b></td></tr>`
     : '';
 
   const inner = `
-    <p style="margin:0 0 6px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#E8C468;">Khách tiềm năng mới</p>
-    <h1 style="margin:0 0 20px;font-size:24px;color:#F4F6FA;">${esc(lead.name)}</h1>
+    <p style="margin:0 0 6px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#C4560A;">Khách tiềm năng mới</p>
+    <h1 style="margin:0 0 20px;font-size:24px;color:#10252A;">${esc(lead.name)}</h1>
     <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
-      ${row('Điện thoại', `<a href="tel:${esc(lead.phone)}" style="color:#E8C468;text-decoration:none;font-weight:600;">${esc(lead.phone)}</a>`)}
-      ${row('Email', `<a href="mailto:${esc(lead.email)}" style="color:#E8C468;text-decoration:none;">${esc(lead.email)}</a>`)}
+      ${row('Điện thoại', `<a href="tel:${esc(lead.phone)}" style="color:#C4560A;text-decoration:none;font-weight:600;">${esc(lead.phone)}</a>`)}
+      ${row('Email', `<a href="mailto:${esc(lead.email)}" style="color:#C4560A;text-decoration:none;">${esc(lead.email)}</a>`)}
       ${row('Doanh nghiệp', esc(lead.company))}
       ${row('Ngành', esc(lead.industry))}
       ${row('Quan tâm', esc(lead.service))}
@@ -92,8 +92,8 @@ export async function queueLeadNotification(lead, id, { inbox } = {}) {
       ${row('Trang gửi', esc(lead.page))}
       ${dx}
     </table>
-    ${lead.message ? `<div style="margin-top:20px;padding:16px 18px;background:rgba(255,255,255,.04);border-left:2px solid #D4AF37;border-radius:6px;color:#AEB9CC;font-size:14px;">${esc(lead.message)}</div>` : ''}
-    <p style="margin:26px 0 0;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);color:#7E8CA3;font-size:13px;">
+    ${lead.message ? `<div style="margin-top:20px;padding:16px 18px;background:#F5F7F6;border-left:3px solid #F27A1A;border-radius:6px;color:#46585D;font-size:14px;">${esc(lead.message)}</div>` : ''}
+    <p style="margin:26px 0 0;padding-top:20px;border-top:1px solid #ECF1F0;color:#66777C;font-size:13px;">
       Hệ thống của chính bạn cam kết phản hồi dưới 60 giây. Đồng hồ bắt đầu chạy từ bây giờ.
     </p>
     <p style="margin:20px 0 0;">${btn(`tel:${lead.phone}`, 'Gọi ngay')}</p>`;
@@ -129,56 +129,56 @@ export async function queueDiagnosticReport(lead, id, result) {
   if (!result) return null;
 
   const bars = result.layers.map(l => {
-    const color = l.state === 'weak' ? '#FF6B6B' : l.state === 'mid' ? '#FF9F2E' : '#D4AF37';
+    const color = l.state === 'weak' ? '#FF6B6B' : l.state === 'mid' ? '#F27A1A' : '#046E72';
     return `<tr>
-      <td style="padding:9px 0;width:26px;color:#E8C468;font-size:17px;font-weight:700;">${l.letter}</td>
-      <td style="padding:9px 0;color:#F4F6FA;font-size:14px;">${esc(LAYERS[l.key]?.name || l.name)}</td>
+      <td style="padding:9px 0;width:26px;color:#C4560A;font-size:17px;font-weight:700;">${l.letter}</td>
+      <td style="padding:9px 0;color:#10252A;font-size:14px;">${esc(LAYERS[l.key]?.name || l.name)}</td>
       <td style="padding:9px 0;width:120px;">
-        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:rgba(255,255,255,.08);border-radius:4px;">
+        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#ECF1F0;border-radius:4px;">
           <tr><td style="height:6px;width:${l.score}%;background:${color};border-radius:4px;font-size:0;line-height:0;">&nbsp;</td><td style="font-size:0;line-height:0;">&nbsp;</td></tr>
         </table>
       </td>
-      <td style="padding:9px 0 9px 12px;width:54px;text-align:right;color:#7E8CA3;font-size:13px;">${l.score}/100</td>
+      <td style="padding:9px 0 9px 12px;width:54px;text-align:right;color:#66777C;font-size:13px;">${l.score}/100</td>
     </tr>`;
   }).join('');
 
   const recs = result.recommendations.map(r => `
-    <div style="margin-bottom:14px;padding:16px 18px;background:rgba(255,255,255,.035);border-radius:10px;">
-      <div style="color:#E8C468;font-size:15px;font-weight:700;margin-bottom:6px;">${r.priority}. ${esc(r.title)}</div>
-      <div style="color:#AEB9CC;font-size:14px;line-height:1.65;">${esc(r.body)}</div>
-      <div style="margin-top:9px;"><a href="${site.origin}${r.service}" style="color:#E8C468;font-size:13px;text-decoration:none;">Dịch vụ liên quan: ${esc(r.serviceName)} →</a></div>
+    <div style="margin-bottom:14px;padding:16px 18px;background:#F5F7F6;border-radius:10px;">
+      <div style="color:#C4560A;font-size:15px;font-weight:700;margin-bottom:6px;">${r.priority}. ${esc(r.title)}</div>
+      <div style="color:#46585D;font-size:14px;line-height:1.65;">${esc(r.body)}</div>
+      <div style="margin-top:9px;"><a href="${site.origin}${r.service}" style="color:#C4560A;font-size:13px;text-decoration:none;">Dịch vụ liên quan: ${esc(r.serviceName)} →</a></div>
     </div>`).join('');
 
   const leak = result.leak.monthlyMillions > 0
-    ? `<div style="margin:24px 0;padding:20px 22px;background:rgba(255,159,46,.07);border:1px solid rgba(212,175,55,.25);border-radius:12px;">
-         <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#FF9F2E;margin-bottom:8px;">Ước tính thất thoát mỗi tháng</div>
-         <div style="font-size:30px;color:#E8C468;font-weight:700;">~ ${esc(result.leak.display)}</div>
-         <div style="margin-top:8px;color:#7E8CA3;font-size:13px;">Tương đương khoảng ${esc(result.leak.yearlyDisplay)} mỗi năm.</div>
+    ? `<div style="margin:24px 0;padding:20px 22px;background:#FFF4EA;border:1px solid #F9C99B;border-radius:12px;">
+         <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#C4560A;margin-bottom:8px;">Ước tính thất thoát mỗi tháng</div>
+         <div style="font-size:30px;color:#C4560A;font-weight:700;">~ ${esc(result.leak.display)}</div>
+         <div style="margin-top:8px;color:#66777C;font-size:13px;">Tương đương khoảng ${esc(result.leak.yearlyDisplay)} mỗi năm.</div>
        </div>`
     : '';
 
   const inner = `
-    <p style="margin:0 0 6px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#E8C468;">Báo cáo chẩn đoán</p>
-    <h1 style="margin:0 0 16px;font-size:24px;color:#F4F6FA;">Chào ${esc(lead.name)},</h1>
-    <p style="margin:0 0 22px;color:#AEB9CC;">Đây là kết quả chẩn đoán hệ thống tăng trưởng của bạn, dựa trên câu trả lời vừa rồi.</p>
+    <p style="margin:0 0 6px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#C4560A;">Báo cáo chẩn đoán</p>
+    <h1 style="margin:0 0 16px;font-size:24px;color:#10252A;">Chào ${esc(lead.name)},</h1>
+    <p style="margin:0 0 22px;color:#46585D;">Đây là kết quả chẩn đoán hệ thống tăng trưởng của bạn, dựa trên câu trả lời vừa rồi.</p>
 
-    <div style="text-align:center;padding:24px;background:rgba(255,255,255,.035);border-radius:12px;margin-bottom:24px;">
-      <div style="font-size:46px;font-weight:700;color:#E8C468;line-height:1;">${result.overall}</div>
-      <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#7E8CA3;margin-top:8px;">Điểm hệ thống</div>
-      <div style="margin-top:14px;display:inline-block;padding:6px 16px;border:1px solid rgba(212,175,55,.35);border-radius:99px;color:#E8C468;font-size:12px;font-weight:600;">${esc(result.tier.label)}</div>
+    <div style="text-align:center;padding:24px;background:#F5F7F6;border-radius:12px;margin-bottom:24px;">
+      <div style="font-size:46px;font-weight:700;color:#C4560A;line-height:1;">${result.overall}</div>
+      <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#66777C;margin-top:8px;">Điểm hệ thống</div>
+      <div style="margin-top:14px;display:inline-block;padding:6px 16px;border:1px solid #F9C99B;border-radius:99px;color:#C4560A;font-size:12px;font-weight:600;">${esc(result.tier.label)}</div>
     </div>
 
-    <p style="margin:0 0 6px;color:#F4F6FA;font-size:17px;font-weight:600;">${esc(result.tier.headline)}</p>
-    <p style="margin:0 0 26px;color:#AEB9CC;">${esc(result.tier.body)}</p>
+    <p style="margin:0 0 6px;color:#10252A;font-size:17px;font-weight:600;">${esc(result.tier.headline)}</p>
+    <p style="margin:0 0 26px;color:#46585D;">${esc(result.tier.body)}</p>
 
-    <p style="margin:0 0 10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#E8C468;">Bảng điểm năm tầng</p>
+    <p style="margin:0 0 10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#C4560A;">Bảng điểm năm tầng</p>
     <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:8px;">${bars}</table>
     ${leak}
 
-    <p style="margin:0 0 12px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#E8C468;">Nên làm gì, theo thứ tự</p>
+    <p style="margin:0 0 12px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#C4560A;">Nên làm gì, theo thứ tự</p>
     ${recs}
 
-    <p style="margin:28px 0 0;padding-top:22px;border-top:1px solid rgba(255,255,255,.08);color:#AEB9CC;">
+    <p style="margin:28px 0 0;padding-top:22px;border-top:1px solid #ECF1F0;color:#46585D;">
       Nếu muốn đi sâu hơn, chúng tôi dành bốn mươi lăm phút để soi hệ thống của bạn bằng dữ liệu thật — miễn phí, không ràng buộc.
     </p>
     <p style="margin:20px 0 0;">${btn(`${site.origin}/lien-he/`, 'Đặt lịch chẩn đoán trực tiếp')}</p>`;

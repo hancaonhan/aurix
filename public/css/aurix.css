@@ -1,6 +1,6 @@
 /* ==========================================================================
    AURIX DESIGN SYSTEM
-   Navy sâu · Gold khắc · Amber tia lửa
+   Xanh cổ vịt · Cam chấm chữ i — bảng màu đầy đủ ở BRAND.md
    ========================================================================== */
 
 /* ---------- 1. Tokens ----------
@@ -11,9 +11,14 @@
      --ink-900          chữ tối đặt trên nền màu
      --gold-*           màu nhấn (cam)                                        */
 :root {
+  /* Bộ nhận diện Aurix — xem BRAND.md.
+     Xanh cổ vịt là chữ logo; nền chuyển sắc lấy từ ảnh nhận diện gốc
+     (public/assets/Logo.png); cam là chấm chữ i. */
   --brand: #0E3B3D;
-  --brand-2: #155A5C;
-  --brand-soft: #E7F0EF;
+  --brand-2: #046E72;
+  --brand-soft: #E6F1F0;
+  --brand-grad: linear-gradient(135deg, #046E72 0%, #045152 45%, #012B2B 100%);
+  --brand-deep: #012B2B;
 
   --ink-900: #0B2A2C;
   --ink-800: #FFFFFF;
