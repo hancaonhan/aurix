@@ -37,6 +37,11 @@ export function initTracking() {
     if (a.matches('.btn-primary, .svc-cta') || /^\/(chan-doan|lien-he)\//.test(href)) track('cta');
   }, { capture: true });
 
+  // Bấm xem video (sự kiện play không nổi bọt nên phải bắt ở pha capture)
+  document.addEventListener('play', e => {
+    if (e.target.matches?.('video')) track('video_play', { once: true });
+  }, { capture: true });
+
   // Bắt đầu điền form: lần đầu con trỏ vào một ô nhập bất kỳ trong form
   document.addEventListener('focusin', e => {
     if (e.target.matches?.('form input:not([type=hidden]):not(.hp), form textarea, form select')) {

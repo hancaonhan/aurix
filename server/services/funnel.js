@@ -18,6 +18,7 @@ import { ROOT } from '../core/config.js';
 export const KINDS = {
   view:       'Xem trang',
   cta:        'Bấm nút kêu gọi',
+  video_play: 'Xem video giới thiệu',
   calc_use:   'Dùng máy tính thất thoát',
   dx_start:   'Bắt đầu bài chẩn đoán',
   dx_done:    'Xong bài chẩn đoán',

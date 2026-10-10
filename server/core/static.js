@@ -30,10 +30,16 @@ export const MIME = {
   '.webp': 'image/webp',
   '.avif': 'image/avif',
   '.ico': 'image/x-icon',
-  '.woff2': 'font/woff2'
+  '.woff2': 'font/woff2',
+  '.mp4': 'video/mp4',
+  '.vtt': 'text/vtt; charset=utf-8'
 };
 
-const COMPRESSIBLE = new Set(['.html', '.css', '.js', '.mjs', '.json', '.svg', '.xml', '.txt', '.webmanifest']);
+const COMPRESSIBLE = new Set(['.html', '.css', '.js', '.mjs', '.json', '.svg', '.xml', '.txt', '.webmanifest', '.vtt']);
+
+/* Loại tệp phát theo từng đoạn. Safari và iPhone CHỈ phát video khi máy chủ
+   trả lời được yêu cầu Range bằng 206 — trả nguyên tệp 200 là video đứng im. */
+const RANGEABLE = new Set(['.mp4']);
 
 export function cacheControl(ext, pathname) {
   if (ext === '.html') return 'public, max-age=0, must-revalidate';
@@ -83,9 +89,25 @@ export async function sendFile(req, res, { full, st }, pathname, extraHeaders = 
     return res.end();
   }
 
+  if (RANGEABLE.has(ext)) headers['Accept-Ranges'] = 'bytes';
+
   if (req.method === 'HEAD') {
     res.writeHead(200, { ...headers, 'Content-Length': st.size });
     return res.end();
+  }
+
+  // Phát theo đoạn: "bytes=a-b", "bytes=a-" hoặc "bytes=-n" (n byte cuối).
+  // Chỉ nhận một khoảng; yêu cầu nhiều khoảng hiếm gặp với video, trả cả tệp.
+  const range = RANGEABLE.has(ext) && /^bytes=(\d*)-(\d*)$/.exec(String(req.headers.range || ''));
+  if (range && (range[1] || range[2])) {
+    const start = range[1] ? Number(range[1]) : Math.max(0, st.size - Number(range[2]));
+    const end = range[1] && range[2] ? Math.min(Number(range[2]), st.size - 1) : st.size - 1;
+    if (start > end || start >= st.size) {
+      res.writeHead(416, { 'Content-Range': `bytes */${st.size}` });
+      return res.end();
+    }
+    res.writeHead(206, { ...headers, 'Content-Range': `bytes ${start}-${end}/${st.size}`, 'Content-Length': end - start + 1 });
+    return pipeline(createReadStream(full, { start, end }), res).catch(() => {});
   }
 
   const accept = String(req.headers['accept-encoding'] || '');

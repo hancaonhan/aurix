@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Aurix — video 9:16</title>
+<style>
+@font-face { font-family: 'BVP'; font-weight: 400; src: url('../../public/assets/fonts/be-vietnam-pro-400-vietnamese.woff2') format('woff2'); unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB; }
+@font-face { font-family: 'BVP'; font-weight: 400; src: url('../../public/assets/fonts/be-vietnam-pro-400-latin.woff2') format('woff2'); }
+@font-face { font-family: 'BVP'; font-weight: 600; src: url('../../public/assets/fonts/be-vietnam-pro-600-vietnamese.woff2') format('woff2'); unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB; }
+@font-face { font-family: 'BVP'; font-weight: 600; src: url('../../public/assets/fonts/be-vietnam-pro-600-latin.woff2') format('woff2'); }
+@font-face { font-family: 'BVP'; font-weight: 700; src: url('../../public/assets/fonts/be-vietnam-pro-700-vietnamese.woff2') format('woff2'); unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB; }
+@font-face { font-family: 'BVP'; font-weight: 700; src: url('../../public/assets/fonts/be-vietnam-pro-700-latin.woff2') format('woff2'); }
+@font-face { font-family: 'BVP'; font-weight: 800; src: url('../../public/assets/fonts/be-vietnam-pro-800-vietnamese.woff2') format('woff2'); unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB; }
+@font-face { font-family: 'BVP'; font-weight: 800; src: url('../../public/assets/fonts/be-vietnam-pro-800-latin.woff2') format('woff2'); }
+
+:root {
+  --teal: #0E3B3D; --teal-l: #046E72; --teal-m: #045152; --teal-d: #012B2B;
+  --orange: #F27A1A; --white: #FFFFFF; --soft: rgba(255,255,255,.72);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--teal-d); }
+body { font-family: 'BVP', sans-serif; color: var(--white); -webkit-font-smoothing: antialiased; }
+.abs { position: absolute; }
+#stage { position: relative; width: 1080px; height: 1920px; overflow: hidden;
+  background: linear-gradient(150deg, #046E72 0%, #045152 42%, #012B2B 82%, #001B1B 100%); }
+.orb { position: absolute; border-radius: 50%; filter: blur(2px); }
+#orb1 { width: 900px; height: 900px; border: 90px solid rgba(10,138,140,.16); }
+#orb2 { width: 760px; height: 760px; border: 70px solid rgba(10,138,140,.12); }
+#grain { inset: 0; background: radial-gradient(ellipse at 50% 120%, rgba(0,0,0,.35), transparent 60%); }
+
+.scene { position: absolute; inset: 0; opacity: 0; }
+.big { font-weight: 800; letter-spacing: -0.03em; line-height: 1.08; }
+.o { color: var(--orange); }
+.center { left: 0; right: 0; text-align: center; }
+
+#topLogo { left: 50%; top: 96px; width: 300px; margin-left: -150px; }
+
+/* Phụ đề */
+#cap { left: 70px; right: 70px; top: 1520px; text-align: center; font-size: 50px; font-weight: 700;
+  line-height: 1.32; letter-spacing: -0.01em; text-shadow: 0 4px 24px rgba(0,0,0,.35); }
+#cap span { color: rgba(255,255,255,.42); }
+#cap span.done { color: #fff; }
+#cap span.now { color: var(--orange); }
+
+/* Cảnh 1 */
+.bubble { position: absolute; padding: 26px 34px; border-radius: 34px 34px 34px 8px; background: #fff; color: var(--teal);
+  font-size: 40px; font-weight: 600; box-shadow: 0 20px 50px rgba(0,0,0,.25); white-space: nowrap; }
+.bubble.r { border-radius: 34px 34px 8px 34px; }
+.bubble i { font-style: normal; display: block; font-size: 24px; font-weight: 600; color: #8AA; margin-top: 6px; }
+
+/* Cảnh 2 */
+.leak { position: absolute; left: 120px; right: 120px; height: 118px; border-radius: 28px; background: rgba(255,255,255,.1);
+  border-left: 12px solid var(--orange); display: flex; align-items: center; gap: 28px; padding: 0 40px; font-size: 50px; font-weight: 700; }
+.leak b { width: 64px; height: 64px; border-radius: 50%; background: var(--orange); display: grid; place-items: center; font-size: 36px; flex: none; }
+
+/* Cảnh 3 */
+#photo { left: 50%; top: 300px; width: 560px; height: 640px; margin-left: -280px; border-radius: 44px; overflow: hidden;
+  box-shadow: 0 40px 90px rgba(0,0,0,.4); border: 6px solid rgba(255,255,255,.9); }
+#photo img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+.chip { position: absolute; padding: 20px 40px; border-radius: 999px; background: #fff; color: var(--teal); font-size: 44px; font-weight: 700; }
+
+/* Cảnh 4 */
+.svc { position: absolute; left: 90px; right: 90px; height: 168px; border-radius: 36px; display: flex; align-items: center; gap: 36px; padding: 0 36px; }
+.svc .badge { width: 112px; height: 112px; border-radius: 28px; background: #fff; color: var(--teal); display: grid; place-items: center; font-size: 60px; font-weight: 800; flex: none; }
+.svc .n { font-size: 50px; font-weight: 700; line-height: 1.1; }
+.svc .s { font-size: 31px; color: var(--soft); margin-top: 8px; }
+
+/* Cảnh 5 */
+#card { left: 90px; right: 90px; top: 330px; height: 760px; border-radius: 44px; background: #fff; color: var(--teal); padding: 56px; box-shadow: 0 40px 100px rgba(0,0,0,.35); }
+#card h3 { font-size: 40px; font-weight: 700; }
+#card .leg { display: flex; gap: 36px; margin-top: 18px; font-size: 30px; color: #46585D; font-weight: 600; }
+#card .leg i { display: inline-block; width: 24px; height: 24px; border-radius: 6px; margin-right: 10px; vertical-align: -3px; }
+.bar { position: absolute; bottom: 70px; width: 52px; border-radius: 12px 12px 4px 4px; }
+
+/* Cảnh 6 */
+#badge45 { width: 250px; height: 250px; border-radius: 50%; background: var(--orange); display: grid; place-items: center; text-align: center;
+  font-weight: 800; font-size: 74px; line-height: .95; box-shadow: 0 30px 70px rgba(242,122,26,.45); }
+#badge45 small { display: block; font-size: 36px; font-weight: 700; }
+#url { left: 50%; width: 760px; margin-left: -380px; top: 1060px; height: 130px; border-radius: 999px; background: #fff; color: var(--teal);
+  display: grid; place-items: center; font-size: 58px; font-weight: 800; letter-spacing: -0.01em; }
+#btn { left: 50%; width: 600px; margin-left: -300px; top: 1230px; height: 120px; border-radius: 999px; background: var(--orange);
+  display: grid; place-items: center; font-size: 46px; font-weight: 800; }
+
+/* Cảnh 7 */
+#bigLogo { left: 50%; top: 700px; width: 840px; margin-left: -420px; }
+#tag { top: 1000px; font-size: 50px; font-weight: 600; }
+#tag .d { color: var(--orange); margin: 0 18px; }
+#url2 { top: 1110px; font-size: 40px; font-weight: 600; color: var(--soft); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="orb1" class="orb"></div>
+  <div id="orb2" class="orb"></div>
+  <div id="grain" class="abs"></div>
+
+  <img id="topLogo" class="abs" src="../../public/assets/logo-trang-aurix.png" alt="">
+
+  <!-- 1. Câu hỏi mở đầu -->
+  <section class="scene" id="s-hook">
+    <div class="bubble" id="b1" style="left:110px;top:330px">Giá bao nhiêu ạ?<i>Đã xem · 21:04</i></div>
+    <div class="bubble r" id="b2" style="right:110px;top:520px">Còn lịch cuối tuần không?<i>Đã xem · 21:10</i></div>
+    <div class="bubble" id="b3" style="left:150px;top:710px">Tư vấn giúp em với<i>Đã xem · 21:32</i></div>
+    <div class="abs center big" id="h1" style="top:960px;font-size:96px">Khách hỏi nhiều.</div>
+    <div class="abs center big" id="h2" style="top:1090px;font-size:96px">Mua được <span class="o">bao nhiêu?</span></div>
+  </section>
+
+  <!-- 2. Khách mất ở đâu -->
+  <section class="scene" id="s-problem">
+    <div class="abs center big" id="p1" style="top:300px;font-size:92px">Khách mất ở đâu?</div>
+    <svg class="abs" id="funnel" style="left:240px;top:470px" width="600" height="520" viewBox="0 0 600 520">
+      <path d="M0 0 H600 L430 260 V520 H170 V260 Z" fill="rgba(255,255,255,.12)" stroke="rgba(255,255,255,.55)" stroke-width="6"/>
+      <text x="300" y="120" text-anchor="middle" font-size="40" font-weight="700" fill="#fff" font-family="BVP">Quảng cáo</text>
+      <text x="300" y="400" text-anchor="middle" font-size="40" font-weight="700" fill="#fff" font-family="BVP">Doanh thu</text>
+      <g id="drops"></g>
+    </svg>
+    <div class="leak" id="l1" style="top:1050px"><b>1</b>Trang web chậm</div>
+    <div class="leak" id="l2" style="top:1190px"><b>2</b>Gọi lại trễ</div>
+    <div class="leak" id="l3" style="top:1330px"><b>3</b>Không ai đo được</div>
+  </section>
+
+  <!-- 3. Giới thiệu -->
+  <section class="scene" id="s-intro">
+    <div class="abs" id="photo"><img src="../../assets-goc/11.png" alt=""></div>
+    <img class="abs" id="introLogo" src="../../public/assets/logo-trang-aurix.png" style="left:50%;top:990px;width:520px;margin-left:-260px" alt="">
+    <div class="abs center" id="i1" style="top:1160px;font-size:46px;font-weight:600;color:rgba(255,255,255,.85)">Agency marketing cho</div>
+    <div class="chip" id="c1" style="left:150px;top:1250px">Spa</div>
+    <div class="chip" id="c2" style="left:400px;top:1250px">Nha khoa</div>
+    <div class="chip" id="c3" style="left:180px;top:1370px">Giáo dục</div>
+    <div class="chip" id="c4" style="left:540px;top:1370px">Fitness</div>
+  </section>
+
+  <!-- 4. Năm dịch vụ -->
+  <section class="scene" id="s-services">
+    <div class="abs center big" id="v0" style="top:280px;font-size:84px"><span class="o">5</span> việc Aurix làm</div>
+    <div class="svc" id="v1" style="top:440px"><div class="badge">A</div><div><div class="n">Web cá nhân hoá</div><div class="s">Đúng bản sắc thương hiệu</div></div></div>
+    <div class="svc" id="v2" style="top:630px"><div class="badge">U</div><div><div class="n">Hệ thống marketing</div><div class="s">Nối quảng cáo với doanh thu</div></div></div>
+    <div class="svc" id="v3" style="top:820px"><div class="badge">R</div><div><div class="n">Phủ sóng đa kênh</div><div class="s">Đúng người, đúng lúc</div></div></div>
+    <div class="svc" id="v4" style="top:1010px"><div class="badge">I</div><div><div class="n">Landing page</div><div class="s">Thiết kế để chốt</div></div></div>
+    <div class="svc" id="v5" style="top:1200px"><div class="badge">X</div><div><div class="n">Siêu chuyển đổi</div><div class="s">Cùng lượng khách, nhiều doanh thu hơn</div></div></div>
+  </section>
+
+  <!-- 5. Báo cáo -->
+  <section class="scene" id="s-proof">
+    <div class="abs" id="card">
+      <h3>Báo cáo hằng tuần</h3>
+      <div class="leg"><span><i style="background:#9DB8B8"></i>Chi phí</span><span><i style="background:#F27A1A"></i>Doanh thu</span></div>
+      <div id="bars"></div>
+    </div>
+    <div class="abs center big" id="r1" style="top:1150px;font-size:70px">Mỗi đồng chi</div>
+    <div class="abs center big" id="r2" style="top:1240px;font-size:70px">đối chiếu với <span class="o">doanh thu thật</span></div>
+  </section>
+
+  <!-- 6. Kêu gọi -->
+  <section class="scene" id="s-cta">
+    <div class="abs center big" id="k1" style="top:330px;font-size:124px">Chẩn đoán</div>
+    <div class="abs center big o" id="k2" style="top:480px;font-size:124px">miễn phí</div>
+    <div class="abs" id="badge45" style="left:415px;top:690px">45<small>phút</small></div>
+    <div class="abs" id="url">aurixvietnam.vn</div>
+    <div class="abs" id="btn">Đặt lịch ngay →</div>
+  </section>
+
+  <!-- 7. Logo -->
+  <section class="scene" id="s-logo">
+    <img class="abs" id="bigLogo" src="../../public/assets/logo-trang-aurix.png" alt="">
+    <div class="abs center" id="tag">Công nghệ<span class="d">•</span>Giải pháp<span class="d">•</span>Tăng trưởng</div>
+    <div class="abs center" id="url2">aurixvietnam.vn</div>
+  </section>
+
+  <div class="abs" id="cap"></div>
+</div>
+
+<script>
+/* Mọi trạng thái hình là hàm thuần của thời điểm t (giây) — dựng khung nào
+   cũng ra đúng hình đó, không phụ thuộc khung trước. */
+const $ = id => document.getElementById(id);
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const out3 = p => 1 - Math.pow(1 - p, 3);
+const back = p => { const c = 1.6; return 1 + (c + 1) * Math.pow(p - 1, 3) + c * Math.pow(p - 1, 2); };
+
+let TL, LINE, SCENE;
+window.setTimeline = tl => {
+  TL = tl;
+  LINE = Object.fromEntries(tl.lines.map(l => [l.id, l]));
+  SCENE = Object.fromEntries(tl.scenes.map(s => [s.id, s]));
+  // Cột biểu đồ cảnh báo cáo: chi phí đều, doanh thu tăng dần (minh hoạ, không ghi số)
+  const bars = $('bars');
+  const cost = [.42, .45, .43, .46, .44, .45, .44];
+  const rev = [.30, .38, .47, .55, .66, .78, .92];
+  bars.innerHTML = cost.map((c, i) =>
+    `<div class="bar" data-h="${c}" style="left:${70 + i * 116}px;background:#9DB8B8"></div>` +
+    `<div class="bar" data-h="${rev[i]}" style="left:${70 + i * 116 + 56}px;background:#F27A1A"></div>`).join('');
+  // Giọt rơi khỏi phễu
+  let d = '';
+  for (let i = 0; i < 9; i++) d += `<circle class="drop" r="12" fill="#F27A1A" data-i="${i}"/>`;
+  $('drops').innerHTML = d;
+};
+
+/** Hiện dần + trượt lên tại thời điểm a. */
+function rise(el, t, a, dist = 50, len = 0.55) {
+  const p = out3(seg(t, a, a + len));
+  el.style.opacity = p;
+  el.style.transform = `translateY(${(1 - p) * dist}px)`;
+  return p;
+}
+function pop(el, t, a, len = 0.5) {
+  const p = seg(t, a, a + len);
+  el.style.opacity = clamp(p * 2.5);
+  el.style.transform = `scale(${0.6 + 0.4 * back(p)})`;
+  return p;
+}
+const wordT = (lineId, k) => LINE[lineId].words[Math.min(k, LINE[lineId].words.length - 1)].t;
+const findWord = (lineId, re) => {
+  const ws = LINE[lineId].words;
+  const k = ws.findIndex(w => re.test(w.w));
+  return (k < 0 ? ws[0] : ws[k]).t;
+};
+
+function sceneOpacity(s, t, last) {
+  const fin = out3(seg(t, s.in, s.in + 0.45));
+  const fout = last ? 1 : 1 - seg(t, s.out - 0.35, s.out);
+  return Math.min(fin, fout);
+}
+
+window.render = t => {
+  // Nền: hai vòng tròn trôi chậm như ảnh nhận diện gốc
+  $('orb1').style.transform = `translate(${560 + Math.sin(t * 0.21) * 60}px, ${-260 + Math.cos(t * 0.17) * 50}px)`;
+  $('orb2').style.transform = `translate(${-380 + Math.cos(t * 0.19) * 50}px, ${1300 + Math.sin(t * 0.23) * 60}px)`;
+
+  const ids = ['hook', 'problem', 'intro', 'services', 'proof', 'cta', 'logo'];
+  ids.forEach((id, i) => { $('s-' + id).style.opacity = sceneOpacity(SCENE[id], t, i === ids.length - 1); });
+
+  // Logo nhỏ phía trên: ẩn khi cảnh giới thiệu và cảnh logo lớn đang chiếm chỗ
+  const hideTop = Math.max(sceneOpacity(SCENE.intro, t), sceneOpacity(SCENE.logo, t, true));
+  $('topLogo').style.opacity = (1 - hideTop) * out3(seg(t, 0, 0.5));
+
+  /* 1. Mở đầu */
+  const H = LINE.hook;
+  ['b1', 'b2', 'b3'].forEach((id, i) => {
+    const p = rise($(id), t, 0.15 + i * 0.32, 60, 0.5);
+    $(id).style.opacity = p * (t > findWord('hook', /nhưng/) ? 0.55 : 1);
+  });
+  rise($('h1'), t, H.start + 0.05);
+  rise($('h2'), t, findWord('hook', /nhưng/) - 0.1);
+
+  /* 2. Vấn đề */
+  rise($('p1'), t, SCENE.problem.in + 0.1);
+  rise($('funnel'), t, SCENE.problem.in + 0.25, 40, 0.6);
+  document.querySelectorAll('.drop').forEach(el => {
+    const i = +el.dataset.i;
+    const period = 1.6, phase = (t * 1 + i * 0.37) % period / period;
+    const side = i % 2 ? 1 : -1;
+    const start = SCENE.problem.in + 0.6;
+    const x = 300 + side * (150 + phase * 260 + (i % 3) * 20);
+    const y = 150 + phase * 380;
+    el.setAttribute('cx', x); el.setAttribute('cy', y);
+    el.setAttribute('opacity', t < start ? 0 : (1 - phase) * 0.9);
+  });
+  rise($('l1'), t, findWord('prob2', /chậm/) - 0.25, 0, 0.4);
+  rise($('l2'), t, findWord('prob2', /trễ/) - 0.25, 0, 0.4);
+  rise($('l3'), t, findWord('prob2', /^đo/) - 0.25, 0, 0.4);
+  ['l1', 'l2', 'l3'].forEach((id, i) => {
+    const a = [findWord('prob2', /chậm/), findWord('prob2', /trễ/), findWord('prob2', /^đo/)][i] - 0.25;
+    const p = out3(seg(t, a, a + 0.4));
+    $(id).style.transform = `translateX(${(1 - p) * -120}px)`;
+  });
+
+  /* 3. Giới thiệu */
+  const I = SCENE.intro;
+  pop($('photo'), t, I.in + 0.05, 0.6);
+  rise($('introLogo'), t, findWord('intro', /^Aurix/) + 0.1);
+  rise($('i1'), t, findWord('intro', /agency/i));
+  pop($('c1'), t, findWord('intro', /^spa/) - 0.08, 0.4);
+  pop($('c2'), t, findWord('intro', /^nha/) - 0.08, 0.4);
+  pop($('c3'), t, findWord('intro', /^giáo/) - 0.08, 0.4);
+  pop($('c4'), t, findWord('intro', /^fitness/) - 0.08, 0.4);
+
+  /* 4. Dịch vụ */
+  rise($('v0'), t, LINE.svc0.start - 0.05);
+  for (let i = 1; i <= 5; i++) {
+    const L = LINE['svc' + i];
+    const el = $('v' + i);
+    const p = rise(el, t, L.start - 0.2, 0, 0.45);
+    el.style.transform = `translateX(${(1 - out3(seg(t, L.start - 0.2, L.start + 0.25))) * 140}px)`;
+    const next = i < 5 ? LINE['svc' + (i + 1)].start - 0.2 : SCENE.services.out;
+    const active = t >= L.start - 0.2 && t < next;
+    el.style.background = active ? 'rgba(255,255,255,.14)' : 'transparent';
+    el.querySelector('.badge').style.background = active ? '#F27A1A' : '#fff';
+    el.querySelector('.badge').style.color = active ? '#fff' : '#0E3B3D';
+    el.style.opacity = p * (active || t < L.start ? 1 : 0.62);
+  }
+
+  /* 5. Báo cáo */
+  const P = SCENE.proof;
+  pop($('card'), t, P.in + 0.05, 0.6);
+  document.querySelectorAll('#bars .bar').forEach((el, k) => {
+    const a = P.in + 0.45 + Math.floor(k / 2) * 0.16;
+    el.style.height = `${out3(seg(t, a, a + 0.6)) * Number(el.dataset.h) * 470}px`;
+  });
+  rise($('r1'), t, LINE.proof1.start + 0.05);
+  rise($('r2'), t, findWord('proof1', /đối/) - 0.1);
+
+  /* 6. Kêu gọi */
+  const C = LINE.cta1;
+  rise($('k1'), t, C.start - 0.1);
+  rise($('k2'), t, findWord('cta1', /miễn/) - 0.1);
+  const bp = seg(t, findWord('cta1', /^bốn/) - 0.1, findWord('cta1', /^bốn/) + 0.5);
+  $('badge45').style.opacity = clamp(bp * 3);
+  $('badge45').style.transform = `scale(${0.4 + 0.6 * back(bp)}) rotate(${(1 - out3(bp)) * -40}deg)`;
+  rise($('url'), t, findWord('cta1', /website/) - 0.1);
+  const bt = rise($('btn'), t, findWord('cta1', /website/) + 0.4);
+  if (bt >= 1) $('btn').style.transform = `scale(${1 + Math.sin((t - C.end) * 6) * 0.025})`;
+
+  /* 7. Logo */
+  const G = SCENE.logo;
+  const lp = seg(t, G.in + 0.05, G.in + 0.9);
+  $('bigLogo').style.opacity = out3(lp);
+  $('bigLogo').style.transform = `scale(${0.86 + 0.14 * out3(lp)})`;
+  $('bigLogo').style.filter = `drop-shadow(0 0 ${40 * (1 - out3(lp))}px rgba(242,122,26,.6))`;
+  rise($('tag'), t, findWord('cta2', /^Công/) - 0.1);
+  rise($('url2'), t, LINE.cta2.end - 0.3);
+
+  /* Phụ đề: câu đang đọc, từ đã đọc sáng trắng, từ đang đọc màu cam */
+  let cur = null;
+  for (const l of TL.lines) if (t >= l.start - 0.15 && t <= l.end + 0.35) cur = l;
+  const cap = $('cap');
+  if (!cur || cur.scene === 'logo') { cap.style.opacity = 0; return; }
+  cap.style.opacity = Math.min(out3(seg(t, cur.start - 0.15, cur.start + 0.1)), 1 - seg(t, cur.end + 0.15, cur.end + 0.35));
+  const html = cur.words.map((w, k) => {
+    const nextT = k < cur.words.length - 1 ? cur.words[k + 1].t : cur.end;
+    const cls = t >= nextT ? 'done' : t >= w.t ? 'now' : '';
+    return `<span class="${cls}">${w.w}</span>`;
+  }).join(' ');
+  if (cap.innerHTML !== html) cap.innerHTML = html;
+};
+</script>
+</body>
+</html>

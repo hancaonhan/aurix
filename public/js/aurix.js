@@ -137,6 +137,21 @@ function initCardGlow() {
 }
 
 /* ---------- 7. Thanh hành động nổi trên di động ---------- */
+/* ---------- Video giới thiệu: nút phát lớn ở giữa khung ----------
+   Bấm là phát luôn có tiếng (cử chỉ của người dùng nên trình duyệt cho phép).
+   Nút ẩn khi đang phát, hiện lại khi dừng để khách xem tiếp. */
+function initVideo() {
+  for (const frame of $$('.video-frame')) {
+    const video = $('video', frame);
+    const btn = $('.video-play', frame);
+    if (!video || !btn) continue;
+    btn.addEventListener('click', () => { video.play().catch(() => {}); });
+    video.addEventListener('play', () => frame.classList.add('is-playing'));
+    video.addEventListener('pause', () => frame.classList.remove('is-playing'));
+    video.addEventListener('ended', () => frame.classList.remove('is-playing'));
+  }
+}
+
 function initMobileBar() {
   const bar = $('#mobileBar');
   if (!bar) return;
@@ -281,6 +296,7 @@ function boot() {
   initFaq();
   initCardGlow();
   initMobileBar();
+  initVideo();
   initPersonalization();
   initSiteSettings();
   initTracking();

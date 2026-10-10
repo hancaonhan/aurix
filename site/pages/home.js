@@ -5,6 +5,7 @@ import { industries, projects, process, differentiators, testimonials, faq, stat
 import { esc, attr, map, sectionHead, btn, ARROW, CHECK, faqList, picture } from '../lib/ui.js';
 import { articles } from '../data/articles.js';
 import { calcSection } from './calc.js';
+import { introVideo } from '../data/video.js';
 
 /*
  * Trang chủ. Nguyên tắc bố cục: mỗi mục chỉ có MỘT ý chính và một chỗ để mắt
@@ -72,6 +73,39 @@ function statsSection() {
         <div class="v" data-count="${s.value}" data-suffix="${attr(s.suffix)}"${s.decimals ? ` data-decimals="${s.decimals}"` : ''}>0${esc(s.suffix)}</div>
         <div class="l">${esc(s.label)}</div>
       </div>`)}
+    </div>
+  </div>
+</section>`;
+}
+
+/* ---------- Video giới thiệu 60 giây ----------
+   preload="none": video chỉ tải khi khách bấm phát, trang chủ không nặng thêm.
+   Phụ đề đã in sẵn trong hình (phần lớn người xem trên điện thoại tắt tiếng);
+   tệp .vtt đi kèm cho trình đọc màn hình và máy tìm kiếm. */
+function videoSection() {
+  const v = introVideo;
+  return `
+<section id="video" class="video-band">
+  <div class="wrap split">
+    <div class="video-frame" data-reveal>
+      <video controls playsinline preload="none" poster="${attr(v.poster)}" width="${v.width}" height="${v.height}"
+             aria-label="${attr(v.title)}">
+        <source src="${attr(v.src)}" type="video/mp4">
+        <track kind="captions" src="${attr(v.captions)}" srclang="vi" label="Tiếng Việt">
+      </video>
+      <button class="video-play" type="button" aria-label="Phát video giới thiệu, có tiếng">
+        <svg viewBox="0 0 24 24" width="34" height="34" aria-hidden="true"><path fill="currentColor" d="M8 5.5v13l11-6.5L8 5.5Z"/></svg>
+      </button>
+    </div>
+    <div>
+      ${sectionHead({ eyebrow: 'Video', title: v.title })}
+      <p class="lead" style="margin-top:14px">Aurix làm gì, làm cho ai, và bắt đầu từ đâu. Bật tiếng để nghe đầy đủ.</p>
+      <ul class="check-list" style="margin-top:22px">
+        <li>${CHECK}<span>Năm việc Aurix làm cho doanh nghiệp dịch vụ</span></li>
+        <li>${CHECK}<span>Cách mỗi khoản chi được đối chiếu với doanh thu</span></li>
+        <li>${CHECK}<span>Buổi chẩn đoán miễn phí 45 phút</span></li>
+      </ul>
+      <p style="margin-top:26px">${btn({ href: cta.primary.href, label: 'Chẩn đoán miễn phí' })}</p>
     </div>
   </div>
 </section>`;
@@ -282,6 +316,18 @@ export function ctaBand({
 export default function homePage() {
   const schema = [
     {
+      '@type': 'VideoObject',
+      '@id': `${site.origin}/#video`,
+      name: introVideo.title,
+      description: introVideo.description,
+      thumbnailUrl: site.origin + introVideo.poster,
+      contentUrl: site.origin + introVideo.src,
+      uploadDate: introVideo.uploadDate,
+      duration: introVideo.duration,
+      inLanguage: 'vi-VN',
+      publisher: { '@id': `${site.origin}/#organization` }
+    },
+    {
       '@type': 'FAQPage',
       '@id': `${site.origin}/#faq`,
       mainEntity: faq.map(f => ({
@@ -318,6 +364,7 @@ export default function homePage() {
     body: [
       hero(),
       statsSection(),
+      videoSection(),
       problem(),
       calcSection({ bg: 'bg-alt' }),
       servicesSection(),

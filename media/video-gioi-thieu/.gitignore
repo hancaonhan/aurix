@@ -1,0 +1,8 @@
+# Sản phẩm dựng ra — sinh lại được bằng các bước trong README.md
+out/
+stills/
+check/
+.edge-profile/
+video-only.mp4
+mix.wav
+timeline.json

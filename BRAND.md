@@ -70,3 +70,19 @@ bài 400. Không dùng chữ có chân hay chữ nghiêng làm điểm nhấn.
 - Thư gửi khách và sales: `server/lib/mailer.js` (màu viết cứng vì ứng dụng
   email không hiểu biến CSS)
 - Ảnh chia sẻ mạng xã hội: `scripts/images.js` → `buildOgImage()`
+
+## Video
+
+Video giới thiệu 9:16 (`public/assets/video/aurix-gioi-thieu-v1.*`) theo đúng
+bộ nhận diện: nền dải chuyển sắc, logo trắng chấm cam, chữ Be Vietnam Pro,
+phụ đề in sẵn (từ đang đọc tô cam), khung kết là logo + khẩu hiệu.
+
+- Giọng đọc: giọng neural tiếng Việt của Microsoft Edge (Hoài My). Đây là dịch
+  vụ đọc to của trình duyệt, không phải API thương mại — nếu dùng video cho
+  quảng cáo trả phí ở quy mô lớn, nên thu lại giọng bằng dịch vụ có giấy phép
+  (FPT.AI, ElevenLabs) hoặc người thật.
+- Nhạc nền và hiệu ứng âm thanh được tổng hợp bằng mã, không dùng bản nhạc có
+  bản quyền.
+- Số liệu trên website hiện là minh hoạ, nên video **không** nêu con số kết quả.
+- Thay video: đổi số phiên bản trong tên tệp (`-v2`) và trong `site/data/video.js`,
+  vì `/assets/` được giữ trong bộ nhớ đệm một năm.

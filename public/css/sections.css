@@ -1236,3 +1236,26 @@
 .brand-line .dot { color: var(--gold-200); margin-inline: 6px; }
 .site-footer .brand-line { color: rgba(255, 255, 255, 0.85); margin-top: 14px; }
 .cta-band .brand-line { color: rgba(255, 255, 255, 0.7); margin-top: 10px; }
+
+/* ---------- Video giới thiệu 9:16 ---------- */
+.video-band { background: var(--ink-700); }
+.video-band .split { grid-template-columns: minmax(0, 0.8fr) 1fr; }
+.video-frame { width: min(100%, 380px); margin-inline: auto; aspect-ratio: 9 / 16; border-radius: 28px; overflow: hidden;
+  background: var(--brand-deep); box-shadow: var(--shadow); border: 6px solid #fff; }
+.video-frame video { display: block; width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 980px) { .video-band .split { grid-template-columns: 1fr; } }
+@media (max-width: 720px) { .video-frame { width: min(100%, 320px); border-radius: 22px; } }
+
+/* Nút phát lớn: chấm cam thương hiệu, ẩn khi video đang chạy */
+.video-frame { position: relative; }
+.video-play {
+  position: absolute; left: 50%; top: 50%; translate: -50% -50%;
+  width: 92px; height: 92px; border-radius: 50%; border: 0; cursor: pointer;
+  display: grid; place-items: center; padding-left: 6px;
+  background: var(--gold-200); color: #fff;
+  box-shadow: 0 0 0 10px rgba(242, 122, 26, 0.25), 0 18px 40px -10px rgba(0, 0, 0, 0.5);
+  transition: transform 0.25s var(--ease), opacity 0.25s var(--ease);
+}
+.video-play:hover { transform: scale(1.06); }
+.video-frame.is-playing .video-play { opacity: 0; pointer-events: none; }
+@media (max-width: 720px) { .video-play { width: 76px; height: 76px; } }
