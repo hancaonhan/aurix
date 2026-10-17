@@ -94,6 +94,7 @@ function loginView(errorMessage = '') {
           <input id="password" name="password" type="password" autocomplete="current-password" required>
         </div>
         <button class="btn primary" type="submit">Đăng nhập</button>
+        <p style="text-align:center;margin:14px 0 0"><a href="/bang-dieu-khien/quen-mat-khau">Quên mật khẩu?</a></p>
         <p class="muted" style="text-align:center;margin:18px 0 0">
           Truy cập được ghi lại trong nhật ký kiểm toán.
         </p>

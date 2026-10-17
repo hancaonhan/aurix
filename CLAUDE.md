@@ -29,6 +29,7 @@ Viết tài liệu, comment, thông điệp lỗi và giao diện **bằng tiế
 | Nghiệp vụ | `server/services/` |
 | Giao diện bảng điều khiển | `server/console/theme.js` (màu) · `server/console/app.js` (màn hình) |
 | Màu, logo, favicon | `BRAND.md` — logo trắng và biểu tượng sinh bằng `npm run brand` |
+| Quên mật khẩu, tài khoản đầu tiên | `server/modules/auth.js` (`/bang-dieu-khien/quen-mat-khau`) — CSDL chưa có tài khoản nào thì yêu cầu cho đúng `AURIX_SALES_INBOX` sẽ tạo chủ sở hữu |
 | Nội dung website | `site/data/` rồi `npm run build` — hoặc sửa ngay trên bảng điều khiển |
 | Bộ sưu tập nội dung sửa được | `overlay()` trong `site/data/` + `COLLECTIONS` trong `server/services/content.js` |
 

@@ -123,6 +123,39 @@ export async function queueLeadNotification(lead, id, { inbox } = {}) {
 }
 
 /* ==========================================================================
+   Đặt lại mật khẩu bảng điều khiển
+   `firstOwner`: tài khoản chủ sở hữu vừa được tạo, thư mời đặt mật khẩu lần đầu.
+   ========================================================================== */
+export async function queuePasswordReset(user, link, { minutes = 60, firstOwner = false } = {}) {
+  const title = firstOwner ? 'Kích hoạt tài khoản quản trị' : 'Đặt lại mật khẩu';
+  const inner = `
+    <p style="margin:0 0 6px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#C4560A;">Bảng điều khiển Aurix</p>
+    <h1 style="margin:0 0 18px;font-size:24px;color:#10252A;">${esc(title)}</h1>
+    <p style="margin:0 0 14px;">${firstOwner
+      ? `Tài khoản chủ sở hữu <b>${esc(user.email)}</b> vừa được tạo cho website Aurix. Bấm nút bên dưới để đặt mật khẩu và đăng nhập lần đầu.`
+      : `Có yêu cầu đặt lại mật khẩu cho tài khoản <b>${esc(user.email)}</b>. Bấm nút bên dưới để chọn mật khẩu mới.`}</p>
+    <p style="margin:24px 0;">${btn(link, firstOwner ? 'Đặt mật khẩu' : 'Đặt lại mật khẩu')}</p>
+    <p style="margin:0;color:#66777C;font-size:13px;">Link dùng được một lần và hết hạn sau ${minutes} phút.
+      Nếu bạn không yêu cầu, hãy bỏ qua thư này — mật khẩu hiện tại vẫn giữ nguyên.</p>`;
+
+  const text = [
+    `${title.toUpperCase()} — BẢNG ĐIỀU KHIỂN AURIX`, '',
+    `Tài khoản: ${user.email}`,
+    `Mở link sau để ${firstOwner ? 'đặt mật khẩu' : 'đặt lại mật khẩu'} (hết hạn sau ${minutes} phút, dùng một lần):`,
+    link, '',
+    'Nếu bạn không yêu cầu, hãy bỏ qua thư này.'
+  ].join('\n');
+
+  return await queueMail({
+    kind: 'password_reset',
+    to: user.email,
+    subject: `${title} — Bảng điều khiển Aurix`,
+    html: shell(title, inner),
+    text
+  });
+}
+
+/* ==========================================================================
    2. Báo cáo chẩn đoán gửi cho khách
    ========================================================================== */
 export async function queueDiagnosticReport(lead, id, result) {
